@@ -169,11 +169,11 @@ namespace ProjectVanquish.Renderers
         /// <param name="minZ">The min Z.</param>
         /// <param name="maxZ">The max Z.</param>
         /// <returns></returns>
-        void CalculateFrustum(ProjectVanquish.Core.Lights.DirectionalLight light, BaseCamera camera)
+        void CalculateFrustum(ProjectVanquish.Core.Lights.DirectionalLight light)
         {
             // Shorten the view frustum according to the shadow view distance
             Matrix cameraMatrix;
-            camera.GetWorldMatrix(out cameraMatrix);
+            CameraManager.GetActiveCamera().GetWorldMatrix(out cameraMatrix);
 
             Vector3 frustumCentroid = new Vector3(0,0,0);
             for (int i = 0; i < 8; i++)
@@ -183,7 +183,8 @@ namespace ProjectVanquish.Renderers
             
             // Position the shadow-caster camera so that it's looking at the centroid,
             // and backed up in the direction of the sunlight
-            float distFromCentroid = MathHelper.Max((camera.FarClip - camera.NearClip), Vector3.Distance(frustumCornersVS[4], frustumCornersVS[5])) + 50.0f;
+            float distFromCentroid = MathHelper.Max((CameraManager.GetActiveCamera().FarClip - CameraManager.GetActiveCamera().NearClip), 
+                                                    Vector3.Distance(frustumCornersVS[4], frustumCornersVS[5])) + 50.0f;
             Matrix viewMatrix = Matrix.CreateLookAt(frustumCentroid - (light.Direction * distFromCentroid), frustumCentroid, new Vector3(0, 1, 0));
 
             // Determine the position of the frustum corners in light space
@@ -242,20 +243,20 @@ namespace ProjectVanquish.Renderers
 
                 // Get corners of the main camera's BoundingFrustum
                 Matrix cameraTransform, viewMatrix;
-                scene.Camera.GetWorldMatrix(out cameraTransform);
-                scene.Camera.GetViewMatrix(out viewMatrix);
-                scene.Camera.BoundingFrustum.GetCorners(frustumCornersWS);
+                CameraManager.GetActiveCamera().GetWorldMatrix(out cameraTransform);
+                CameraManager.GetActiveCamera().GetViewMatrix(out viewMatrix);
+                CameraManager.GetActiveCamera().BoundingFrustum.GetCorners(frustumCornersWS);
                 Vector3.Transform(frustumCornersWS, ref viewMatrix, frustumCornersVS);
 
                 for (int i = 0; i < 4; i++)
                     farFrustumCornerVS[i] = frustumCornersVS[i + 4];
 
-                CalculateFrustum(light, scene.Camera);
+                CalculateFrustum(light);
 
                 DrawShadowMap(device, scene);
                 
                 // Render the shadow occlusion
-                DrawShadowOcclusion(device, scene.Camera, depthRT);
+                DrawShadowOcclusion(device, CameraManager.GetActiveCamera(), depthRT);
 
                 return shadowOcclusion;
             }
@@ -296,7 +297,7 @@ namespace ProjectVanquish.Renderers
         /// </summary>
         /// <param name="device">The device.</param>
         /// <param name="depthTexture">The depth texture.</param>
-        protected void DrawShadowOcclusion(GraphicsDevice device, BaseCamera camera, RenderTarget2D depthTexture)
+        protected void DrawShadowOcclusion(GraphicsDevice device, ICamera camera, RenderTarget2D depthTexture)
         {
             // Set the device to render the shadow occlusion texture
             device.SetRenderTarget(shadowOcclusion);

@@ -185,17 +185,17 @@ namespace ProjectVanquish.Renderers
         /// <param name="minZ">The min Z.</param>
         /// <param name="maxZ">The max Z.</param>
         /// <returns></returns>
-        protected OrthographicCamera CalculateFrustum(ProjectVanquish.Core.Lights.DirectionalLight light, BaseCamera camera, float minZ, float maxZ)
+        protected OrthographicCamera CalculateFrustum(ProjectVanquish.Core.Lights.DirectionalLight light, float minZ, float maxZ)
         {
             // Shorten the view frustum according to the shadow view distance
             Matrix cameraMatrix;
-            camera.GetWorldMatrix(out cameraMatrix);
+            CameraManager.GetActiveCamera().GetWorldMatrix(out cameraMatrix);
 
             for (int i = 0; i < 4; i++)
-                splitFrustumCornersVS[i] = frustumCornersVS[i + 4] * (minZ / camera.FarClip);
+                splitFrustumCornersVS[i] = frustumCornersVS[i + 4] * (minZ / CameraManager.GetActiveCamera().FarClip);
 
             for (int i = 4; i < 8; i++)
-                splitFrustumCornersVS[i] = frustumCornersVS[i] * (maxZ / camera.FarClip);
+                splitFrustumCornersVS[i] = frustumCornersVS[i] * (maxZ / CameraManager.GetActiveCamera().FarClip);
 
             Vector3.Transform(splitFrustumCornersVS, ref cameraMatrix, frustumCornersWS);
 
@@ -288,9 +288,9 @@ namespace ProjectVanquish.Renderers
 
                 // Get corners of the main camera's BoundingFrustum
                 Matrix cameraTransform, viewMatrix;
-                scene.Camera.GetWorldMatrix(out cameraTransform);
-                scene.Camera.GetViewMatrix(out viewMatrix);
-                scene.Camera.BoundingFrustum.GetCorners(frustumCornersWS);
+                CameraManager.GetActiveCamera().GetWorldMatrix(out cameraTransform);
+                CameraManager.GetActiveCamera().GetViewMatrix(out viewMatrix);
+                CameraManager.GetActiveCamera().BoundingFrustum.GetCorners(frustumCornersWS);
                 Vector3.Transform(frustumCornersWS, ref viewMatrix, frustumCornersVS);
 
                 for (int i = 0; i < 4; i++)
@@ -300,7 +300,7 @@ namespace ProjectVanquish.Renderers
                 // split is larger than the previous, giving the closest split the most amount
                 // of shadow detail.  
                 float N = NUMBER_OF_SPLITS;
-                float near = scene.Camera.NearClip, far = scene.Camera.FarClip;
+                float near = CameraManager.GetActiveCamera().NearClip, far = CameraManager.GetActiveCamera().FarClip;
                 splitDepths[0] = near;
                 splitDepths[NUMBER_OF_SPLITS] = far;
                 const float splitConstant = 0.95f;
@@ -313,12 +313,12 @@ namespace ProjectVanquish.Renderers
                 {
                     float minZ = splitDepths[i];
                     float maxZ = splitDepths[i + 1];
-                    lightCameras[i] = CalculateFrustum(light, scene.Camera, minZ, maxZ);
+                    lightCameras[i] = CalculateFrustum(light, minZ, maxZ);
                     DrawShadowMap(device, scene, i);
                 }
 
                 // Render the shadow occlusion
-                DrawShadowOcclusion(device, scene.Camera, depthRT);
+                DrawShadowOcclusion(device, depthRT);
 
                 return shadowOcclusion;
             }
@@ -365,13 +365,13 @@ namespace ProjectVanquish.Renderers
         /// </summary>
         /// <param name="device">The device.</param>
         /// <param name="depthTexture">The depth texture.</param>
-        protected void DrawShadowOcclusion(GraphicsDevice device, BaseCamera camera, RenderTarget2D depthTexture)
+        protected void DrawShadowOcclusion(GraphicsDevice device, RenderTarget2D depthTexture)
         {
             // Set the device to render the shadow occlusion texture
             device.SetRenderTarget(shadowOcclusion);
 
             Matrix cameraTransform;
-            camera.GetWorldMatrix(out cameraTransform);
+            CameraManager.GetActiveCamera().GetWorldMatrix(out cameraTransform);
 
             // Determine which split a pixel belongs too
             for (int i = 0; i < NUMBER_OF_SPLITS; i++)

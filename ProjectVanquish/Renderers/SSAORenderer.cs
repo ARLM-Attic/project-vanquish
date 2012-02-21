@@ -126,9 +126,9 @@ namespace ProjectVanquish.Renderers
 
             // Calculate Frustum Corner of the Camera
             Vector3 cornerFrustum = Vector3.Zero;
-            cornerFrustum.Y = (float)Math.Tan(Math.PI / 3.0 / 2.0) * scene.Camera.FarClip;
-            cornerFrustum.X = cornerFrustum.Y * scene.Camera.AspectRatio;
-            cornerFrustum.Z = scene.Camera.FarClip;
+            cornerFrustum.Y = (float)Math.Tan(Math.PI / 3.0 / 2.0) * CameraManager.GetActiveCamera().FarClip;
+            cornerFrustum.X = cornerFrustum.Y * CameraManager.GetActiveCamera().AspectRatio;
+            cornerFrustum.Z = CameraManager.GetActiveCamera().FarClip;
 
             device.SamplerStates[0] = SamplerState.PointClamp;
             device.SamplerStates[1] = SamplerState.PointClamp;
@@ -137,7 +137,7 @@ namespace ProjectVanquish.Renderers
             // Set SSAO parameters
             ssaoEffect.Parameters["depthTexture"].SetValue((Texture2D)gBuffer[2].RenderTarget);
             ssaoEffect.Parameters["randomTexture"].SetValue(randomNormals);
-            ssaoEffect.Parameters["Projection"].SetValue(scene.Camera.ProjectionMatrix);
+            ssaoEffect.Parameters["Projection"].SetValue(CameraManager.GetActiveCamera().ProjectionMatrix);
             ssaoEffect.Parameters["cornerFustrum"].SetValue(cornerFrustum);
             ssaoEffect.Parameters["sampleRadius"].SetValue(sampleRadius);
             ssaoEffect.Parameters["distanceScale"].SetValue(distanceScale);

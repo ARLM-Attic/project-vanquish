@@ -4,18 +4,6 @@ namespace ProjectVanquish.Cameras
 {
     public class PerspectiveCamera : BaseCamera
     {
-        #region Fields
-        /// <summary>
-        /// Aspect Ratio
-        /// </summary>
-        protected float aspectRatio;
-
-        /// <summary>
-        /// Field Of View
-        /// </summary>
-        protected float fieldOfView;
-        #endregion
-
         #region Constructor
         /// <summary>
         /// Initializes a new instance of the <see cref="PerspectiveCamera"/> class.
@@ -41,7 +29,7 @@ namespace ProjectVanquish.Cameras
         /// Gets or sets the aspect ratio.
         /// </summary>
         /// <value>The aspect ratio.</value>
-        public float AspectRatio
+        public override float AspectRatio
         {
             get { return aspectRatio; }
             set
@@ -71,7 +59,7 @@ namespace ProjectVanquish.Cameras
         /// Gets or sets the field of view.
         /// </summary>
         /// <value>The field of view.</value>
-        public float FieldOfView
+        public override float FieldOfView
         {
             get { return fieldOfView; }
             set

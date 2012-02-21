@@ -59,6 +59,8 @@ namespace ProjectVanquishTest
 
             // TODO: use this.Content to load your game content here
             SceneManager.AddModel(Content.Load<Model>("Models/Sponza"));
+
+            CameraManager.AddCamera("Camera1", new PerspectiveCamera(MathHelper.PiOver2, GraphicsDevice.Viewport.AspectRatio, 1.0f, 100.0f));            
         }
 
         /// <summary>
@@ -94,17 +96,17 @@ namespace ProjectVanquishTest
             float modelRotateAmount = 0.5f * dt;
 
             if (keyboardState.IsKeyDown(Keys.W))
-                renderer.Camera.Position += renderer.Camera.WorldMatrix.Forward * cameraMoveAmount;
+                CameraManager.GetActiveCamera().Position += CameraManager.GetActiveCamera().WorldMatrix.Forward * cameraMoveAmount;
             if (keyboardState.IsKeyDown(Keys.S))
-                renderer.Camera.Position += renderer.Camera.WorldMatrix.Backward * cameraMoveAmount;
+                CameraManager.GetActiveCamera().Position += CameraManager.GetActiveCamera().WorldMatrix.Backward * cameraMoveAmount;
             if (keyboardState.IsKeyDown(Keys.A))
-                renderer.Camera.Position += renderer.Camera.WorldMatrix.Left * cameraMoveAmount;
+                CameraManager.GetActiveCamera().Position += CameraManager.GetActiveCamera().WorldMatrix.Left * cameraMoveAmount;
             if (keyboardState.IsKeyDown(Keys.D))
-                renderer.Camera.Position += renderer.Camera.WorldMatrix.Right * cameraMoveAmount;
+                CameraManager.GetActiveCamera().Position += CameraManager.GetActiveCamera().WorldMatrix.Right * cameraMoveAmount;
             if (keyboardState.IsKeyDown(Keys.Q))
-                renderer.Camera.Position += renderer.Camera.WorldMatrix.Up * cameraMoveAmount;
+                CameraManager.GetActiveCamera().Position += CameraManager.GetActiveCamera().WorldMatrix.Up * cameraMoveAmount;
             if (keyboardState.IsKeyDown(Keys.E))
-                renderer.Camera.Position += renderer.Camera.WorldMatrix.Down * cameraMoveAmount;
+                CameraManager.GetActiveCamera().Position += CameraManager.GetActiveCamera().WorldMatrix.Down * cameraMoveAmount;
 
             if (lastMouseX == -1)
                 lastMouseX = mouseState.X;
@@ -116,15 +118,15 @@ namespace ProjectVanquishTest
 
             if (mouseState.LeftButton == ButtonState.Pressed)
             {
-                renderer.Camera.YRotation -= cameraRotateAmount * mouseMoveX;
-                renderer.Camera.XRotation -= cameraRotateAmount * mouseMoveY;
+                CameraManager.GetActiveCamera().YRotation -= cameraRotateAmount * mouseMoveX;
+                CameraManager.GetActiveCamera().XRotation -= cameraRotateAmount * mouseMoveY;
             }
 
             lastMouseX = mouseState.X;
             lastMouseY = mouseState.Y;
             renderer.Update(gameTime);
 
-            Window.Title = "X: " + renderer.Camera.Position.X + " Y: " + renderer.Camera.Position.Y + " Z: " + renderer.Camera.Position.Z;
+            Window.Title = "X: " + CameraManager.GetActiveCamera().Position.X + " Y: " + CameraManager.GetActiveCamera().Position.Y + " Z: " + CameraManager.GetActiveCamera().Position.Z;
 
             base.Update(gameTime);
         }

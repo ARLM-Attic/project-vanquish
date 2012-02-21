@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using ProjectVanquish.Cameras;
 using ProjectVanquish.Core;
 using ProjectVanquish.Renderers.PostProcessing;
 
@@ -76,13 +77,7 @@ namespace ProjectVanquish.Renderers
         } 
         #endregion
 
-        #region Properties
-        /// <summary>
-        /// Gets the camera.
-        /// </summary>
-        /// <value>The camera.</value>
-        public Cameras.FirstPersonCamera Camera { get { return sceneManager.Camera; } }
-        
+        #region Properties        
         /// <summary>
         /// Gets or sets a value indicating whether [use SSAO].
         /// </summary>
@@ -170,9 +165,9 @@ namespace ProjectVanquish.Renderers
 
             // Set the Depth effect
             depthEffect.CurrentTechnique = depthEffect.Techniques["LinearDepth"];
-            depthEffect.Parameters["g_matView"].SetValue(sceneManager.Camera.ViewMatrix);
-            depthEffect.Parameters["g_matProj"].SetValue(sceneManager.Camera.ProjectionMatrix);
-            depthEffect.Parameters["g_fFarClip"].SetValue(sceneManager.Camera.FarClip);
+            depthEffect.Parameters["g_matView"].SetValue(CameraManager.GetActiveCamera().ViewMatrix);
+            depthEffect.Parameters["g_matProj"].SetValue(CameraManager.GetActiveCamera().ProjectionMatrix);
+            depthEffect.Parameters["g_fFarClip"].SetValue(CameraManager.GetActiveCamera().FarClip);
 
             // Apply the effect
             //depthEffect.CurrentTechnique.Passes[0].Apply();
@@ -218,8 +213,9 @@ namespace ProjectVanquish.Renderers
             directionalLightEffect.Parameters["depthMap"].SetValue(depthRT);
             directionalLightEffect.Parameters["lightDirection"].SetValue(lightDirection);
             directionalLightEffect.Parameters["Color"].SetValue(color.ToVector3());
-            directionalLightEffect.Parameters["cameraPosition"].SetValue(sceneManager.Camera.Position);
-            directionalLightEffect.Parameters["InvertViewProjection"].SetValue(Matrix.Invert(sceneManager.Camera.ViewMatrix * sceneManager.Camera.ProjectionMatrix));
+            directionalLightEffect.Parameters["cameraPosition"].SetValue(CameraManager.GetActiveCamera().Position);
+            directionalLightEffect.Parameters["InvertViewProjection"].SetValue(Matrix.Invert(CameraManager.GetActiveCamera().ViewMatrix
+                                                                                            * CameraManager.GetActiveCamera().ProjectionMatrix));
             directionalLightEffect.Parameters["halfPixel"].SetValue(halfPixel);
             directionalLightEffect.Techniques[0].Passes[0].Apply();
             fullscreenQuad.Draw();
@@ -243,8 +239,8 @@ namespace ProjectVanquish.Renderers
             // Scale according to Light radius and translate it to Light position
             Matrix sphereWorldMatrix = Matrix.CreateScale(lightRadius) * Matrix.CreateTranslation(lightPosition);
             pointLightEffect.Parameters["World"].SetValue(sphereWorldMatrix);
-            pointLightEffect.Parameters["View"].SetValue(sceneManager.Camera.ViewMatrix);
-            pointLightEffect.Parameters["Projection"].SetValue(sceneManager.Camera.ProjectionMatrix);
+            pointLightEffect.Parameters["View"].SetValue(CameraManager.GetActiveCamera().ViewMatrix);
+            pointLightEffect.Parameters["Projection"].SetValue(CameraManager.GetActiveCamera().ProjectionMatrix);
 
             // Light position
             pointLightEffect.Parameters["lightPosition"].SetValue(lightPosition);
@@ -255,14 +251,15 @@ namespace ProjectVanquish.Renderers
             pointLightEffect.Parameters["lightIntensity"].SetValue(lightIntensity);
 
             // Parameters for specular computations
-            pointLightEffect.Parameters["cameraPosition"].SetValue(sceneManager.Camera.Position);
-            pointLightEffect.Parameters["InvertViewProjection"].SetValue(Matrix.Invert(sceneManager.Camera.ViewMatrix * sceneManager.Camera.ProjectionMatrix));
+            pointLightEffect.Parameters["cameraPosition"].SetValue(CameraManager.GetActiveCamera().Position);
+            pointLightEffect.Parameters["InvertViewProjection"].SetValue(Matrix.Invert(CameraManager.GetActiveCamera().ViewMatrix
+                                                                                      * CameraManager.GetActiveCamera().ProjectionMatrix));
 
             // Size of a halfpixel, for texture coordinates alignment
             pointLightEffect.Parameters["halfPixel"].SetValue(halfPixel);
 
             // Calculate the distance between the camera and light center
-            float cameraToCenter = Vector3.Distance(sceneManager.Camera.Position, lightPosition);
+            float cameraToCenter = Vector3.Distance(CameraManager.GetActiveCamera().Position, lightPosition);
 
             // If we are inside the light volume, draw the sphere's inside face
             if (cameraToCenter < lightRadius)

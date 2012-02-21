@@ -2,7 +2,7 @@
 
 namespace ProjectVanquish.Cameras
 {
-    public abstract class BaseCamera
+    public abstract class BaseCamera : ICamera
     {
         #region Fields
         /// <summary>
@@ -24,6 +24,16 @@ namespace ProjectVanquish.Cameras
         /// World Matrix
         /// </summary>
         protected Matrix worldMatrix = Matrix.Identity;
+
+        /// <summary>
+        /// Aspect Ratio
+        /// </summary>
+        protected float aspectRatio;
+
+        /// <summary>
+        /// Field Of View
+        /// </summary>
+        protected float fieldOfView;
 
         /// <summary>
         /// BoundingFrustum
@@ -55,6 +65,21 @@ namespace ProjectVanquish.Cameras
 
         #region Properties
         /// <summary>
+        /// Gets or sets the aspect ratio.
+        /// </summary>
+        /// <value>The aspect ratio.</value>
+        public virtual float AspectRatio
+        {
+            get { return aspectRatio; }
+            set
+            {
+                aspectRatio = value;
+                Matrix.CreatePerspectiveFieldOfView(fieldOfView, aspectRatio, nearClip, farClip, out projectionMatrix);
+                Update();
+            }
+        }
+
+        /// <summary>
         /// Gets the bounding frustum.
         /// </summary>
         /// <value>The bounding frustum.</value>
@@ -71,6 +96,21 @@ namespace ProjectVanquish.Cameras
         {
             get { return nearClip; }
             set { }
+        }
+
+        /// <summary>
+        /// Gets or sets the field of view.
+        /// </summary>
+        /// <value>The field of view.</value>
+        public virtual float FieldOfView
+        {
+            get { return fieldOfView; }
+            set
+            {
+                fieldOfView = value;
+                Matrix.CreatePerspectiveFieldOfView(fieldOfView, aspectRatio, nearClip, farClip, out projectionMatrix);
+                Update();
+            }
         }
 
         /// <summary>
@@ -166,6 +206,36 @@ namespace ProjectVanquish.Cameras
                 worldMatrix = value;
                 Update();
             }
+        }
+
+        /// <summary>
+        /// Gets or sets the X rotation.
+        /// </summary>
+        /// <value>The X rotation.</value>
+        public virtual float XRotation
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Gets or sets the Y rotation.
+        /// </summary>
+        /// <value>The Y rotation.</value>
+        public virtual float YRotation
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Gets or sets the Z rotation.
+        /// </summary>
+        /// <value>The Z rotation.</value>
+        public virtual float ZRotation
+        {
+            get;
+            set;
         }
         #endregion
 

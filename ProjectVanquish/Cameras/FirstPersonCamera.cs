@@ -41,7 +41,7 @@ namespace ProjectVanquish.Cameras
         /// Gets or sets the X rotation.
         /// </summary>
         /// <value>The X rotation.</value>
-        public float XRotation
+        public override float XRotation
         {
             get { return this.xRotation; }
             set
@@ -63,7 +63,7 @@ namespace ProjectVanquish.Cameras
         /// Gets or sets the Y rotation.
         /// </summary>
         /// <value>The Y rotation.</value>
-        public float YRotation
+        public override float YRotation
         {
             get { return yRotation; }
             set

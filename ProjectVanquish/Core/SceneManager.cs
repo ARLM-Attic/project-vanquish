@@ -21,9 +21,9 @@ namespace ProjectVanquish.Core
         GraphicsDevice device;
 
         /// <summary>
-        /// First Person Camera
+        /// Camera Manager
         /// </summary>
-        FirstPersonCamera camera;
+        static CameraManager cameraManager;
 
         /// <summary>
         /// List of Models
@@ -41,19 +41,16 @@ namespace ProjectVanquish.Core
         {
             this.content = content;
             this.device = device;
-            camera = new FirstPersonCamera(MathHelper.PiOver4, (float)device.PresentationParameters.BackBufferWidth / (float)device.PresentationParameters.BackBufferHeight, 1.0f, 500f);
-            camera.Position = new Vector3(0, 5, 10);
+            cameraManager = new CameraManager("Default", 
+                                              new FirstPersonCamera(MathHelper.PiOver4, 
+                                                        (float)device.PresentationParameters.BackBufferWidth / (float)device.PresentationParameters.BackBufferHeight, 
+                                                        1.0f, 500f));
+            //camera.Position = new Vector3(0, 5, 10);
             models = new List<Actor>();
         } 
         #endregion
 
         #region Properties
-        /// <summary>
-        /// Gets the camera.
-        /// </summary>
-        /// <value>The camera.</value>
-        public FirstPersonCamera Camera { get { return camera; } }
-
         /// <summary>
         /// Gets the models.
         /// </summary>
@@ -114,7 +111,7 @@ namespace ProjectVanquish.Core
             device.BlendState = BlendState.Opaque;
 
             foreach (Actor actor in models)
-                DrawModel(actor.Model, actor.World, camera);
+                DrawModel(actor.Model, actor.World);
         }
 
         /// <summary>
@@ -123,15 +120,15 @@ namespace ProjectVanquish.Core
         /// <param name="model">The model.</param>
         /// <param name="world">The world.</param>
         /// <param name="camera">The camera.</param>
-        void DrawModel(Model model, Matrix world, FirstPersonCamera camera)
+        void DrawModel(Model model, Matrix world)
         {
             foreach (ModelMesh mesh in model.Meshes)
             {
                 foreach (Effect effect in mesh.Effects)
                 {
                     effect.Parameters["World"].SetValue(world);
-                    effect.Parameters["View"].SetValue(camera.ViewMatrix);
-                    effect.Parameters["Projection"].SetValue(camera.ProjectionMatrix);
+                    effect.Parameters["View"].SetValue(CameraManager.GetActiveCamera().ViewMatrix);
+                    effect.Parameters["Projection"].SetValue(CameraManager.GetActiveCamera().ProjectionMatrix);
                 }
 
                 mesh.Draw();
@@ -180,7 +177,7 @@ namespace ProjectVanquish.Core
         /// <param name="gameTime">The game time.</param>
         public void Update(GameTime gameTime)
         {
-            camera.Update();
+            CameraManager.GetActiveCamera().Update();
         } 
         #endregion
     }
