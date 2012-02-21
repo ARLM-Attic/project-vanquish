@@ -55,7 +55,7 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
 {
 	float shadowTerm = tex2D(shadowSampler,input.TexCoord).r;
     float3 diffuseColor = tex2D(colorSampler,input.TexCoord).rgb;
-    float4 light = tex2D(lightSampler,input.TexCoord);
+    float4 light = shadowTerm * tex2D(lightSampler,input.TexCoord);
     float3 diffuseLight = light.rgb;
     float specularLight = light.a;
     //return float4(shadowTerm * (diffuseColor * diffuseLight + specularLight),1);

@@ -60,7 +60,7 @@ namespace ProjectVanquishTest
             // TODO: use this.Content to load your game content here
             SceneManager.AddModel(Content.Load<Model>("Models/Sponza"));
 
-            CameraManager.AddCamera("Camera1", new PerspectiveCamera(MathHelper.PiOver2, GraphicsDevice.Viewport.AspectRatio, 1.0f, 100.0f));            
+            CameraManager.GetActiveCamera().Position = new Vector3(0, 6, 0.4f);
         }
 
         /// <summary>
@@ -108,6 +108,9 @@ namespace ProjectVanquishTest
             if (keyboardState.IsKeyDown(Keys.E))
                 CameraManager.GetActiveCamera().Position += CameraManager.GetActiveCamera().WorldMatrix.Down * cameraMoveAmount;
 
+            if (keyboardState.IsKeyUp(Keys.T) && lastKeyboardState.IsKeyDown(Keys.T))
+                renderer.UseSSAO = !renderer.UseSSAO;
+
             if (lastMouseX == -1)
                 lastMouseX = mouseState.X;
             if (lastMouseY == -1)
@@ -124,6 +127,7 @@ namespace ProjectVanquishTest
 
             lastMouseX = mouseState.X;
             lastMouseY = mouseState.Y;
+            lastKeyboardState = keyboardState;
             renderer.Update(gameTime);
 
             Window.Title = "X: " + CameraManager.GetActiveCamera().Position.X + " Y: " + CameraManager.GetActiveCamera().Position.Y + " Z: " + CameraManager.GetActiveCamera().Position.Z;

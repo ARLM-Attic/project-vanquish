@@ -43,5 +43,11 @@ technique LinearDepth
     {
         VertexShader = compile vs_3_0 DepthVS();
         PixelShader = compile ps_3_0 DepthPS();
+
+		ZEnable = true;
+        ZWriteEnable = true;
+        CullMode = CCW;
+        FillMode = Solid;
+        AlphaBlendEnable = false;
     }
 }

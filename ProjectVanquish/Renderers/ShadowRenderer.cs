@@ -30,7 +30,7 @@ namespace ProjectVanquish.Renderers
         /// <summary>
         /// Is it enabled?
         /// </summary>
-        bool isEnabled = false;
+        bool isEnabled = true;
 
         /// <summary>
         /// Sprite Batch
@@ -149,6 +149,11 @@ namespace ProjectVanquish.Renderers
             get { return shadowOcclusion; }
         }
 
+        public RenderTarget2D ShadowMap
+        {
+            get { return shadowMap; }
+        }
+
         /// <summary>
         /// Gets or sets the type of the shadow filtering.
         /// </summary>
@@ -240,7 +245,7 @@ namespace ProjectVanquish.Renderers
                 device.SetRenderTarget(shadowMap);
                 device.Clear(ClearOptions.Target, Color.White, 1.0f, 0);
                 device.Clear(ClearOptions.DepthBuffer, Color.Black, 1.0f, 0);
-
+                
                 // Get corners of the main camera's BoundingFrustum
                 Matrix cameraTransform, viewMatrix;
                 CameraManager.GetActiveCamera().GetWorldMatrix(out cameraTransform);
@@ -284,10 +289,7 @@ namespace ProjectVanquish.Renderers
             // Set up the effect
             shadowEffect.CurrentTechnique = shadowOcclusionTechniques["GenerateShadowMap"];
             shadowEffect.Parameters["g_matViewProj"].SetValue(lightCamera.ViewProjectionMatrix);
-
-            // Apply the Effect
-            //shadowEffect.CurrentTechnique.Passes[0].Apply();
-
+            
             // Draw the models
             scene.Draw(device, shadowEffect);
         }

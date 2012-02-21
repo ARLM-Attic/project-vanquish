@@ -13,7 +13,8 @@ namespace ProjectVanquish.Renderers
         RenderTarget2D ssaoRT, blurRT;
         float sampleRadius, distanceScale;
         Texture2D randomNormals;
-        QuadRenderer fullscreenQuad; 
+        QuadRenderer fullscreenQuad;
+        Vector2 halfPixel, gBufferTextureSize;
         #endregion
 
         #region Constructor
@@ -39,10 +40,18 @@ namespace ProjectVanquish.Renderers
             randomNormals = content.Load<Texture2D>("Textures/RandomNormal");
 
             // Set Sample Radius to Default
-            sampleRadius = 0.5f;
+            sampleRadius = 0.05f;
 
             // Set Distance Scale to Default
-            distanceScale = 100f;
+            distanceScale = 30f;
+
+            // Instantiate halfPixel and GBuffer Texture Size
+            halfPixel = new Vector2()
+            {
+                X = 1.0f / ssaoRT.Width,
+                Y = 1.0f / ssaoRT.Height
+            };
+            gBufferTextureSize = new Vector2(ssaoRT.Width, ssaoRT.Height);
         } 
         #endregion
 
@@ -57,12 +66,10 @@ namespace ProjectVanquish.Renderers
             device.SetRenderTarget(blurRT);
             device.Clear(Color.White);
 
-            device.SamplerStates[0] = SamplerState.PointClamp;
-            device.SamplerStates[1] = SamplerState.PointClamp;
+            device.Textures[3] = ssaoRT;
+            device.SamplerStates[3] = SamplerState.LinearClamp;
 
             // Set Blur parameters
-            blurEffect.Parameters["depthTexture"].SetValue((Texture2D)gBuffer[2].RenderTarget);
-            blurEffect.Parameters["SSAOTexture"].SetValue(ssaoRT);
             blurEffect.Parameters["blurDirection"].SetValue(new Vector2(1.0f / 800.0f, 0.0f));
 
             // Apply Effect
@@ -84,8 +91,11 @@ namespace ProjectVanquish.Renderers
             device.Clear(Color.White);
 
             // Set Final Parameters
-            finalEffect.Parameters["SSAOTexture"].SetValue(blurRT);
-            finalEffect.Parameters["SceneTexture"].SetValue(sceneRT);
+            device.Textures[0] = sceneRT;
+            device.SamplerStates[0] = SamplerState.LinearClamp;
+            device.Textures[1] = ssaoRT;
+            device.SamplerStates[1] = SamplerState.LinearClamp;
+            finalEffect.Parameters["halfPixel"].SetValue(halfPixel);
 
             // Apply Effect
             finalEffect.CurrentTechnique.Passes[0].Apply();
@@ -131,16 +141,19 @@ namespace ProjectVanquish.Renderers
             cornerFrustum.Z = CameraManager.GetActiveCamera().FarClip;
 
             device.SamplerStates[0] = SamplerState.PointClamp;
-            device.SamplerStates[1] = SamplerState.PointClamp;
+            device.Textures[1] = gBuffer[1].RenderTarget;
+            device.SamplerStates[1] = SamplerState.LinearClamp;
+            device.Textures[2] = gBuffer[1].RenderTarget;
             device.SamplerStates[2] = SamplerState.PointClamp;
+            device.Textures[3] = randomNormals;
+            device.SamplerStates[3] = SamplerState.LinearWrap;
 
             // Set SSAO parameters
-            ssaoEffect.Parameters["depthTexture"].SetValue((Texture2D)gBuffer[2].RenderTarget);
-            ssaoEffect.Parameters["randomTexture"].SetValue(randomNormals);
             ssaoEffect.Parameters["Projection"].SetValue(CameraManager.GetActiveCamera().ProjectionMatrix);
             ssaoEffect.Parameters["cornerFustrum"].SetValue(cornerFrustum);
             ssaoEffect.Parameters["sampleRadius"].SetValue(sampleRadius);
             ssaoEffect.Parameters["distanceScale"].SetValue(distanceScale);
+            ssaoEffect.Parameters["GBufferTextureSize"].SetValue(gBufferTextureSize);
 
             // Apply Effect
             ssaoEffect.CurrentTechnique.Passes[0].Apply();

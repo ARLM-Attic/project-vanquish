@@ -154,20 +154,9 @@ namespace ProjectVanquish.Core
                     Matrix.Transpose(ref world, out transpose);
                     Matrix.Invert(ref transpose, out inverseTranspose);
                     effect.Parameters["g_matWorldIT"].SetValue(inverseTranspose);
-
                     effect.CurrentTechnique.Passes[0].Apply();
-
-                    for (int k = 0; k < mesh.MeshParts.Count; k++)
-                    {
-                        ModelMeshPart part = mesh.MeshParts[k];
-                        device.SetVertexBuffer(part.VertexBuffer);
-                        device.Indices = part.IndexBuffer;
-                        device.DrawIndexedPrimitives(PrimitiveType.TriangleList, 0, 0, part.NumVertices, part.StartIndex, part.PrimitiveCount);
-                    }
+                    mesh.Draw();
                 }
-
-                device.SetVertexBuffer(null);
-                device.Indices = null;
             }
         }
 

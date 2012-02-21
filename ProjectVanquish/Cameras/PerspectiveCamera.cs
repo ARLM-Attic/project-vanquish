@@ -19,7 +19,7 @@ namespace ProjectVanquish.Cameras
             this.aspectRatio = aspectRatio;
             this.nearClip = nearClip;
             this.farClip = farClip;
-            Matrix.CreatePerspectiveFieldOfView(fieldOfView, aspectRatio, nearClip, farClip, out projectionMatrix);
+            Matrix.CreatePerspectiveFieldOfView(this.fieldOfView, this.aspectRatio, this.nearClip, this.farClip, out projectionMatrix);
             Update();
         }
         #endregion

@@ -20,7 +20,7 @@ namespace ProjectVanquish.Renderers
         private SpriteBatch spriteBatch;
         private SceneManager sceneManager;
         private Model sphere;
-        private ShadowRenderer shadowRenderer;
+        private CascadeShadowRenderer shadowRenderer;
         private SSAORenderer ssaoRenderer;
         private Bloom bloom; 
         #endregion
@@ -67,7 +67,7 @@ namespace ProjectVanquish.Renderers
 
             sceneManager = new SceneManager(device, content);
 
-            shadowRenderer = new ShadowRenderer(device, content);
+            shadowRenderer = new CascadeShadowRenderer(device, content);
 
             ssaoRenderer = new SSAORenderer(device, content, backbufferWidth, backbufferHeight);
 
@@ -77,7 +77,7 @@ namespace ProjectVanquish.Renderers
         } 
         #endregion
 
-        #region Properties        
+        #region Properties
         /// <summary>
         /// Gets or sets a value indicating whether [use SSAO].
         /// </summary>
@@ -98,14 +98,14 @@ namespace ProjectVanquish.Renderers
         /// <summary>
         /// Combines the G buffer.
         /// </summary>
-        void CombineGBuffer()//ref RenderTarget2D shadowOcclusion)
+        void CombineGBuffer(ref RenderTarget2D shadowOcclusion)
         {
             // Set Scene RenderTarget
             device.SetRenderTarget(sceneRT);
 
             finalEffect.Parameters["colorMap"].SetValue(colorRT);
             finalEffect.Parameters["lightMap"].SetValue(lightRT);
-            //finalEffect.Parameters["shadowMap"].SetValue(shadowOcclusion);
+            finalEffect.Parameters["shadowMap"].SetValue(shadowOcclusion);
             finalEffect.Parameters["halfPixel"].SetValue(halfPixel);
             finalEffect.CurrentTechnique.Passes[0].Apply();
             fullscreenQuad.Draw();
@@ -137,10 +137,10 @@ namespace ProjectVanquish.Renderers
             ClearGBuffer();
             sceneManager.Draw();
             ResolveGBuffer();
-            //DrawDepth();
-            //var shadowOcclusion = shadowRenderer.Draw(device, linearDepthRT, sceneManager);
+            DrawDepth();
+            var shadowOcclusion = shadowRenderer.Draw(device, linearDepthRT, sceneManager);
             DrawLights();
-            CombineGBuffer();//ref shadowOcclusion);
+            CombineGBuffer(ref shadowOcclusion);
             if (UseSSAO)
             {
                 ssaoRenderer.Draw(device, renderTargets, sceneRT, sceneManager, bloomRT);
@@ -148,7 +148,7 @@ namespace ProjectVanquish.Renderers
             }
             else
                 bloom.Draw(device, sceneRT);
-            DrawDebug();//ref shadowOcclusion);
+            DrawDebug(ref shadowOcclusion);
         }
 
         /// <summary>
@@ -168,10 +168,7 @@ namespace ProjectVanquish.Renderers
             depthEffect.Parameters["g_matView"].SetValue(CameraManager.GetActiveCamera().ViewMatrix);
             depthEffect.Parameters["g_matProj"].SetValue(CameraManager.GetActiveCamera().ProjectionMatrix);
             depthEffect.Parameters["g_fFarClip"].SetValue(CameraManager.GetActiveCamera().FarClip);
-
-            // Apply the effect
-            //depthEffect.CurrentTechnique.Passes[0].Apply();
-
+            
             // Draw the Models
             sceneManager.Draw(device, depthEffect);
 
@@ -287,7 +284,7 @@ namespace ProjectVanquish.Renderers
         /// <summary>
         /// Draws the debug output.
         /// </summary>
-        public void DrawDebug()//ref RenderTarget2D shadowOcclusion)
+        public void DrawDebug(ref RenderTarget2D shadowOcclusion)
         {
             int width = 128;
             int height = 128;
@@ -302,8 +299,10 @@ namespace ProjectVanquish.Renderers
             spriteBatch.Draw((Texture2D)normalRT, rect, Color.White);
             rect.X += width;
             spriteBatch.Draw((Texture2D)depthRT, rect, Color.White);
-            //rect.X += width;
-            //spriteBatch.Draw((Texture2D)shadowOcclusion, rect, Color.White);
+            rect.X += width;
+            spriteBatch.Draw((Texture2D)shadowRenderer.ShadowMap, rect, Color.White);
+            rect.X += width;
+            spriteBatch.Draw((Texture2D)shadowRenderer.ShadowOcclusion, rect, Color.White);
             spriteBatch.End();
         }
 

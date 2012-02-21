@@ -1,34 +1,51 @@
-texture SSAOTexture;
-sampler2D SSAOSampler = sampler_state
+float2 halfPixel;
+sampler Scene : register(s0);
+sampler SSAO : register(s1);
+
+struct VertexShaderInput
 {
-	Texture = <SSAOTexture>;
-    ADDRESSU = CLAMP;
-	ADDRESSV = CLAMP;
-	MAGFILTER = LINEAR;
-	MINFILTER = LINEAR;
+	float3 Position : POSITION0;
+	float2 UV : TEXCOORD0;
 };
 
-texture SceneTexture;
-sampler2D baseSampler = sampler_state
+struct VertexShaderOutput
 {
-	Texture = <SceneTexture>;
-    ADDRESSU = CLAMP;
-	ADDRESSV = CLAMP;
-	MAGFILTER = LINEAR;
-	MINFILTER = LINEAR;
+	float4 Position : POSITION0;
+	float2 UV : TEXCOORD0;
 };
 
-float4 PixelShaderFunction(float2 TexCoord :TEXCOORD0) : COLOR0
+VertexShaderOutput VertexShaderFunction(VertexShaderInput input)
 {
-	TexCoord.x += 1.0/1600.0;
-	TexCoord.y += 1.0/1200.0;
-	return tex2D( SSAOSampler, TexCoord ).r * (tex2D(baseSampler,TexCoord) );    
+	//Initialize Output
+	VertexShaderOutput output;
+
+	//Pass Position
+	output.Position = float4(input.Position, 1);
+
+	//Pass Texcoord's
+	output.UV = input.UV - halfPixel;
+
+	//Return
+	return output;
+}
+
+float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
+{
+	//Sample Scene
+	float4 scene = tex2D(Scene, input.UV);
+
+	//Sample SSAO
+	float4 ssao = tex2D(SSAO, input.UV);
+
+	//Return
+	return (scene * ssao);
 }
 
 technique SSAOFinal
 {
-    pass Pass1
-    {
-        PixelShader = compile ps_3_0 PixelShaderFunction();
-    }
+	pass Pass1
+	{
+		VertexShader = compile vs_3_0 VertexShaderFunction();
+		PixelShader = compile ps_3_0 PixelShaderFunction();
+	}
 }
