@@ -37,7 +37,7 @@ PixelShaderOutput PixelShaderFunction(VertexShaderOutput input)
     output.Normal.a = 0.0f;
 
     // Max depth
-    output.Depth = 0.0f;
+    output.Depth = 1.0f;
 
     return output;
 }

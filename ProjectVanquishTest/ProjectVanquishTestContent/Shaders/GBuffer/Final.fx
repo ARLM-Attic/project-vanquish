@@ -26,9 +26,9 @@ sampler lightSampler = sampler_state
 sampler shadowSampler = sampler_state
 {
 	Texture = (shadowMap);
-	MagFilter = POINT;
-    MinFilter = POINT;
-    Mipfilter = POINT;
+    MinFilter = POINT; 
+    MagFilter = POINT; 
+    MipFilter = POINT;
 };
 
 struct VertexShaderInput
@@ -55,18 +55,17 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
 {
 	float shadowTerm = tex2D(shadowSampler,input.TexCoord).r;
     float3 diffuseColor = tex2D(colorSampler,input.TexCoord).rgb;
-    float4 light = shadowTerm * tex2D(lightSampler,input.TexCoord);
+    float4 light = tex2D(lightSampler,input.TexCoord);
     float3 diffuseLight = light.rgb;
     float specularLight = light.a;
-    //return float4(shadowTerm * (diffuseColor * diffuseLight + specularLight),1);
-	return float4((diffuseColor * diffuseLight + specularLight),1);
+    return float4(shadowTerm * (diffuseColor * diffuseLight + specularLight),1);
 }
 
-technique CombineFinal
+technique GBufferFinal
 {
     pass Pass1
     {
-        VertexShader = compile vs_3_0 VertexShaderFunction();
-        PixelShader = compile ps_3_0 PixelShaderFunction();
+        VertexShader = compile vs_2_0 VertexShaderFunction();
+        PixelShader = compile ps_2_0 PixelShaderFunction();
     }
 }

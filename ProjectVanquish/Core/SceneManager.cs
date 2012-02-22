@@ -43,7 +43,7 @@ namespace ProjectVanquish.Core
             this.device = device;
             cameraManager = new CameraManager("Default", 
                                               new FirstPersonCamera(MathHelper.PiOver4, 
-                                                        (float)device.PresentationParameters.BackBufferWidth / (float)device.PresentationParameters.BackBufferHeight, 
+                                                        device.PresentationParameters.BackBufferWidth / device.PresentationParameters.BackBufferHeight, 
                                                         1.0f, 500f));
             //camera.Position = new Vector3(0, 5, 10);
             models = new List<Actor>();
@@ -143,21 +143,34 @@ namespace ProjectVanquish.Core
         public void Draw(GraphicsDevice device, Effect effect)
         {
             for (int i = 0; i < models.Count; i++)
-            {
-                for (int j = 0; j < models[i].Model.Meshes.Count; j++)
-                {
-                    ModelMesh mesh = models[i].Model.Meshes[j];
-                    Matrix world = models[i].World;
+                DrawWithEffect(models[i].Model, models[i].World, effect);
+        }
 
-                    effect.Parameters["g_matWorld"].SetValue(world);
-                    Matrix transpose, inverseTranspose;
-                    Matrix.Transpose(ref world, out transpose);
-                    Matrix.Invert(ref transpose, out inverseTranspose);
-                    effect.Parameters["g_matWorldIT"].SetValue(inverseTranspose);
-                    effect.CurrentTechnique.Passes[0].Apply();
-                    mesh.Draw();
+        void DrawWithEffect(Model model, Matrix world, Effect effect)
+        {
+            for (int i = 0; i < model.Meshes.Count; i++)
+            {
+                ModelMesh mesh = model.Meshes[i];
+
+                effect.Parameters["g_matWorld"].SetValue(world);
+                Matrix transpose, inverseTranspose;
+                Matrix.Transpose(ref world, out transpose);
+                Matrix.Invert(ref transpose, out inverseTranspose);
+                effect.Parameters["g_matWorldIT"].SetValue(inverseTranspose);
+
+                effect.Techniques[0].Passes[0].Apply();
+
+                for (int j = 0; j < mesh.MeshParts.Count; j++)
+                {
+                    ModelMeshPart part = mesh.MeshParts[j];
+                    device.SetVertexBuffer(part.VertexBuffer);
+                    device.Indices = part.IndexBuffer;
+                    device.DrawIndexedPrimitives(PrimitiveType.TriangleList, 0, 0, part.NumVertices, part.StartIndex, part.PrimitiveCount);
                 }
             }
+
+            device.SetVertexBuffer(null);
+            device.Indices = null;
         }
 
         /// <summary>

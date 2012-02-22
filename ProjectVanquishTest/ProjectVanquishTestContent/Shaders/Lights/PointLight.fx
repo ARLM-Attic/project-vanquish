@@ -1,22 +1,32 @@
 float4x4 World;
 float4x4 View;
 float4x4 Projection;
-// Color of the light
-float3 Color;
-// Position of the camera, for specular light
-float3 cameraPosition;
-// This is used to compute the world-position
-float4x4 InvertViewProjection;
-// This is the position of the light
-float3 lightPosition;
-// How far does this light reach
-float lightRadius;
-// Control the brightness of the light
-float lightIntensity = 1.0f;
-float2 halfPixel;
 
-// Diffuse color, and SpecularIntensity in the alpha channel
-texture colorMap;
+//color of the light 
+float3 Color; 
+
+//position of the camera, for specular light
+float3 cameraPosition; 
+
+//this is used to compute the world-position
+float4x4 InvertViewProjection; 
+
+//this is the position of the light
+float3 lightPosition;
+
+//how far does this light reach
+float lightRadius;
+
+//control the brightness of the light
+float lightIntensity = 1.0f;
+
+// diffuse color, and specularIntensity in the alpha channel
+texture colorMap; 
+// normals, and specularPower in the alpha channel
+texture normalMap;
+//depth
+texture depthMap;
+
 sampler colorSampler = sampler_state
 {
     Texture = (colorMap);
@@ -26,9 +36,6 @@ sampler colorSampler = sampler_state
     MinFilter = LINEAR;
     Mipfilter = LINEAR;
 };
-
-// Depth
-texture depthMap;
 sampler depthSampler = sampler_state
 {
     Texture = (depthMap);
@@ -38,9 +45,6 @@ sampler depthSampler = sampler_state
     MinFilter = POINT;
     Mipfilter = POINT;
 };
-
-// Normals, and SpecularPower in the alpha channel
-texture normalMap;
 sampler normalSampler = sampler_state
 {
     Texture = (normalMap);
@@ -50,6 +54,7 @@ sampler normalSampler = sampler_state
     MinFilter = POINT;
     Mipfilter = POINT;
 };
+
 
 struct VertexShaderInput
 {
@@ -65,7 +70,7 @@ struct VertexShaderOutput
 VertexShaderOutput VertexShaderFunction(VertexShaderInput input)
 {
     VertexShaderOutput output;
-    // Processing geometry coordinates
+    //processing geometry coordinates
     float4 worldPosition = mul(float4(input.Position,1), World);
     float4 viewPosition = mul(worldPosition, View);
     output.Position = mul(viewPosition, Projection);
@@ -73,66 +78,67 @@ VertexShaderOutput VertexShaderFunction(VertexShaderInput input)
     return output;
 }
 
+float2 halfPixel;
 float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
 {
-    // Obtain screen position
+    //obtain screen position
     input.ScreenPosition.xy /= input.ScreenPosition.w;
 
-    // Obtain textureCoordinates corresponding to the current pixel
-    // The screen coordinates are in [-1,1]*[1,-1]
-    // The texture coordinates need to be in [0,1]*[0,1]
+    //obtain textureCoordinates corresponding to the current pixel
+    //the screen coordinates are in [-1,1]*[1,-1]
+    //the texture coordinates need to be in [0,1]*[0,1]
     float2 texCoord = 0.5f * (float2(input.ScreenPosition.x,-input.ScreenPosition.y) + 1);
-    // Align texels to pixels
+    //allign texels to pixels
     texCoord -=halfPixel;
 
-    // Get normal data from the normalMap
+    //get normal data from the normalMap
     float4 normalData = tex2D(normalSampler,texCoord);
-    // Transform normal back into [-1,1] range
+    //tranform normal back into [-1,1] range
     float3 normal = 2.0f * normalData.xyz - 1.0f;
-    // Get specular power
+    //get specular power
     float specularPower = normalData.a * 255;
-    // Get specular intensity from the colorMap
+    //get specular intensity from the colorMap
     float specularIntensity = tex2D(colorSampler, texCoord).a;
 
-    // Read depth
+    //read depth
     float depthVal = tex2D(depthSampler,texCoord).r;
 
-    // Compute screen-space position
+    //compute screen-space position
     float4 position;
     position.xy = input.ScreenPosition.xy;
     position.z = depthVal;
     position.w = 1.0f;
-    // Transform to world space
+    //transform to world space
     position = mul(position, InvertViewProjection);
     position /= position.w;
 
-    // Surface-to-light vector
+    //surface-to-light vector
     float3 lightVector = lightPosition - position;
 
-    // Compute attenuation based on distance - linear attenuation
-    float attenuation = saturate(1.0f - length(lightVector)/lightRadius);
+    //compute attenuation based on distance - linear attenuation
+    float attenuation = saturate(1.0f - length(lightVector)/lightRadius); 
 
-    // Normalize light vector
-    lightVector = normalize(lightVector);
+    //normalize light vector
+    lightVector = normalize(lightVector); 
 
-    // Compute diffuse light
+    //compute diffuse light
     float NdL = max(0,dot(normal,lightVector));
     float3 diffuseLight = NdL * Color.rgb;
 
-    // Reflection vector
+    //reflection vector
     float3 reflectionVector = normalize(reflect(-lightVector, normal));
-    // Camera-to-surface vector
+    //camera-to-surface vector
     float3 directionToCamera = normalize(cameraPosition - position);
-    // Compute specular light
+    //compute specular light
     float specularLight = specularIntensity * pow( saturate(dot(reflectionVector, directionToCamera)), specularPower);
 
-    // Take into account attenuation and lightIntensity.
+    //take into account attenuation and lightIntensity.
     return attenuation * lightIntensity * float4(diffuseLight.rgb,specularLight);
 }
 
-technique PointLight
+technique Technique1
 {
-    pass Pass0
+    pass Pass1
     {
         VertexShader = compile vs_2_0 VertexShaderFunction();
         PixelShader = compile ps_2_0 PixelShaderFunction();

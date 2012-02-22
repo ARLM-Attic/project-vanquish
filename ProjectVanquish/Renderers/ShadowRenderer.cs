@@ -68,7 +68,7 @@ namespace ProjectVanquish.Renderers
         /// <summary>
         /// Effect Technique Collection
         /// </summary>
-        EffectTechniqueCollection shadowOcclusionTechniques;
+        EffectTechnique[] shadowOcclusionTechniques = new EffectTechnique[4];
         
         /// <summary>
         /// Fullscreen Quad
@@ -118,7 +118,10 @@ namespace ProjectVanquish.Renderers
             // 2 - CreateShadowTerm3x3PCF
             // 3 - CreateShadowTerm5x5PCF
             // 4 - CreateShadowTerm7x7PCF
-            shadowOcclusionTechniques = shadowEffect.Techniques;
+            shadowOcclusionTechniques[0] = shadowEffect.Techniques["CreateShadowTerm2x2PCF"];
+            shadowOcclusionTechniques[1] = shadowEffect.Techniques["CreateShadowTerm3x3PCF"];
+            shadowOcclusionTechniques[2] = shadowEffect.Techniques["CreateShadowTerm5x5PCF"];
+            shadowOcclusionTechniques[3] = shadowEffect.Techniques["CreateShadowTerm7x7PCF"];
 
             // Create a default Directional light
             light = new ProjectVanquish.Core.Lights.DirectionalLight();
@@ -226,19 +229,8 @@ namespace ProjectVanquish.Renderers
         /// </summary>
         /// <param name="device">The device.</param>
         /// <param name="camera">The camera.</param>
-        public RenderTarget2D Draw(GraphicsDevice device, RenderTarget2D depthRT, SceneManager scene)
-        {            
-            // Create the Shadow Occlusion
-            return Draw(device, depthRT, scene, light);
-        }
-
-        /// <summary>
-        /// Renders the specified device.
-        /// </summary>
-        /// <param name="device">The device.</param>
-        /// <param name="camera">The camera.</param>
         /// <param name="light">The light.</param>
-        RenderTarget2D Draw(GraphicsDevice device, RenderTarget2D depthRT, SceneManager scene, ProjectVanquish.Core.Lights.DirectionalLight light)
+        public RenderTarget2D Draw(GraphicsDevice device, RenderTarget2D depthRT, SceneManager scene)
         {
             if (isEnabled)
             {
@@ -287,7 +279,7 @@ namespace ProjectVanquish.Renderers
             device.Clear(ClearOptions.DepthBuffer, new Vector4(1.0f), 1.0f, 0);
 
             // Set up the effect
-            shadowEffect.CurrentTechnique = shadowOcclusionTechniques["GenerateShadowMap"];
+            shadowEffect.CurrentTechnique = shadowEffect.Techniques["GenerateShadowMap"];
             shadowEffect.Parameters["g_matViewProj"].SetValue(lightCamera.ViewProjectionMatrix);
             
             // Draw the models

@@ -344,6 +344,10 @@ namespace ProjectVanquish.Renderers
         /// <param name="splitIndex">Index of the split.</param>
         protected void DrawShadowMap(GraphicsDevice device, SceneManager scene, int splitIndex)
         {
+            device.SetRenderTarget(shadowMap);
+            device.Clear(ClearOptions.Target, Color.White, 1.0f, 0);
+            device.Clear(ClearOptions.DepthBuffer, Color.Black, 1.0f, 0);
+
             // Set the Viewport
             Viewport splitViewport = new Viewport();
             splitViewport.MinDepth = 0;
