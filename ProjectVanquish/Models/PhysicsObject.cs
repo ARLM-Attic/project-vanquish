@@ -99,6 +99,7 @@ namespace ProjectVanquish.Models
         } 
         #endregion
 
+        #region Members
         /// <summary>
         /// Initializes the entity.
         /// </summary>
@@ -120,6 +121,7 @@ namespace ProjectVanquish.Models
         {
             entity.Space.Remove(entity);
             SceneManager.PhysicsManager.PhysicsObjects.Remove(this);
-        }
+        } 
+        #endregion
     }
 }

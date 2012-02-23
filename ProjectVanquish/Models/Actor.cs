@@ -1,10 +1,11 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using ProjectVanquish.Core;
 using ProjectVanquish.Models.Interfaces;
 
 namespace ProjectVanquish.Models
 {
-    public class Actor : IEntity
+    public class Actor : IEntity, IRenderable
     {
         #region Fields
         Model model;
@@ -130,6 +131,61 @@ namespace ProjectVanquish.Models
                     * Matrix.CreateRotationZ(rotation.Z);
             }
         } 
+        #endregion
+
+        #region Members
+        /// <summary>
+        /// Draws the specified model.
+        /// </summary>
+        /// <param name="model">The model.</param>
+        /// <param name="world">The world.</param>
+        public void Draw()
+        {
+            foreach (ModelMesh mesh in model.Meshes)
+            {
+                foreach (Effect effect in mesh.Effects)
+                {
+                    effect.Parameters["World"].SetValue(World);
+                    effect.Parameters["View"].SetValue(CameraManager.GetActiveCamera().ViewMatrix);
+                    effect.Parameters["Projection"].SetValue(CameraManager.GetActiveCamera().ProjectionMatrix);
+                }
+
+                mesh.Draw();
+            }
+        }
+
+        /// <summary>
+        /// Draws the with effect.
+        /// </summary>
+        /// <param name="device">The device.</param>
+        /// <param name="effect">The effect.</param>
+        public void DrawWithEffect(GraphicsDevice device, Effect effect)
+        {
+            for (int i = 0; i < model.Meshes.Count; i++)
+            {
+                ModelMesh mesh = model.Meshes[i];
+
+                effect.Parameters["g_matWorld"].SetValue(World);
+                Matrix transpose, inverseTranspose;
+                Matrix world = World;
+                Matrix.Transpose(ref world, out transpose);
+                Matrix.Invert(ref transpose, out inverseTranspose);
+                effect.Parameters["g_matWorldIT"].SetValue(inverseTranspose);
+
+                effect.Techniques[0].Passes[0].Apply();
+
+                for (int j = 0; j < mesh.MeshParts.Count; j++)
+                {
+                    ModelMeshPart part = mesh.MeshParts[j];
+                    device.SetVertexBuffer(part.VertexBuffer);
+                    device.Indices = part.IndexBuffer;
+                    device.DrawIndexedPrimitives(PrimitiveType.TriangleList, 0, 0, part.NumVertices, part.StartIndex, part.PrimitiveCount);
+                }
+            }
+
+            device.SetVertexBuffer(null);
+            device.Indices = null;
+        }
         #endregion
     }
 }

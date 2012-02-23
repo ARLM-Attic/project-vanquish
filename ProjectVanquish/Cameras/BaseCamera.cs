@@ -168,7 +168,7 @@ namespace ProjectVanquish.Cameras
             get { return projectionMatrix; }
             set { projectionMatrix = value; }
         }
-        
+
         /// <summary>
         /// Gets or sets the view matrix.
         /// </summary>

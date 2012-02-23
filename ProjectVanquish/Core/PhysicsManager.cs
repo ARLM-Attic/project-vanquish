@@ -40,7 +40,7 @@ namespace ProjectVanquish.Core
             // Check if we can use mutli-threading
             if (Environment.ProcessorCount > 1)
             {
-                for (int i = 0; i < Environment.ProcessorCount; i++)
+                for (int i = 0; i < Environment.ProcessorCount - 1; i++)
                     space.ThreadManager.AddThread();
 
                 space.BroadPhase.AllowMultithreading = true;
