@@ -1,13 +1,14 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using ProjectVanquish.Models.Interfaces;
 
 namespace ProjectVanquish.Models
 {
-    public class Actor
+    public class Actor : IEntity
     {
         #region Fields
         Model model;
-        Vector3 position, rotation = Vector3.Zero, scale = Vector3.One; 
+        Vector3 position, rotation, scale;
         #endregion
 
         #region Constructor
@@ -68,10 +69,53 @@ namespace ProjectVanquish.Models
 
         #region Properties
         /// <summary>
+        /// Gets the bounding box.
+        /// </summary>
+        /// <value>The bounding box.</value>
+        public BoundingBox BoundingBox 
+        { 
+            get { return new BoundingBox(Position - Scale / 2f, Position + Scale / 2f); }
+        }
+
+        /// <summary>
         /// Gets the model.
         /// </summary>
         /// <value>The model.</value>
-        public Model Model { get { return model; } }
+        public Model Model 
+        { 
+            get { return model; } 
+            set { model = value; } 
+        }
+
+        /// <summary>
+        /// Gets or sets the position.
+        /// </summary>
+        /// <value>The position.</value>
+        public Vector3 Position 
+        { 
+            get { return position; } 
+            set { position = value; } 
+        }
+
+        /// <summary>
+        /// Gets or sets the rotation.
+        /// </summary>
+        /// <value>The rotation.</value>
+        public Vector3 Rotation 
+        { 
+            get { return rotation; } 
+            set { rotation = value; } 
+        }
+
+        /// <summary>
+        /// Gets or sets the scale.
+        /// </summary>
+        /// <value>The scale.</value>
+        public Vector3 Scale 
+        { 
+            get { return scale; } 
+            set { scale = value; } 
+        }
 
         /// <summary>
         /// Gets the world.
