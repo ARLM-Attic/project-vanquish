@@ -23,7 +23,12 @@ namespace ProjectVanquish.Core
         /// <summary>
         /// Camera Manager
         /// </summary>
-        static CameraManager cameraManager;
+        CameraManager cameraManager;
+
+        /// <summary>
+        /// Physics Manager
+        /// </summary>
+        static PhysicsManager physicsManager;
 
         /// <summary>
         /// List of Models
@@ -45,7 +50,7 @@ namespace ProjectVanquish.Core
                                               new FirstPersonCamera(MathHelper.PiOver4, 
                                                         device.PresentationParameters.BackBufferWidth / device.PresentationParameters.BackBufferHeight, 
                                                         1.0f, 500f));
-            //camera.Position = new Vector3(0, 5, 10);
+            physicsManager = new PhysicsManager(new Vector3(0, 0, 0));
             models = new List<Actor>();
         } 
         #endregion
@@ -55,7 +60,13 @@ namespace ProjectVanquish.Core
         /// Gets the models.
         /// </summary>
         /// <value>The models.</value>
-        public IList<Actor> Models { get { return models; } } 
+        public IList<Actor> Models { get { return models; } }
+
+        /// <summary>
+        /// Gets the physics manager.
+        /// </summary>
+        /// <value>The physics manager.</value>
+        public static PhysicsManager PhysicsManager { get { return physicsManager; } }
         #endregion
 
         #region Members
@@ -180,6 +191,7 @@ namespace ProjectVanquish.Core
         public void Update(GameTime gameTime)
         {
             CameraManager.GetActiveCamera().Update();
+            physicsManager.Update(gameTime);
         } 
         #endregion
     }

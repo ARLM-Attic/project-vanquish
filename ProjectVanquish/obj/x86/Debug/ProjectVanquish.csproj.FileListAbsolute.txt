@@ -4,3 +4,5 @@ C:\ProjectVanquishTest\ProjectVanquish\obj\x86\Debug\ResolveAssemblyReference.ca
 C:\ProjectVanquishTest\ProjectVanquish\obj\x86\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
 C:\ProjectVanquishTest\ProjectVanquish\obj\x86\Debug\ProjectVanquish.dll
 C:\ProjectVanquishTest\ProjectVanquish\obj\x86\Debug\ProjectVanquish.pdb
+C:\ProjectVanquishTest\ProjectVanquish\bin\x86\Debug\BEPUphysics.dll
+C:\ProjectVanquishTest\ProjectVanquish\bin\x86\Debug\BEPUphysics.xml

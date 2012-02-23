@@ -181,7 +181,8 @@ namespace ProjectVanquish.Renderers
         {
             // Shorten the view frustum according to the shadow view distance
             Matrix cameraMatrix;
-            CameraManager.GetActiveCamera().GetWorldMatrix(out cameraMatrix);
+            ICamera activeCamera = CameraManager.GetActiveCamera();
+            //CameraManager.GetActiveCamera().GetWorldMatrix(out cameraMatrix);
 
             Vector3 frustumCentroid = new Vector3(0,0,0);
             for (int i = 0; i < 8; i++)
@@ -191,7 +192,7 @@ namespace ProjectVanquish.Renderers
             
             // Position the shadow-caster camera so that it's looking at the centroid,
             // and backed up in the direction of the sunlight
-            float distFromCentroid = MathHelper.Max((CameraManager.GetActiveCamera().FarClip - CameraManager.GetActiveCamera().NearClip), 
+            float distFromCentroid = MathHelper.Max((activeCamera.FarClip - activeCamera.NearClip), 
                                                     Vector3.Distance(frustumCornersVS[4], frustumCornersVS[5])) + 50.0f;
             Matrix viewMatrix = Matrix.CreateLookAt(frustumCentroid - (light.Direction * distFromCentroid), frustumCentroid, new Vector3(0, 1, 0));
 
@@ -240,9 +241,12 @@ namespace ProjectVanquish.Renderers
                 
                 // Get corners of the main camera's BoundingFrustum
                 Matrix cameraTransform, viewMatrix;
-                CameraManager.GetActiveCamera().GetWorldMatrix(out cameraTransform);
-                CameraManager.GetActiveCamera().GetViewMatrix(out viewMatrix);
-                CameraManager.GetActiveCamera().BoundingFrustum.GetCorners(frustumCornersWS);
+                ICamera activeCamera = CameraManager.GetActiveCamera();
+                //CameraManager.GetActiveCamera().GetWorldMatrix(out cameraTransform);
+                //CameraManager.GetActiveCamera().GetViewMatrix(out viewMatrix);
+                //CameraManager.GetActiveCamera().BoundingFrustum.GetCorners(frustumCornersWS);
+                viewMatrix = activeCamera.ViewMatrix;
+                activeCamera.BoundingFrustum.GetCorners(frustumCornersWS);
                 Vector3.Transform(frustumCornersWS, ref viewMatrix, frustumCornersVS);
 
                 for (int i = 0; i < 4; i++)
@@ -281,7 +285,9 @@ namespace ProjectVanquish.Renderers
             // Set up the effect
             shadowEffect.CurrentTechnique = shadowEffect.Techniques["GenerateShadowMap"];
             shadowEffect.Parameters["g_matViewProj"].SetValue(lightCamera.ViewProjectionMatrix);
-            
+
+            shadowEffect.CurrentTechnique.Passes[0].Apply();
+
             // Draw the models
             scene.Draw(device, shadowEffect);
         }
@@ -297,11 +303,12 @@ namespace ProjectVanquish.Renderers
             device.SetRenderTarget(shadowOcclusion);
 
             Matrix cameraTransform;
-            camera.GetWorldMatrix(out cameraTransform);
+            ICamera activeCamera = CameraManager.GetActiveCamera();
+            //camera.GetWorldMatrix(out cameraTransform);
             
             // Setup the shadow effect
             shadowEffect.CurrentTechnique = shadowOcclusionTechniques[(int)filteringType];
-            shadowEffect.Parameters["g_matInvView"].SetValue(cameraTransform);
+            shadowEffect.Parameters["g_matInvView"].SetValue(Matrix.Invert(activeCamera.ViewMatrix));
             shadowEffect.Parameters["g_matLightViewProj"].SetValue(lightCamera.ViewProjectionMatrix);
             shadowEffect.Parameters["g_vFrustumCornersVS"].SetValue(farFrustumCornerVS);
             shadowEffect.Parameters["ShadowMap"].SetValue(shadowMap);
