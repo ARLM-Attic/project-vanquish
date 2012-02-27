@@ -24,7 +24,7 @@ namespace ProjectVanquish.Renderers
         /// <summary>
         /// Shadow Map size
         /// </summary>
-        public const int SHADOWMAPSIZE = 1024;
+        public const int SHADOWMAPSIZE = 512;
 
         /// <summary>
         /// Number of splits
@@ -120,7 +120,7 @@ namespace ProjectVanquish.Renderers
             // Create the Shadow Occlusion RenderTarget
             shadowOcclusion = new RenderTarget2D(device, device.PresentationParameters.BackBufferWidth,
                                                       device.PresentationParameters.BackBufferHeight,
-                                                      false, SurfaceFormat.Color, DepthFormat.Depth24Stencil8, 0, RenderTargetUsage.DiscardContents);
+                                                      false, SurfaceFormat.Color, DepthFormat.Depth24Stencil8);
 
             // Create the Disabled Shadow Occlusion RenderTarget
             disabledShadowOcclusion = new RenderTarget2D(device, 1, 1, false, SurfaceFormat.Color, DepthFormat.Depth24Stencil8);
@@ -190,24 +190,23 @@ namespace ProjectVanquish.Renderers
         /// <param name="minZ">The min Z.</param>
         /// <param name="maxZ">The max Z.</param>
         /// <returns></returns>
-        protected OrthographicCamera CalculateFrustum(ProjectVanquish.Core.Lights.DirectionalLight light, float minZ, float maxZ)
+        protected OrthographicCamera CalculateFrustum(ProjectVanquish.Core.Lights.DirectionalLight light, ICamera camera, float minZ, float maxZ)
         {
             // Shorten the view frustum according to the shadow view distance
-            ICamera activeCamera = CameraManager.GetActiveCamera();
-            Matrix cameraMatrix = activeCamera.WorldMatrix;
-            //activeCamera.GetWorldMatrix(out cameraMatrix);
+            Matrix cameraMatrix;
+            camera.GetWorldMatrix(out cameraMatrix);
 
             for (int i = 0; i < 4; i++)
-                splitFrustumCornersVS[i] = frustumCornersVS[i + 4] * (minZ / activeCamera.FarClip);
+                splitFrustumCornersVS[i] = frustumCornersVS[i + 4] * (minZ / camera.FarClip);
 
             for (int i = 4; i < 8; i++)
-                splitFrustumCornersVS[i] = frustumCornersVS[i] * (maxZ / activeCamera.FarClip);
+                splitFrustumCornersVS[i] = frustumCornersVS[i] * (maxZ / camera.FarClip);
 
             Vector3.Transform(splitFrustumCornersVS, ref cameraMatrix, frustumCornersWS);
 
             // Position the shadow-caster camera so that it's looking at the centroid,
             // and backed up in the direction of the sunlight
-            Matrix viewMatrix = Matrix.CreateLookAt(Vector3.Zero - light.Direction * 100, Vector3.Zero, new Vector3(0, 1, 0));
+            Matrix viewMatrix = Matrix.CreateLookAt(Vector3.Zero - (light.Direction * 100), Vector3.Zero, new Vector3(0, 1, 0));
 
             // Determine the position of the frustum corners in light space
             Vector3.Transform(frustumCornersWS, ref viewMatrix, frustumCornersLS);
@@ -270,10 +269,10 @@ namespace ProjectVanquish.Renderers
         /// </summary>
         /// <param name="device">The device.</param>
         /// <param name="camera">The camera.</param>
-        public RenderTarget2D Draw(GraphicsDevice device, RenderTarget2D depthRT, SceneManager scene)
+        public RenderTarget2D Draw(GraphicsDevice device, RenderTarget2D depthRT, SceneManager scene, ICamera camera)
         {            
             // Create the Shadow Occlusion
-            RenderTarget2D shadowOcclusion = Draw(device, depthRT, scene, light);
+            RenderTarget2D shadowOcclusion = Draw(device, depthRT, scene, camera, light);
 
             return shadowOcclusion;
         }
@@ -284,7 +283,7 @@ namespace ProjectVanquish.Renderers
         /// <param name="device">The device.</param>
         /// <param name="camera">The camera.</param>
         /// <param name="light">The light.</param>
-        RenderTarget2D Draw(GraphicsDevice device, RenderTarget2D depthRT, SceneManager scene, ProjectVanquish.Core.Lights.DirectionalLight light)
+        RenderTarget2D Draw(GraphicsDevice device, RenderTarget2D depthRT, SceneManager scene, ICamera camera, ProjectVanquish.Core.Lights.DirectionalLight light)
         {
             if (isEnabled)
             {
@@ -293,13 +292,11 @@ namespace ProjectVanquish.Renderers
                 device.Clear(ClearOptions.DepthBuffer, Color.Black, 1.0f, 0);
 
                 // Get corners of the main camera's BoundingFrustum
-                Matrix cameraTransform, viewMatrix;
-                ICamera activeCamera = CameraManager.GetActiveCamera();
-                //CameraManager.GetActiveCamera().GetWorldMatrix(out cameraTransform);
-                //CameraManager.GetActiveCamera().GetViewMatrix(out viewMatrix);
-                //CameraManager.GetActiveCamera().BoundingFrustum.GetCorners(frustumCornersWS);
-                viewMatrix = activeCamera.ViewMatrix;
-                activeCamera.BoundingFrustum.GetCorners(frustumCornersWS);
+                Matrix cameraTransform, viewMatrix;                
+                camera.GetWorldMatrix(out cameraTransform);
+                camera.GetViewMatrix(out viewMatrix);
+                camera.BoundingFrustum.GetCorners(frustumCornersWS);
+
                 Vector3.Transform(frustumCornersWS, ref viewMatrix, frustumCornersVS);
 
                 for (int i = 0; i < 4; i++)
@@ -309,7 +306,7 @@ namespace ProjectVanquish.Renderers
                 // split is larger than the previous, giving the closest split the most amount
                 // of shadow detail.  
                 float N = NUMBER_OF_SPLITS;
-                float near = activeCamera.NearClip, far = activeCamera.FarClip;
+                float near = camera.NearClip, far = camera.FarClip;
                 splitDepths[0] = near;
                 splitDepths[NUMBER_OF_SPLITS] = far;
                 const float splitConstant = 0.95f;
@@ -322,12 +319,12 @@ namespace ProjectVanquish.Renderers
                 {
                     float minZ = splitDepths[i];
                     float maxZ = splitDepths[i + 1];
-                    lightCameras[i] = CalculateFrustum(light, minZ, maxZ);
+                    lightCameras[i] = CalculateFrustum(light, camera, minZ, maxZ);
                     DrawShadowMap(device, scene, i);
                 }
 
                 // Render the shadow occlusion
-                DrawShadowOcclusion(device, depthRT);
+                DrawShadowOcclusion(device, camera, depthRT);
 
                 return shadowOcclusion;
             }
@@ -348,10 +345,6 @@ namespace ProjectVanquish.Renderers
         /// <param name="splitIndex">Index of the split.</param>
         protected void DrawShadowMap(GraphicsDevice device, SceneManager scene, int splitIndex)
         {
-            device.SetRenderTarget(shadowMap);
-            //device.Clear(ClearOptions.Target, Color.White, 1.0f, 0);
-            //device.Clear(ClearOptions.DepthBuffer, Color.Black, 1.0f, 0);
-
             // Set the Viewport
             Viewport splitViewport = new Viewport();
             splitViewport.MinDepth = 0;
@@ -362,9 +355,12 @@ namespace ProjectVanquish.Renderers
             splitViewport.Y = 0;
             device.Viewport = splitViewport;
 
-            // Set up the effect
+            // Set up the Effect
             shadowEffect.CurrentTechnique = shadowOcclusionTechniques["GenerateShadowMap"];
             shadowEffect.Parameters["g_matViewProj"].SetValue(lightCameras[splitIndex].ViewProjectionMatrix);
+
+            // Apply the Effect
+            shadowEffect.CurrentTechnique.Passes[0].Apply();
 
             // Draw the models
             scene.Draw(device, shadowEffect);
@@ -375,14 +371,13 @@ namespace ProjectVanquish.Renderers
         /// </summary>
         /// <param name="device">The device.</param>
         /// <param name="depthTexture">The depth texture.</param>
-        protected void DrawShadowOcclusion(GraphicsDevice device, RenderTarget2D depthTexture)
+        protected void DrawShadowOcclusion(GraphicsDevice device, ICamera camera, RenderTarget2D depthTexture)
         {
             // Set the device to render the shadow occlusion texture
             device.SetRenderTarget(shadowOcclusion);
 
-            ICamera activeCamera = CameraManager.GetActiveCamera();
             Matrix cameraTransform;
-            //CameraManager.GetActiveCamera().GetWorldMatrix(out cameraTransform);
+            camera.GetWorldMatrix(out cameraTransform);
 
             // Determine which split a pixel belongs too
             for (int i = 0; i < NUMBER_OF_SPLITS; i++)
@@ -394,7 +389,7 @@ namespace ProjectVanquish.Renderers
 
             // Setup the shadow effect
             shadowEffect.CurrentTechnique = shadowOcclusionTechniques[(int)filteringType];
-            shadowEffect.Parameters["g_matInvView"].SetValue(Matrix.Invert(activeCamera.ViewMatrix));//cameraTransform);
+            shadowEffect.Parameters["g_matInvView"].SetValue(Matrix.Invert(cameraTransform));
             shadowEffect.Parameters["g_matLightViewProj"].SetValue(lightViewProjectionMatrices);
             shadowEffect.Parameters["g_vFrustumCornersVS"].SetValue(farFrustumCornerVS);
             shadowEffect.Parameters["g_vClipPlanes"].SetValue(lightClipPlanes);

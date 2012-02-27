@@ -20,7 +20,7 @@ namespace ProjectVanquish.Renderers
         private SpriteBatch spriteBatch;
         private SceneManager sceneManager;
         private Model sphere;
-        private ShadowRenderer shadowRenderer;
+        private CascadeShadowRenderer shadowRenderer;
         private SSAORenderer ssaoRenderer;
         private Bloom bloom; 
         #endregion
@@ -48,7 +48,7 @@ namespace ProjectVanquish.Renderers
             colorRT = new RenderTarget2D(device, backbufferWidth, backbufferHeight, false, SurfaceFormat.Color, DepthFormat.Depth24);
             normalRT = new RenderTarget2D(device, backbufferWidth, backbufferHeight, false, SurfaceFormat.Color, DepthFormat.None);
             depthRT = new RenderTarget2D(device, backbufferWidth, backbufferHeight, false, SurfaceFormat.Single, DepthFormat.Depth24Stencil8);
-            linearDepthRT = new RenderTarget2D(device, backbufferWidth, backbufferHeight, false, SurfaceFormat.Single, DepthFormat.Depth24Stencil8);
+            linearDepthRT = new RenderTarget2D(device, backbufferWidth, backbufferHeight, false, SurfaceFormat.Single, DepthFormat.Depth24Stencil8, 0, RenderTargetUsage.DiscardContents);
             lightRT = new RenderTarget2D(device, backbufferWidth, backbufferHeight, false, SurfaceFormat.Color, DepthFormat.None, 0, RenderTargetUsage.PreserveContents);
             sceneRT = new RenderTarget2D(device, backbufferWidth, backbufferHeight, false, SurfaceFormat.Color, DepthFormat.Depth24Stencil8);
             bloomRT = new RenderTarget2D(device, backbufferWidth, backbufferHeight, false, SurfaceFormat.Color, DepthFormat.Depth24Stencil8);
@@ -67,7 +67,7 @@ namespace ProjectVanquish.Renderers
 
             sceneManager = new SceneManager(device, content);
 
-            shadowRenderer = new ShadowRenderer(device, content);
+            shadowRenderer = new CascadeShadowRenderer(device, content);
 
             ssaoRenderer = new SSAORenderer(device, content, backbufferWidth, backbufferHeight);
 
@@ -137,8 +137,8 @@ namespace ProjectVanquish.Renderers
             ClearGBuffer();
             sceneManager.Draw();
             ResolveGBuffer();
-            DrawDepth();
-            var shadowOcclusion = shadowRenderer.Draw(device, linearDepthRT, sceneManager);
+            DrawDepth(CameraManager.GetActiveCamera());
+            var shadowOcclusion = shadowRenderer.Draw(device, linearDepthRT, sceneManager, CameraManager.GetActiveCamera());
             DrawLights();
             CombineGBuffer(ref shadowOcclusion);
             //ssaoRenderer.Draw(device, renderTargets, sceneRT, sceneManager, null);
@@ -155,7 +155,7 @@ namespace ProjectVanquish.Renderers
         /// <summary>
         /// Draws the depth.
         /// </summary>
-        void DrawDepth()
+        void DrawDepth(BaseCamera camera)
         {
             // Set the Depth RenderTarget
             device.SetRenderTarget(linearDepthRT);
@@ -166,10 +166,11 @@ namespace ProjectVanquish.Renderers
 
             // Set the Depth effect
             depthEffect.CurrentTechnique = depthEffect.Techniques["LinearDepth"];
-            depthEffect.Parameters["g_matView"].SetValue(CameraManager.GetActiveCamera().ViewMatrix);
-            depthEffect.Parameters["g_matProj"].SetValue(CameraManager.GetActiveCamera().ProjectionMatrix);
-            depthEffect.Parameters["g_fFarClip"].SetValue(CameraManager.GetActiveCamera().FarClip);
+            depthEffect.Parameters["g_matView"].SetValue(camera.ViewMatrix);
+            depthEffect.Parameters["g_matProj"].SetValue(camera.ProjectionMatrix);
+            depthEffect.Parameters["g_fFarClip"].SetValue(camera.FarClip);
 
+            // Apply the Effect
             depthEffect.CurrentTechnique.Passes[0].Apply();
 
             // Draw the Models

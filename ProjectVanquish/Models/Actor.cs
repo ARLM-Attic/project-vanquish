@@ -8,6 +8,7 @@ namespace ProjectVanquish.Models
     public class Actor : IEntity, IRenderable
     {
         #region Fields
+        Matrix[] bones;
         Model model;
         Vector3 position, rotation, scale;
         #endregion
@@ -23,6 +24,7 @@ namespace ProjectVanquish.Models
             position = Vector3.Zero;
             rotation = Vector3.Zero;
             scale = Vector3.One;
+            bones = new Matrix[model.Bones.Count];
         }
 
         /// <summary>
@@ -36,6 +38,7 @@ namespace ProjectVanquish.Models
             this.position = position;
             rotation = Vector3.Zero;
             scale = Vector3.One;
+            bones = new Matrix[model.Bones.Count];
         }
 
         /// <summary>
@@ -50,6 +53,7 @@ namespace ProjectVanquish.Models
             this.position = position;
             this.rotation = rotation;
             scale = Vector3.One;
+            bones = new Matrix[model.Bones.Count];
         }
 
         /// <summary>
@@ -65,6 +69,7 @@ namespace ProjectVanquish.Models
             this.position = position;
             this.rotation = rotation;
             this.scale = scale;
+            bones = new Matrix[model.Bones.Count];
         } 
         #endregion
 
@@ -164,27 +169,33 @@ namespace ProjectVanquish.Models
             for (int i = 0; i < model.Meshes.Count; i++)
             {
                 ModelMesh mesh = model.Meshes[i];
-
-                effect.Parameters["g_matWorld"].SetValue(World);
+                Matrix world;
+                world = World;
+                effect.Parameters["g_matWorld"].SetValue(Matrix.CreateScale(scale) * World);
+                
                 Matrix transpose, inverseTranspose;
-                Matrix world = World;
                 Matrix.Transpose(ref world, out transpose);
                 Matrix.Invert(ref transpose, out inverseTranspose);
                 effect.Parameters["g_matWorldIT"].SetValue(inverseTranspose);
 
-                effect.Techniques[0].Passes[0].Apply();
-
-                for (int j = 0; j < mesh.MeshParts.Count; j++)
+                foreach (EffectPass pass in effect.CurrentTechnique.Passes)
                 {
-                    ModelMeshPart part = mesh.MeshParts[j];
-                    device.SetVertexBuffer(part.VertexBuffer);
-                    device.Indices = part.IndexBuffer;
-                    device.DrawIndexedPrimitives(PrimitiveType.TriangleList, 0, 0, part.NumVertices, part.StartIndex, part.PrimitiveCount);
+                    foreach (ModelMeshPart part in mesh.MeshParts)
+                    {
+                        // Set VertexBuffer
+                        device.SetVertexBuffer(part.VertexBuffer, part.VertexOffset);
+
+                        // Set IndexBuffer
+                        device.Indices = part.IndexBuffer;
+
+                        // Apply the Effect
+                        pass.Apply();
+
+                        // Draw the Primitives
+                        device.DrawIndexedPrimitives(PrimitiveType.TriangleList, 0, 0, part.NumVertices, part.StartIndex, part.PrimitiveCount);
+                    }
                 }
             }
-
-            device.SetVertexBuffer(null);
-            device.Indices = null;
         }
         #endregion
     }

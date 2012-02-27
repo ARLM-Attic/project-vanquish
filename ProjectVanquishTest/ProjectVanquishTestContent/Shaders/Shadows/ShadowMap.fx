@@ -28,10 +28,10 @@ float3		g_vFrustumCornersVS [4];
 
 static const float BIAS = 0.01f;
 
-texture DepthTexture;
+texture DepthMap;
 sampler2D DepthTextureSampler = sampler_state
 {
-    Texture = <DepthTexture>;
+    Texture = <DepthMap>;
     MinFilter = point;
     MagFilter = point;
     MipFilter = none;
@@ -187,7 +187,7 @@ float4 ShadowTermPS(	in float2 in_vTexCoord			: TEXCOORD0,
 
 technique GenerateShadowMap
 {
-	pass p0
+	pass Pass1
 	{
 		ZWriteEnable = true;
 		ZEnable = true;		
@@ -202,7 +202,7 @@ technique GenerateShadowMap
 
 technique CreateShadowTerm2x2PCF
 {
-    pass p0
+    pass Pass1
     {
 		ZWriteEnable = false;
 		ZEnable = false;
@@ -216,7 +216,7 @@ technique CreateShadowTerm2x2PCF
 
 technique CreateShadowTerm3x3PCF
 {
-    pass p0
+    pass Pass1
     {
 		ZWriteEnable = false;
 		ZEnable = false;
@@ -230,7 +230,7 @@ technique CreateShadowTerm3x3PCF
 
 technique CreateShadowTerm5x5PCF
 {
-    pass p0
+    pass Pass1
     {
 		ZWriteEnable = false;
 		ZEnable = false;
@@ -244,7 +244,7 @@ technique CreateShadowTerm5x5PCF
 
 technique CreateShadowTerm7x7PCF
 {
-    pass p0
+    pass Pass1
     {
 		ZWriteEnable = false;
 		ZEnable = false;

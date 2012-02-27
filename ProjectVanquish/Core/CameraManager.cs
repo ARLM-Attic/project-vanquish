@@ -6,7 +6,7 @@ namespace ProjectVanquish.Core
 {
     public class CameraManager
     {
-        private static Dictionary<string, ICamera> cameras;
+        private static Dictionary<string, BaseCamera> cameras;
         private static string activeCamera;
 
         /// <summary>
@@ -14,9 +14,9 @@ namespace ProjectVanquish.Core
         /// </summary>
         /// <param name="name">The name.</param>
         /// <param name="camera">The camera.</param>
-        public CameraManager(string name, ICamera camera)
+        public CameraManager(string name, BaseCamera camera)
         {
-            cameras = new Dictionary<string, ICamera>();
+            cameras = new Dictionary<string, BaseCamera>();
             if (camera == null || String.IsNullOrEmpty(name))
                 throw new Exception("Camera or name cannot be null");
 
@@ -29,7 +29,7 @@ namespace ProjectVanquish.Core
         /// </summary>
         /// <param name="name">The name.</param>
         /// <param name="camera">The camera.</param>
-        public static void AddCamera(string name, ICamera camera)
+        public static void AddCamera(string name, BaseCamera camera)
         {
             if (camera == null || String.IsNullOrEmpty(name))
                 throw new Exception("Camera or name cannot be null");
@@ -41,12 +41,12 @@ namespace ProjectVanquish.Core
         /// Gets the active camera.
         /// </summary>
         /// <returns></returns>
-        public static ICamera GetActiveCamera()
+        public static BaseCamera GetActiveCamera()
         {
             if (String.IsNullOrEmpty(activeCamera))
                 throw new Exception("No camera is currently active");
 
-            return cameras[activeCamera];
+            return (BaseCamera)cameras[activeCamera];
         }
 
         /// <summary>

@@ -41,8 +41,8 @@ technique LinearDepth
 {
     pass Pass0
     {
-        VertexShader = compile vs_3_0 DepthVS();
-        PixelShader = compile ps_3_0 DepthPS();
+        VertexShader = compile vs_2_0 DepthVS();
+        PixelShader = compile ps_2_0 DepthPS();
 
 		ZEnable = true;
         ZWriteEnable = true;
