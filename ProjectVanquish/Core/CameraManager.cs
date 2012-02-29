@@ -6,9 +6,19 @@ namespace ProjectVanquish.Core
 {
     public class CameraManager
     {
+        #region Fields
+        /// <summary>
+        /// Dictionary of Cameras
+        /// </summary>
         private static Dictionary<string, BaseCamera> cameras;
-        private static string activeCamera;
 
+        /// <summary>
+        /// Active Camera Name
+        /// </summary>
+        private static string activeCamera; 
+        #endregion
+
+        #region Constructor
         /// <summary>
         /// Initializes a new instance of the <see cref="CameraManager"/> class.
         /// </summary>
@@ -22,8 +32,10 @@ namespace ProjectVanquish.Core
 
             AddCamera(name, camera);
             SetActiveCamera(name);
-        }
+        } 
+        #endregion
 
+        #region Members
         /// <summary>
         /// Adds the camera.
         /// </summary>
@@ -74,6 +86,7 @@ namespace ProjectVanquish.Core
                 throw new ArgumentOutOfRangeException("No camera exists with that name.");
 
             activeCamera = name;
-        }
+        } 
+        #endregion
     }
 }

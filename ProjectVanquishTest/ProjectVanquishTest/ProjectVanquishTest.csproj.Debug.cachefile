@@ -31,3 +31,14 @@ Content\Models\Ground.xnb
 Content\Models\ship1.xnb
 Content\Models\ground_diffuse_0.xnb
 Content\Models\ship1_c_0.xnb
+Content\Shaders\Sky\Sky.xnb
+Content\Models\skydome.xnb
+Content\Textures\SkyDay.xnb
+Content\Textures\SkyNight.xnb
+Content\Textures\Sunset.xnb
+Content\Shaders\Sky\scatter.xnb
+Content\Shaders\Sky\SNoise.xnb
+Content\Shaders\Sky\Textured.xnb
+Content\Textures\moon.xnb
+Content\Textures\moonglow.xnb
+Content\Textures\starfield.xnb

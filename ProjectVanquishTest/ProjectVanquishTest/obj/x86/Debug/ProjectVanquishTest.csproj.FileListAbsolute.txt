@@ -42,3 +42,14 @@ C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Con
 C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Models\ship1_c_0.xnb
 C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\BEPUphysics.dll
 C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\BEPUphysics.xml
+C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Shaders\Sky\Sky.xnb
+C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Models\skydome.xnb
+C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Textures\SkyDay.xnb
+C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Textures\SkyNight.xnb
+C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Textures\Sunset.xnb
+C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Shaders\Sky\scatter.xnb
+C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Shaders\Sky\SNoise.xnb
+C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Shaders\Sky\Textured.xnb
+C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Textures\moon.xnb
+C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Textures\moonglow.xnb
+C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Textures\starfield.xnb

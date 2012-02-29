@@ -26,7 +26,7 @@
       <Processor>EffectProcessor</Processor>
       <Options>None</Options>
       <Output>C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Shaders\GBuffer\Final.xnb</Output>
-      <Time>2012-02-27T13:48:14.513605+00:00</Time>
+      <Time>2012-02-27T17:17:41.997605+00:00</Time>
     </Item>
     <Item>
       <Source>Shaders\GBuffer\RenderGBuffer.fx</Source>
@@ -80,7 +80,7 @@
       <Processor>EffectProcessor</Processor>
       <Options>None</Options>
       <Output>C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Shaders\SSAO\SSAO.xnb</Output>
-      <Time>2012-02-22T09:00:13.4890889+00:00</Time>
+      <Time>2012-02-29T10:54:51.818429+00:00</Time>
     </Item>
     <Item>
       <Source>Shaders\SSAO\Blur.fx</Source>
@@ -463,6 +463,116 @@
       <Options>None</Options>
       <Output>C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Models\ship1_c_0.xnb</Output>
       <Time>2007-08-10T11:07:46+01:00</Time>
+    </Item>
+    <Item>
+      <Source>Shaders\Sky\Sky.fx</Source>
+      <Name>Shaders\Sky\Sky</Name>
+      <Importer>EffectImporter</Importer>
+      <Processor>EffectProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Shaders\Sky\Sky.xnb</Output>
+      <Time>2012-02-29T11:16:15.4087752+00:00</Time>
+    </Item>
+    <Item>
+      <Source>Models\skydome.fbx</Source>
+      <Name>Models\skydome</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Models\skydome.xnb</Output>
+      <Time>2012-02-27T16:41:03.510605+00:00</Time>
+      <Dependency>
+        <Key>C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\obj\x86\Debug\Models\skydome_0.xml</Key>
+        <Value>2012-02-27T16:42:23.727605+00:00</Value>
+      </Dependency>
+    </Item>
+    <Item>
+      <Source>Models\skydome.fbx</Source>
+      <Importer>FbxImporter</Importer>
+      <Options>IntermediateFile, DontCacheImportedData</Options>
+      <Output>C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\obj\x86\Debug\Models\skydome_0.xml</Output>
+      <Time>2012-02-27T16:41:03.510605+00:00</Time>
+    </Item>
+    <Item>
+      <Source>Textures\SkyDay.png</Source>
+      <Name>Textures\SkyDay</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Textures\SkyDay.xnb</Output>
+      <Time>2012-02-27T16:42:38.244605+00:00</Time>
+    </Item>
+    <Item>
+      <Source>Textures\SkyNight.png</Source>
+      <Name>Textures\SkyNight</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Textures\SkyNight.xnb</Output>
+      <Time>2012-02-27T16:42:38.248605+00:00</Time>
+    </Item>
+    <Item>
+      <Source>Textures\Sunset.png</Source>
+      <Name>Textures\Sunset</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Textures\Sunset.xnb</Output>
+      <Time>2012-02-27T16:42:38.252605+00:00</Time>
+    </Item>
+    <Item>
+      <Source>Shaders\Sky\scatter.fx</Source>
+      <Name>Shaders\Sky\scatter</Name>
+      <Importer>EffectImporter</Importer>
+      <Processor>EffectProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Shaders\Sky\scatter.xnb</Output>
+      <Time>2012-02-29T12:15:29.1661154+00:00</Time>
+    </Item>
+    <Item>
+      <Source>Shaders\Sky\SNoise.fx</Source>
+      <Name>Shaders\Sky\SNoise</Name>
+      <Importer>EffectImporter</Importer>
+      <Processor>EffectProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Shaders\Sky\SNoise.xnb</Output>
+      <Time>2012-02-29T12:23:09.6031545+00:00</Time>
+    </Item>
+    <Item>
+      <Source>Shaders\Sky\Textured.fx</Source>
+      <Name>Shaders\Sky\Textured</Name>
+      <Importer>EffectImporter</Importer>
+      <Processor>EffectProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Shaders\Sky\Textured.xnb</Output>
+      <Time>2012-02-29T12:15:53.4405426+00:00</Time>
+    </Item>
+    <Item>
+      <Source>Textures\moon.tga</Source>
+      <Name>Textures\moon</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Textures\moon.xnb</Output>
+      <Time>2012-02-29T12:14:56.3678359+00:00</Time>
+    </Item>
+    <Item>
+      <Source>Textures\moonglow.tga</Source>
+      <Name>Textures\moonglow</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Textures\moonglow.xnb</Output>
+      <Time>2012-02-29T12:14:56.3758367+00:00</Time>
+    </Item>
+    <Item>
+      <Source>Textures\starfield.png</Source>
+      <Name>Textures\starfield</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Textures\starfield.xnb</Output>
+      <Time>2012-02-29T12:14:56.3798371+00:00</Time>
     </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>

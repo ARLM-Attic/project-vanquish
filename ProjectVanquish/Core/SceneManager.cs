@@ -122,7 +122,7 @@ namespace ProjectVanquish.Core
             device.RasterizerState = RasterizerState.CullCounterClockwise;
             device.BlendState = BlendState.Opaque;
 
-            foreach (Actor actor in models)
+            foreach (Actor actor in models.Where(a => a.BoundingSphere.Intersects(CameraManager.GetActiveCamera().BoundingFrustum)))
                 actor.Draw();
         }
 

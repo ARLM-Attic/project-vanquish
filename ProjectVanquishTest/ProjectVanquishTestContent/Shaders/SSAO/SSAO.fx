@@ -56,12 +56,12 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
 		float4(0.534186, 	0.71511, 	-0.115167,	0.0 ),
 		float4(-0.87866, 	0.157139, 	-0.115167,	0.0 ),
 		float4(0.140679, 	-0.475516, 	-0.0639818,	0.0 ),
-		float4(-0.207641, 	0.414286, 	0.187755,	0.0 ),
-		float4(-0.277332, 	-0.371262, 	0.187755,	0.0 ),
-		float4(0.63864, 	-0.114214, 	0.262857,	0.0 ),
-		float4(-0.184051, 	0.622119, 	0.262857,	0.0 )
+		float4(-0.0796121, 	0.158842, 	-0.677075,	0.0 ),
+		float4(-0.0759516, 	-0.101676, 	-0.483625,	0.0 ),
+		float4(0.12493, 	-0.0223423,	-0.483625,	0.0 ),
+		float4(-0.0720074, 	0.243395, 	-0.967251,	0.0 )
 	};
-
+	
 	//Normalize the input ViewDirection
 	float3 ViewDirection = normalize(input.ViewDirection);
 
@@ -80,7 +80,7 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
 	//No assymetry in HLSL, workaround
 	float finalColor = 0.0f;
 	
-	//SSAO loop
+	//SSAO loop - Pass 1
 	for (int i = 0; i < NUMSAMPLES; i++)
 	{
 		//Calculate the Reflection Ray

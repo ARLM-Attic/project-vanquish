@@ -389,7 +389,7 @@ namespace ProjectVanquish.Renderers
 
             // Setup the shadow effect
             shadowEffect.CurrentTechnique = shadowOcclusionTechniques[(int)filteringType];
-            shadowEffect.Parameters["g_matInvView"].SetValue(Matrix.Invert(cameraTransform));
+            shadowEffect.Parameters["g_matInvView"].SetValue(cameraTransform);
             shadowEffect.Parameters["g_matLightViewProj"].SetValue(lightViewProjectionMatrices);
             shadowEffect.Parameters["g_vFrustumCornersVS"].SetValue(farFrustumCornerVS);
             shadowEffect.Parameters["g_vClipPlanes"].SetValue(lightClipPlanes);

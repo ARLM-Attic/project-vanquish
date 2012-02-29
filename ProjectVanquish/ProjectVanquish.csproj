@@ -83,6 +83,8 @@
     <Compile Include="Renderers\QuadRenderer.cs" />
     <Compile Include="Renderers\ShadowRenderer.cs" />
     <Compile Include="Renderers\SSAORenderer.cs" />
+    <Compile Include="Sky\SkyDome.cs" />
+    <Compile Include="Sky\SkyDomeParameters.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

@@ -84,6 +84,15 @@ namespace ProjectVanquish.Models
         }
 
         /// <summary>
+        /// Gets the bounding sphere.
+        /// </summary>
+        /// <value>The bounding sphere.</value>
+        public BoundingSphere BoundingSphere
+        {
+            get { return new BoundingSphere(Position, model.Meshes[0].BoundingSphere.Radius); }
+        }
+
+        /// <summary>
         /// Gets the model.
         /// </summary>
         /// <value>The model.</value>

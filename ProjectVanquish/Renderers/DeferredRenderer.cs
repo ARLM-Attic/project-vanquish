@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 using ProjectVanquish.Cameras;
 using ProjectVanquish.Core;
 using ProjectVanquish.Renderers.PostProcessing;
+using ProjectVanquish.Sky;
 
 namespace ProjectVanquish.Renderers
 {
@@ -22,7 +23,8 @@ namespace ProjectVanquish.Renderers
         private Model sphere;
         private CascadeShadowRenderer shadowRenderer;
         private SSAORenderer ssaoRenderer;
-        private Bloom bloom; 
+        private Bloom bloom;
+        private SkyDome skyDome;
         #endregion
 
         #region Constructor
@@ -74,6 +76,8 @@ namespace ProjectVanquish.Renderers
             bloom = new Bloom(device, content);
 
             sphere = content.Load<Model>("Models/Sphere");
+
+            skyDome = new SkyDome(device, content);
         } 
         #endregion
 
@@ -98,14 +102,15 @@ namespace ProjectVanquish.Renderers
         /// <summary>
         /// Combines the G buffer.
         /// </summary>
-        void CombineGBuffer(ref RenderTarget2D shadowOcclusion)
+        void CombineGBuffer()//ref RenderTarget2D shadowOcclusion)
         {
             // Set Scene RenderTarget
-            //device.SetRenderTarget(null);
-
+            device.SetRenderTarget(sceneRT);
+            
+            // Combine the Final scene
             finalEffect.Parameters["colorMap"].SetValue(colorRT);
             finalEffect.Parameters["lightMap"].SetValue(lightRT);
-            finalEffect.Parameters["shadowMap"].SetValue(shadowOcclusion);
+            //finalEffect.Parameters["shadowMap"].SetValue(shadowRenderer.ShadowOcclusion);
             finalEffect.Parameters["halfPixel"].SetValue(halfPixel);
             finalEffect.Techniques[0].Passes[0].Apply();
             fullscreenQuad.Draw();
@@ -135,13 +140,16 @@ namespace ProjectVanquish.Renderers
         {
             SetGBuffer();
             ClearGBuffer();
+            if (skyDome != null)
+                skyDome.Draw(device, gameTime);
+            
             sceneManager.Draw();
             ResolveGBuffer();
-            DrawDepth(CameraManager.GetActiveCamera());
-            var shadowOcclusion = shadowRenderer.Draw(device, linearDepthRT, sceneManager, CameraManager.GetActiveCamera());
-            DrawLights();
-            CombineGBuffer(ref shadowOcclusion);
-            //ssaoRenderer.Draw(device, renderTargets, sceneRT, sceneManager, null);
+            //DrawDepth(CameraManager.GetActiveCamera());
+            //var shadowOcclusion = shadowRenderer.Draw(device, linearDepthRT, sceneManager, CameraManager.GetActiveCamera());            
+            DrawLights();            
+            CombineGBuffer();//ref shadowOcclusion);            
+            ssaoRenderer.Draw(device, renderTargets, sceneRT, sceneManager, null);
             //if (UseSSAO)
             //{
             //    ssaoRenderer.Draw(device, renderTargets, sceneRT, sceneManager, bloomRT);
@@ -149,7 +157,7 @@ namespace ProjectVanquish.Renderers
             //}
             //else
             //    bloom.Draw(device, sceneRT);
-            DrawDebug(ref shadowOcclusion);
+            DrawDebug();//ref shadowOcclusion);
         }
 
         /// <summary>
@@ -185,14 +193,14 @@ namespace ProjectVanquish.Renderers
             device.SetRenderTarget(lightRT);
             device.Clear(Color.Transparent);
             device.BlendState = BlendState.AlphaBlend;
-            device.DepthStencilState = DepthStencilState.None;
-
+            device.DepthStencilState = DepthStencilState.Default;
+            
             // Draw lights
             DrawDirectionalLight(new Vector3(0, -1, 0), Color.White);
 
             DrawPointLight(new Vector3(-5, 1, 1), Color.Gold, 10, 1);
             DrawPointLight(new Vector3(0, 1, 1), Color.Gold, 10, 1);
-            DrawPointLight(new Vector3(5, 1, 1), Color.Gold, 10, 1);
+            DrawPointLight(new Vector3(5, 1, 1), Color.Gold, 10, 1);         
 
             device.BlendState = BlendState.Opaque;
             device.DepthStencilState = DepthStencilState.Default;
@@ -214,7 +222,7 @@ namespace ProjectVanquish.Renderers
             directionalLightEffect.Parameters["Color"].SetValue(color.ToVector3());
             directionalLightEffect.Parameters["cameraPosition"].SetValue(CameraManager.GetActiveCamera().Position);
             directionalLightEffect.Parameters["InvertViewProjection"].SetValue(Matrix.Invert(CameraManager.GetActiveCamera().ViewMatrix
-                                                                                            * CameraManager.GetActiveCamera().ProjectionMatrix));
+                                                                                           * CameraManager.GetActiveCamera().ProjectionMatrix));
             directionalLightEffect.Parameters["halfPixel"].SetValue(halfPixel);
             directionalLightEffect.Techniques[0].Passes[0].Apply();
             fullscreenQuad.Draw();
@@ -252,7 +260,7 @@ namespace ProjectVanquish.Renderers
             // Parameters for specular computations
             pointLightEffect.Parameters["cameraPosition"].SetValue(CameraManager.GetActiveCamera().Position);
             pointLightEffect.Parameters["InvertViewProjection"].SetValue(Matrix.Invert(CameraManager.GetActiveCamera().ViewMatrix
-                                                                                      * CameraManager.GetActiveCamera().ProjectionMatrix));
+                                                                                     * CameraManager.GetActiveCamera().ProjectionMatrix));
 
             // Size of a halfpixel, for texture coordinates alignment
             pointLightEffect.Parameters["halfPixel"].SetValue(halfPixel);
@@ -286,7 +294,7 @@ namespace ProjectVanquish.Renderers
         /// <summary>
         /// Draws the debug output.
         /// </summary>
-        public void DrawDebug(ref RenderTarget2D shadowOcclusion)
+        public void DrawDebug()//ref RenderTarget2D shadowOcclusion)
         {
             int width = 128;
             int height = 128;
@@ -301,10 +309,10 @@ namespace ProjectVanquish.Renderers
             spriteBatch.Draw((Texture2D)normalRT, rect, Color.White);
             rect.X += width;
             spriteBatch.Draw((Texture2D)depthRT, rect, Color.White);
-            rect.X += width;
-            spriteBatch.Draw((Texture2D)shadowRenderer.ShadowMap, rect, Color.White);
-            rect.X += width;
-            spriteBatch.Draw((Texture2D)shadowRenderer.ShadowOcclusion, rect, Color.White);
+            //rect.X += width;
+            //spriteBatch.Draw((Texture2D)shadowRenderer.ShadowMap, rect, Color.White);
+            //rect.X += width;
+            //spriteBatch.Draw((Texture2D)shadowRenderer.ShadowOcclusion, rect, Color.White);
             spriteBatch.End();
         }
 
@@ -315,6 +323,8 @@ namespace ProjectVanquish.Renderers
         public void Update(GameTime gameTime)
         {
             sceneManager.Update(gameTime);
+            if (skyDome != null)
+                skyDome.Update(gameTime);
         } 
         #endregion
     }
