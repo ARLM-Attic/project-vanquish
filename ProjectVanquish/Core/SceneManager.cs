@@ -130,8 +130,12 @@ namespace ProjectVanquish.Core
 
             foreach (Actor actor in models)
             {
+                occlusionQuery.Begin();
                 if (CameraManager.GetActiveCamera().BoundingFrustum.Intersects(actor.BoundingSphere))
                     actor.Draw();
+                occlusionQuery.End();
+
+                while (!occlusionQuery.IsComplete) ;
             }
         }
 

@@ -12,7 +12,6 @@ Content\Shaders\SSAO\Final.xnb
 Content\Shaders\PostProcessing\Bloom\Bloom.xnb
 Content\Shaders\PostProcessing\Bloom\Blur.xnb
 Content\Shaders\PostProcessing\Bloom\Final.xnb
-Content\Shaders\Sky\Sky.xnb
 Content\Shaders\Sky\scatter.xnb
 Content\Shaders\Sky\SNoise.xnb
 Content\Shaders\Sky\Textured.xnb

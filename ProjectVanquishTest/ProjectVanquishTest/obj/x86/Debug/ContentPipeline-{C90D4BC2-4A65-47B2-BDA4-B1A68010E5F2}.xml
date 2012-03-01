@@ -26,7 +26,7 @@
       <Processor>EffectProcessor</Processor>
       <Options>None</Options>
       <Output>C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Shaders\GBuffer\Final.xnb</Output>
-      <Time>2012-02-27T17:17:41.997605+00:00</Time>
+      <Time>2012-03-01T16:49:47.5398246+00:00</Time>
     </Item>
     <Item>
       <Source>Shaders\GBuffer\RenderGBuffer.fx</Source>
