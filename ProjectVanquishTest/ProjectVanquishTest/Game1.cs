@@ -45,6 +45,8 @@ namespace ProjectVanquishTest
             // TODO: Add your initialization logic here            
             renderer = new DeferredRenderer(GraphicsDevice, Content);
             renderer.UseSSAO = true;
+
+            renderer.Sky.Theta = 2.4f;
             base.Initialize();
         }
 
@@ -111,6 +113,12 @@ namespace ProjectVanquishTest
 
             if (keyboardState.IsKeyUp(Keys.T) && lastKeyboardState.IsKeyDown(Keys.T))
                 renderer.UseSSAO = !renderer.UseSSAO;
+
+            if (keyboardState.IsKeyDown(Keys.Up))
+                renderer.Sky.Theta += 0.4f * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            
+            if (keyboardState.IsKeyDown(Keys.Down))
+                renderer.Sky.Theta -= 0.4f * (float)gameTime.ElapsedGameTime.TotalSeconds;
 
             if (lastMouseX == -1)
                 lastMouseX = mouseState.X;

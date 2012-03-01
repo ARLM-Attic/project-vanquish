@@ -113,7 +113,7 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
 
 technique Technique0
 {
-    pass Pass0
+    pass Pass1
     {
         VertexShader = compile vs_2_0 VertexShaderFunction();
         PixelShader = compile ps_2_0 PixelShaderFunction();

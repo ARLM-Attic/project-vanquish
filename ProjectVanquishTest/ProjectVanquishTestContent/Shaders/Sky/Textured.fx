@@ -6,13 +6,12 @@ float4x4 WorldViewProjection;
 float alpha;
 
 texture Texture;
-
 sampler texSampler = sampler_state
 {
 	Texture = <Texture>;
-	MinFilter = Linear;
-	MipFilter = Linear;
-	MagFilter = Linear;
+	MinFilter = LINEAR;
+	MipFilter = LINEAR;
+	MagFilter = LINEAR;
 	ADDRESSU = WRAP;
 	ADDRESSV = WRAP;
 };

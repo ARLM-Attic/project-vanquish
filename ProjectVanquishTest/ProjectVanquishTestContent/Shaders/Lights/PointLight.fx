@@ -136,7 +136,7 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
     return attenuation * lightIntensity * float4(diffuseLight.rgb,specularLight);
 }
 
-technique Technique1
+technique PointLight
 {
     pass Pass1
     {

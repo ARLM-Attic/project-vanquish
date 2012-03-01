@@ -64,7 +64,7 @@ float4 PixelShaderFunction(float2 texCoord : TEXCOORD0) : COLOR0
 
 technique BloomCombine
 {
-    pass P0
+    pass Pass1
     {
 		// A post process shader only needs a pixel shader.
         PixelShader = compile ps_3_0 PixelShaderFunction();

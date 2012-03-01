@@ -25,10 +25,12 @@ namespace ProjectVanquish.Sky
     public class SkyDome
     {
         #region Fields
+        GraphicsDevice device;
+
         /// <summary>
         /// Theta
         /// </summary>
-        private float theta;
+        private float theta = 2.4f;
 
         /// <summary>
         /// Phi
@@ -48,7 +50,7 @@ namespace ProjectVanquish.Sky
         /// <summary>
         /// Textures
         /// </summary>
-        Texture2D mieTex, rayleighTex, moonTex, glowTex, starsTex, permTex, gradTex;
+        Texture2D moonTex, glowTex, starsTex, permTex, mieTex, rayleighTex;
 
         /// <summary>
         /// RenderTargets
@@ -83,6 +85,48 @@ namespace ProjectVanquish.Sky
         private float cloudCover;
         private float cloudSharpness;
         private float numTiles;
+        #endregion
+
+        #region Contructor
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SkyDome"/> class.
+        /// </summary>
+        /// <param name="game">The game.</param>
+        /// <param name="camera">The camera.</param>
+        public SkyDome(GraphicsDevice device, ContentManager content)
+        {
+            this.device = device;
+            parameters = new SkyDomeParameters();
+
+            quad = new QuadRenderer(device);
+
+            DomeN = 32;
+
+            GeneratePermTex();
+
+            // You can use SurfaceFormat.Color to increase performance / reduce quality
+            mieRT = new RenderTarget2D(device, 128, 64, false, SurfaceFormat.Color, DepthFormat.None);
+            rayleighRT = new RenderTarget2D(device, 128, 64, false, SurfaceFormat.Color, DepthFormat.None);
+
+            // Clouds constants
+            inverseCloudVelocity = 16.0f;
+            CloudCover = -0.1f;
+            CloudSharpness = 0.5f;
+            numTiles = 16.0f;
+
+            // Load Effects
+            scatterEffect = content.Load<Effect>("Shaders/Sky/scatter");
+            texturedEffect = content.Load<Effect>("Shaders/Sky/Textured");
+            noiseEffect = content.Load<Effect>("Shaders/Sky/SNoise");
+
+            // Load Textures
+            moonTex = content.Load<Texture2D>("Textures/moon");
+            glowTex = content.Load<Texture2D>("Textures/moonglow");
+            starsTex = content.Load<Texture2D>("Textures/starfield");
+
+            GenerateDome();
+            GenerateMoon();
+        }
         #endregion
 
         #region Properties
@@ -133,66 +177,24 @@ namespace ProjectVanquish.Sky
         /// <summary>
         /// Gets/Sets CloudSharpness value
         /// </summary>
-        public float NumTiles { get { return numTiles; } set { numTiles = value; } }
+        public float NumberOfTiles { get { return numTiles; } set { numTiles = value; } }
 
         #endregion
-
-        #region Contructor
-        /// <summary>
-        /// Initializes a new instance of the <see cref="SkyDome"/> class.
-        /// </summary>
-        /// <param name="game">The game.</param>
-        /// <param name="camera">The camera.</param>
-        public SkyDome(GraphicsDevice device, ContentManager content, bool useRealTime = false)
-        {
-            realTime = useRealTime;
-            parameters = new SkyDomeParameters();
-
-            quad = new QuadRenderer(device);
-
-            DomeN = 32;
-
-            GeneratePermTex(device);
-
-            // You can use SurfaceFormat.Color to increase performance / reduce quality
-            mieRT = new RenderTarget2D(device, 128, 64, false, SurfaceFormat.Color, DepthFormat.None);
-            rayleighRT = new RenderTarget2D(device, 128, 64, false, SurfaceFormat.Color, DepthFormat.None);
-
-            // Clouds constants
-            inverseCloudVelocity = 16.0f;
-            CloudCover = -0.1f;
-            CloudSharpness = 0.5f;
-            numTiles = 16.0f;
-
-            // Load Effects
-            scatterEffect = content.Load<Effect>("Shaders/Sky/scatter");
-            texturedEffect = content.Load<Effect>("Shaders/Sky/Textured");
-            noiseEffect = content.Load<Effect>("Shaders/Sky/SNoise");
-
-            // Load Textures
-            moonTex = content.Load<Texture2D>("Textures/moon");
-            glowTex = content.Load<Texture2D>("Textures/moonglow");
-            starsTex = content.Load<Texture2D>("Textures/starfield");
-
-            GenerateDome();
-            GenerateMoon();
-        }
-        #endregion
-
+        
         #region Members
         /// <summary>
         /// Applies the changes.
         /// </summary>
-        public void ApplyChanges(GraphicsDevice device)
+        public void ApplyChanges()
         {
-            UpdateMieRayleighTextures(device);
+            UpdateMieRayleighTextures();
         }
 
         /// <summary>
         /// Draws the component.
         /// </summary>
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
-        public void Draw(GraphicsDevice device,GameTime gameTime)
+        public void Draw(GameTime gameTime)
         {
             Matrix View = CameraManager.GetActiveCamera().ViewMatrix;
             Matrix Projection = CameraManager.GetActiveCamera().ProjectionMatrix;
@@ -201,14 +203,16 @@ namespace ProjectVanquish.Sky
                                                     CameraManager.GetActiveCamera().Position.Z);
 
             if (previousTheta != theta || previousPhi != phi)
-                UpdateMieRayleighTextures(device);
+                UpdateMieRayleighTextures();
 
-            this.sunColor = this.GetSunColor(-theta, 2);
+            sunColor = GetSunColor(-theta, 2);
 
             // Clear the Device
-            device.Clear(ClearOptions.Target, new Vector4(1.0f), 1.0f, 0);
+            device.Clear(ClearOptions.Target, new Vector4(1.0f), 0.0f, 0);
+            device.Clear(ClearOptions.DepthBuffer, new Vector4(1.0f), 1.0f, 0);
             device.RasterizerState = RasterizerState.CullNone;
-
+            device.DepthStencilState = DepthStencilState.None;
+            
             // Set the Scatter Effect parameters
             scatterEffect.CurrentTechnique = scatterEffect.Techniques["Render"];
             scatterEffect.Parameters["txMie"].SetValue(mieRT);
@@ -223,7 +227,7 @@ namespace ProjectVanquish.Sky
                 scatterEffect.Parameters["starIntensity"].SetValue((float)Math.Abs(Math.Sin(Theta + (float)Math.PI / 2.0f)));
             else
                 scatterEffect.Parameters["starIntensity"].SetValue(0.0f);
-
+            
             // Apply each pass
             foreach (EffectPass pass in scatterEffect.CurrentTechnique.Passes)
             {
@@ -231,16 +235,17 @@ namespace ProjectVanquish.Sky
                 pass.Apply();
 
                 // Draw Primitives
-                device.DrawUserIndexedPrimitives<VertexPositionTexture>(PrimitiveType.TriangleList, domeVerts, 0, this.DVSize, ib, 0, this.DISize);
+                device.DrawUserIndexedPrimitives<VertexPositionTexture>(PrimitiveType.TriangleList, domeVerts, 0, DVSize, ib, 0, DISize);
             }
 
             // Draw Glow, Moon and Clouds
-            DrawGlow(device);
-            DrawMoon(device);
-            DrawClouds(device, gameTime);
+            DrawGlow();
+            DrawMoon();
+            DrawClouds(gameTime);
 
             // Reset RasterizerState
             device.RasterizerState = RasterizerState.CullCounterClockwise;
+            device.DepthStencilState = DepthStencilState.Default;
 
             // Store the old theta and phi values
             previousTheta = theta;
@@ -252,17 +257,20 @@ namespace ProjectVanquish.Sky
         /// </summary>
         /// <param name="device">The device.</param>
         /// <param name="gameTime">The game time.</param>
-        private void DrawClouds(GraphicsDevice device, GameTime gameTime)
+        private void DrawClouds(GameTime gameTime)
         {
+            device.BlendState = BlendState.AlphaBlend;
+
             // Set Noise Effect parameters
             noiseEffect.CurrentTechnique = noiseEffect.Techniques["Noise"];
-            noiseEffect.Parameters["World"].SetValue(Matrix.CreateScale(10000.0f) *
-                Matrix.CreateTranslation(new Vector3(0, 0, -900)) *
-                Matrix.CreateRotationX((float)Math.PI / 2.0f) *
-                Matrix.CreateTranslation(CameraManager.GetActiveCamera().Position.X,
-                                         CameraManager.GetActiveCamera().Position.Y,
-                                         CameraManager.GetActiveCamera().Position.Z)
-                                        );
+            noiseEffect.Parameters["World"].SetValue(
+                                                    Matrix.CreateScale(10000.0f) *
+                                                    Matrix.CreateTranslation(new Vector3(0, 0, -900)) *
+                                                    Matrix.CreateRotationX((float)Math.PI / 2.0f) *
+                                                    Matrix.CreateTranslation(CameraManager.GetActiveCamera().Position.X,
+                                                                             CameraManager.GetActiveCamera().Position.Y,
+                                                                             CameraManager.GetActiveCamera().Position.Z)
+                                                                            );
             noiseEffect.Parameters["View"].SetValue(CameraManager.GetActiveCamera().ViewMatrix);
             noiseEffect.Parameters["Projection"].SetValue(CameraManager.GetActiveCamera().ProjectionMatrix);
             noiseEffect.Parameters["permTexture"].SetValue(permTex);
@@ -281,27 +289,31 @@ namespace ProjectVanquish.Sky
                 // Draw Primitives
                 device.DrawUserIndexedPrimitives<VertexPositionTexture>(PrimitiveType.TriangleList, quadVerts, 0, 4, quadIb, 0, 2);
             }
+
+            device.BlendState = BlendState.Opaque;
         }
         
         /// <summary>
         /// Draws the glow.
         /// </summary>
-        private void DrawGlow(GraphicsDevice device)
+        private void DrawGlow()
         {
+            device.BlendState = BlendState.AlphaBlend;
+
             // Set the Effect parameters
             texturedEffect.CurrentTechnique = texturedEffect.Techniques["Textured"];
             texturedEffect.Parameters["World"].SetValue(
-                Matrix.CreateRotationX(Theta + (float)Math.PI / 2.0f) *
-                Matrix.CreateRotationY(-Phi + (float)Math.PI / 2.0f) *
-                Matrix.CreateTranslation(parameters.LightDirection.X * 5,
-                                         parameters.LightDirection.Y * 5,
-                                         parameters.LightDirection.Z * 5) *
-                Matrix.CreateTranslation(CameraManager.GetActiveCamera().Position.X,
-                                         CameraManager.GetActiveCamera().Position.Y,
-                                         CameraManager.GetActiveCamera().Position.Z));
+                                                        Matrix.CreateRotationX(Theta + (float)Math.PI / 2.0f) *
+                                                        Matrix.CreateRotationY(-Phi + (float)Math.PI / 2.0f) *
+                                                        Matrix.CreateTranslation(parameters.LightDirection.X * 5,
+                                                                                 parameters.LightDirection.Y * 5,
+                                                                                 parameters.LightDirection.Z * 5) *
+                                                        Matrix.CreateTranslation(CameraManager.GetActiveCamera().Position.X,
+                                                                                 CameraManager.GetActiveCamera().Position.Y,
+                                                                                 CameraManager.GetActiveCamera().Position.Z));
             texturedEffect.Parameters["View"].SetValue(CameraManager.GetActiveCamera().ViewMatrix);
             texturedEffect.Parameters["Projection"].SetValue(CameraManager.GetActiveCamera().ProjectionMatrix);
-            texturedEffect.Parameters["Texture"].SetValue(this.glowTex);
+            texturedEffect.Parameters["Texture"].SetValue(glowTex);
             if (theta < Math.PI / 2.0f || theta > 3.0f * Math.PI / 2.0f)
                 texturedEffect.Parameters["alpha"].SetValue((float)Math.Abs(Math.Sin(Theta + (float)Math.PI / 2.0f)));
             else
@@ -316,28 +328,32 @@ namespace ProjectVanquish.Sky
                 // Draw Primitives
                 device.DrawUserIndexedPrimitives<VertexPositionTexture>(PrimitiveType.TriangleList, quadVerts, 0, 4, quadIb, 0, 2);
             }
+
+            device.BlendState = BlendState.Opaque;
         }
 
         /// <summary>
         /// Draws the moon.
         /// </summary>
-        private void DrawMoon(GraphicsDevice device)
+        private void DrawMoon()
         {
+            device.BlendState = BlendState.AlphaBlend;
+
             // Set Textured Effect parameters
             texturedEffect.CurrentTechnique = texturedEffect.Techniques["Textured"];
             texturedEffect.Parameters["World"].SetValue(
-                Matrix.CreateRotationX(Theta + (float)Math.PI / 2.0f) *
-                Matrix.CreateRotationY(-Phi + (float)Math.PI / 2.0f) *
-                Matrix.CreateTranslation(parameters.LightDirection.X * 15,
-                                         parameters.LightDirection.Y * 15,
-                                         parameters.LightDirection.Z * 15) *
-                Matrix.CreateTranslation(CameraManager.GetActiveCamera().Position.X,
-                                         CameraManager.GetActiveCamera().Position.Y,
-                                         CameraManager.GetActiveCamera().Position.Z)
-                                        );
+                                                        Matrix.CreateRotationX(Theta + (float)Math.PI / 2.0f) *
+                                                        Matrix.CreateRotationY(-Phi + (float)Math.PI / 2.0f) *
+                                                        Matrix.CreateTranslation(parameters.LightDirection.X * 15,
+                                                                                    parameters.LightDirection.Y * 15,
+                                                                                    parameters.LightDirection.Z * 15) *
+                                                        Matrix.CreateTranslation(CameraManager.GetActiveCamera().Position.X,
+                                                                                    CameraManager.GetActiveCamera().Position.Y,
+                                                                                    CameraManager.GetActiveCamera().Position.Z)
+                                                                                );
             texturedEffect.Parameters["View"].SetValue(CameraManager.GetActiveCamera().ViewMatrix);
             texturedEffect.Parameters["Projection"].SetValue(CameraManager.GetActiveCamera().ProjectionMatrix);
-            texturedEffect.Parameters["Texture"].SetValue(this.moonTex);
+            texturedEffect.Parameters["Texture"].SetValue(moonTex);
             if (theta < Math.PI / 2.0f || theta > 3.0f * Math.PI / 2.0f)
                 texturedEffect.Parameters["alpha"].SetValue((float)Math.Abs(Math.Sin(Theta + (float)Math.PI / 2.0f)));
             else
@@ -348,10 +364,12 @@ namespace ProjectVanquish.Sky
             {
                 // Apply Effect
                 pass.Apply();
-
+                
                 // Draw Primitives
                 device.DrawUserIndexedPrimitives<VertexPositionTexture>(PrimitiveType.TriangleList, quadVerts, 0, 4, quadIb, 0, 2);
             }
+
+            device.BlendState = BlendState.Opaque;
         }
 
         /// <summary>
@@ -391,6 +409,7 @@ namespace ProjectVanquish.Sky
                     DomeIndex++;
                 }
             }
+
             for (int i = 0; i < Longitude; i++)
             {
                 double MoveXZ = 100.0 * (i / (float)(Longitude - 1)) * MathHelper.Pi / 180.0;
@@ -429,6 +448,7 @@ namespace ProjectVanquish.Sky
                     ib[index++] = (short)(i * Latitude + j);
                 }
             }
+
             short Offset = (short)(Latitude * Longitude);
             for (short i = 0; i < Longitude - 1; i++)
             {
@@ -472,7 +492,7 @@ namespace ProjectVanquish.Sky
         /// <summary>
         /// Generates the perm tex.
         /// </summary>
-        private void GeneratePermTex(GraphicsDevice device)
+        private void GeneratePermTex()
         {
             int[] perm = { 151,160,137,91,90,15,
                            131,13,201,95,96,53,194,233,7,225,140,36,103,30,69,142,8,99,37,240,21,10,23,
@@ -524,7 +544,7 @@ namespace ProjectVanquish.Sky
         /// Gets the direction.
         /// </summary>
         /// <returns></returns>
-        Vector4 GetDirection()
+        Vector4 GetLightDirection()
         {
 
             float y = (float)Math.Cos((double)theta);
@@ -538,8 +558,8 @@ namespace ProjectVanquish.Sky
         /// <summary>
         /// Gets the color of the sun.
         /// </summary>
-        /// <param name="fTheta">The f theta.</param>
-        /// <param name="nTurbidity">The n turbidity.</param>
+        /// <param name="fTheta">Theta.</param>
+        /// <param name="nTurbidity">Turbidity.</param>
         /// <returns></returns>
         Vector4 GetSunColor(float fTheta, int nTurbidity)
         {
@@ -574,7 +594,6 @@ namespace ProjectVanquish.Sky
                     fTauA = (float)Math.Exp((double)(-m * fBeta * potencia));
                     fTau[i] = fTauR * fTauA;
                 }
-
             }
 
             Vector4 vAttenuation = new Vector4(fTau[0], fTau[1], fTau[2], 1.0f);
@@ -591,33 +610,42 @@ namespace ProjectVanquish.Sky
 
             if (realTime)
             {
-                int minutos = DateTime.Now.Hour * 60 + DateTime.Now.Minute;
-                theta = (float)minutos * (float)(Math.PI) / 12.0f / 60.0f;
+                int minutes = DateTime.Now.Hour * 60 + DateTime.Now.Minute;
+                theta = (float)minutes * (float)(Math.PI) / 12.0f / 60.0f;
             }
 
-            parameters.LightDirection = this.GetDirection();
+            parameters.LightDirection = GetLightDirection();
             parameters.LightDirection.Normalize();
         }
 
         /// <summary>
         /// Updates the mie rayleigh textures.
         /// </summary>
-        void UpdateMieRayleighTextures(GraphicsDevice device)
+        void UpdateMieRayleighTextures()
         {
+            // Set RenderTargets
             device.SetRenderTargets(rayleighRT, mieRT);
 
-            device.Clear(Color.CornflowerBlue);
+            device.Clear(Color.Transparent);
 
+            // Set Scatter Effect parameters
             scatterEffect.CurrentTechnique = scatterEffect.Techniques["Update"];
             scatterEffect.Parameters["InvWavelength"].SetValue(parameters.InverseWaveLengths);
             scatterEffect.Parameters["WavelengthMie"].SetValue(parameters.WaveLengthsMie);
             scatterEffect.Parameters["v3SunDir"].SetValue(new Vector3(-parameters.LightDirection.X, -parameters.LightDirection.Y, -parameters.LightDirection.Z));
-            EffectPass pass = scatterEffect.CurrentTechnique.Passes[0];
 
-            pass.Apply();
+            // Apply Effect
+            scatterEffect.CurrentTechnique.Passes[0].Apply();
+
+            // Draw
             quad.Draw();
             
+            // Clear RenderTargets
             device.SetRenderTargets(null);
+
+            // Set Textures
+            mieTex = mieRT;
+            rayleighTex = rayleighRT;
         }
         #endregion
     }

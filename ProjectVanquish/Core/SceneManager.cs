@@ -34,7 +34,12 @@ namespace ProjectVanquish.Core
         /// <summary>
         /// List of Models
         /// </summary>
-        static IList<Actor> models; 
+        static IList<Actor> models;
+
+        /// <summary>
+        /// Occlusion Query
+        /// </summary>
+        OcclusionQuery occlusionQuery;
         #endregion
 
         #region Constructor
@@ -53,6 +58,7 @@ namespace ProjectVanquish.Core
                                                         1.0f, 500f));
             physicsManager = new PhysicsManager(new Vector3(0, 0, 0));
             models = new List<Actor>();
+            occlusionQuery = new OcclusionQuery(device);
         } 
         #endregion
 
@@ -122,8 +128,11 @@ namespace ProjectVanquish.Core
             device.RasterizerState = RasterizerState.CullCounterClockwise;
             device.BlendState = BlendState.Opaque;
 
-            foreach (Actor actor in models.Where(a => a.BoundingSphere.Intersects(CameraManager.GetActiveCamera().BoundingFrustum)))
-                actor.Draw();
+            foreach (Actor actor in models)
+            {
+                if (CameraManager.GetActiveCamera().BoundingFrustum.Intersects(actor.BoundingSphere))
+                    actor.Draw();
+            }
         }
 
         /// <summary>

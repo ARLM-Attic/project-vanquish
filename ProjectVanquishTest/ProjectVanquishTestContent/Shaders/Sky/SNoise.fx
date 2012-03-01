@@ -11,9 +11,9 @@ texture permTexture;
 sampler permSampler = sampler_state
 {
 	Texture = <permTexture>;
-	MinFilter = Linear;
-	MipFilter = Linear;
-	MagFilter = Linear;
+	MinFilter = LINEAR;
+	MipFilter = LINEAR;
+	MagFilter = LINEAR;
 	ADDRESSU = WRAP;
 	ADDRESSV = WRAP;
 };

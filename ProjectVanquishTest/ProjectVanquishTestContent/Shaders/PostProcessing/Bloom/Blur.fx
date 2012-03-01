@@ -24,7 +24,7 @@ float4 PixelShaderFunction(float2 Tex: TEXCOORD0) : COLOR
 
 technique Blur
 {
-	pass P0
+	pass Pass1
 	{
 		// A post process shader only needs a pixel shader.
 		PixelShader = compile ps_3_0 PixelShaderFunction();

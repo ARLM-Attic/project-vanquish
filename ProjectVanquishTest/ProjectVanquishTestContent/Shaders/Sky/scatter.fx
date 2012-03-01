@@ -1,4 +1,3 @@
-
 float4x4 WorldViewProjection;
 
 float InvOpticalDepthNLessOne = 1.0f/255.0f;
@@ -27,7 +26,6 @@ float3 WavelengthMie;
 float starIntensity = 0.5f;
 
 Texture txRayleigh;
-
 sampler2D rayleighSampler = sampler_state
 {
 	Texture = <txRayleigh>;
@@ -39,7 +37,6 @@ sampler2D rayleighSampler = sampler_state
 };
 
 Texture txMie;
-
 sampler2D mieSampler = sampler_state
 {
 	Texture = <txMie>;
@@ -51,7 +48,6 @@ sampler2D mieSampler = sampler_state
 };
 
 Texture StarsTex;
-
 sampler2D starSampler = sampler_state
 {
 	Texture = <StarsTex>;

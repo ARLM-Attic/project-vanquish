@@ -48,10 +48,10 @@ namespace ProjectVanquish.Renderers
             };
 
             colorRT = new RenderTarget2D(device, backbufferWidth, backbufferHeight, false, SurfaceFormat.Color, DepthFormat.Depth24);
-            normalRT = new RenderTarget2D(device, backbufferWidth, backbufferHeight, false, SurfaceFormat.Color, DepthFormat.None);
-            depthRT = new RenderTarget2D(device, backbufferWidth, backbufferHeight, false, SurfaceFormat.Single, DepthFormat.Depth24Stencil8);
-            linearDepthRT = new RenderTarget2D(device, backbufferWidth, backbufferHeight, false, SurfaceFormat.Single, DepthFormat.Depth24Stencil8, 0, RenderTargetUsage.DiscardContents);
-            lightRT = new RenderTarget2D(device, backbufferWidth, backbufferHeight, false, SurfaceFormat.Color, DepthFormat.None, 0, RenderTargetUsage.PreserveContents);
+            normalRT = new RenderTarget2D(device, backbufferWidth, backbufferHeight, false, SurfaceFormat.Color, DepthFormat.Depth24);
+            depthRT = new RenderTarget2D(device, backbufferWidth, backbufferHeight, false, SurfaceFormat.Color, DepthFormat.Depth24Stencil8);
+            linearDepthRT = new RenderTarget2D(device, backbufferWidth, backbufferHeight, false, SurfaceFormat.Single, DepthFormat.Depth24Stencil8);
+            lightRT = new RenderTarget2D(device, backbufferWidth, backbufferHeight, false, SurfaceFormat.Color, DepthFormat.None);
             sceneRT = new RenderTarget2D(device, backbufferWidth, backbufferHeight, false, SurfaceFormat.Color, DepthFormat.Depth24Stencil8);
             bloomRT = new RenderTarget2D(device, backbufferWidth, backbufferHeight, false, SurfaceFormat.Color, DepthFormat.Depth24Stencil8);
 
@@ -76,8 +76,6 @@ namespace ProjectVanquish.Renderers
             bloom = new Bloom(device, content);
 
             sphere = content.Load<Model>("Models/Sphere");
-
-            skyDome = new SkyDome(device, content);
         } 
         #endregion
 
@@ -86,7 +84,21 @@ namespace ProjectVanquish.Renderers
         /// Gets or sets a value indicating whether [use SSAO].
         /// </summary>
         /// <value><c>true</c> if [use SSAO]; otherwise, <c>false</c>.</value>
-        public bool UseSSAO { get; set; } 
+        public bool UseSSAO { get; set; }
+
+        /// <summary>
+        /// Gets the sky.
+        /// </summary>
+        /// <value>The sky.</value>
+        public SkyDome Sky 
+        { 
+            get 
+            { 
+                if (skyDome == null)
+                    skyDome = new SkyDome(device, content);
+                return skyDome;
+            } 
+        }
         #endregion
 
         #region Members
@@ -102,7 +114,7 @@ namespace ProjectVanquish.Renderers
         /// <summary>
         /// Combines the G buffer.
         /// </summary>
-        void CombineGBuffer()//ref RenderTarget2D shadowOcclusion)
+        void CombineGBuffer(ref RenderTarget2D shadowOcclusion)
         {
             // Set Scene RenderTarget
             device.SetRenderTarget(sceneRT);
@@ -110,7 +122,7 @@ namespace ProjectVanquish.Renderers
             // Combine the Final scene
             finalEffect.Parameters["colorMap"].SetValue(colorRT);
             finalEffect.Parameters["lightMap"].SetValue(lightRT);
-            //finalEffect.Parameters["shadowMap"].SetValue(shadowRenderer.ShadowOcclusion);
+            finalEffect.Parameters["shadowMap"].SetValue(shadowOcclusion);
             finalEffect.Parameters["halfPixel"].SetValue(halfPixel);
             finalEffect.Techniques[0].Passes[0].Apply();
             fullscreenQuad.Draw();
@@ -141,14 +153,13 @@ namespace ProjectVanquish.Renderers
             SetGBuffer();
             ClearGBuffer();
             if (skyDome != null)
-                skyDome.Draw(device, gameTime);
-            
+                skyDome.Draw(gameTime);
             sceneManager.Draw();
             ResolveGBuffer();
-            //DrawDepth(CameraManager.GetActiveCamera());
-            //var shadowOcclusion = shadowRenderer.Draw(device, linearDepthRT, sceneManager, CameraManager.GetActiveCamera());            
+            DrawDepth(CameraManager.GetActiveCamera());
+            var shadowOcclusion = shadowRenderer.Draw(device, linearDepthRT, sceneManager, CameraManager.GetActiveCamera());            
             DrawLights();            
-            CombineGBuffer();//ref shadowOcclusion);            
+            CombineGBuffer(ref shadowOcclusion);            
             ssaoRenderer.Draw(device, renderTargets, sceneRT, sceneManager, null);
             //if (UseSSAO)
             //{
@@ -157,7 +168,7 @@ namespace ProjectVanquish.Renderers
             //}
             //else
             //    bloom.Draw(device, sceneRT);
-            DrawDebug();//ref shadowOcclusion);
+            DrawDebug(ref shadowOcclusion);
         }
 
         /// <summary>
@@ -294,7 +305,7 @@ namespace ProjectVanquish.Renderers
         /// <summary>
         /// Draws the debug output.
         /// </summary>
-        public void DrawDebug()//ref RenderTarget2D shadowOcclusion)
+        public void DrawDebug(ref RenderTarget2D shadowOcclusion)
         {
             int width = 128;
             int height = 128;
@@ -307,12 +318,12 @@ namespace ProjectVanquish.Renderers
             spriteBatch.Draw((Texture2D)colorRT, rect, Color.White);
             rect.X += width;
             spriteBatch.Draw((Texture2D)normalRT, rect, Color.White);
+            //rect.X += width;
+            //spriteBatch.Draw((Texture2D)depthRT, rect, Color.White);
             rect.X += width;
-            spriteBatch.Draw((Texture2D)depthRT, rect, Color.White);
-            //rect.X += width;
-            //spriteBatch.Draw((Texture2D)shadowRenderer.ShadowMap, rect, Color.White);
-            //rect.X += width;
-            //spriteBatch.Draw((Texture2D)shadowRenderer.ShadowOcclusion, rect, Color.White);
+            spriteBatch.Draw((Texture2D)linearDepthRT, rect, Color.White);
+            rect.X += width;
+            spriteBatch.Draw((Texture2D)shadowOcclusion, rect, Color.White);
             spriteBatch.End();
         }
 
