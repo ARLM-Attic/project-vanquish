@@ -40,10 +40,10 @@ namespace ProjectVanquish.Renderers
             randomNormals = content.Load<Texture2D>("Textures/RandomNormal");
 
             // Set Sample Radius to Default
-            sampleRadius = 0.05f;
+            sampleRadius = 0.15f;
 
             // Set Distance Scale to Default
-            distanceScale = 30f;
+            distanceScale = 10f;
 
             // Instantiate halfPixel and GBuffer Texture Size
             halfPixel = new Vector2()

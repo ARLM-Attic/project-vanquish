@@ -11,6 +11,8 @@ namespace ProjectVanquish.Models.Interfaces
     {
         BoundingBox BoundingBox { get; }
 
+        BoundingSphere BoundingSphere { get; }
+
         Model Model { get; set; }
 
         Vector3 Position { get; set; }

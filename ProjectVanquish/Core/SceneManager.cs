@@ -128,7 +128,7 @@ namespace ProjectVanquish.Core
             device.RasterizerState = RasterizerState.CullCounterClockwise;
             device.BlendState = BlendState.Opaque;
 
-            foreach (Actor actor in models)
+            foreach (Actor actor in models.Where(c => c.BoundingSphere.Intersects(CameraManager.GetActiveCamera().BoundingFrustum)))
             {
                 occlusionQuery.Begin();
                 if (CameraManager.GetActiveCamera().BoundingFrustum.Intersects(actor.BoundingSphere))

@@ -41,3 +41,4 @@ Content\Models\vrata_kr_0.xnb
 Content\Models\vrata_ko_0.xnb
 Content\Models\ground_diffuse_0.xnb
 Content\Models\ship1_c_0.xnb
+Content\Shaders\Lights\PointLightShadow.xnb
