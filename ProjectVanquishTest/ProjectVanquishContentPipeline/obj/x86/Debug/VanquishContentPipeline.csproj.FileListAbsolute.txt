@@ -1,5 +1,0 @@
-C:\VanquishTest\VanquishTest\VanquishContentPipeline\obj\x86\Debug\ResolveAssemblyReference.cache
-C:\VanquishTest\VanquishTest\VanquishContentPipeline\bin\x86\Debug\VanquishContentPipeline.dll
-C:\VanquishTest\VanquishTest\VanquishContentPipeline\bin\x86\Debug\VanquishContentPipeline.pdb
-C:\VanquishTest\VanquishTest\VanquishContentPipeline\obj\x86\Debug\VanquishContentPipeline.dll
-C:\VanquishTest\VanquishTest\VanquishContentPipeline\obj\x86\Debug\VanquishContentPipeline.pdb

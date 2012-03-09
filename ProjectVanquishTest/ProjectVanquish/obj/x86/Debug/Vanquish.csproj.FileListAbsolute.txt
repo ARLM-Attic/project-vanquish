@@ -1,8 +1,0 @@
-C:\VanquishTest\VanquishTest\Vanquish\obj\x86\Debug\ResolveAssemblyReference.cache
-C:\VanquishTest\VanquishTest\Vanquish\obj\x86\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
-C:\VanquishTest\VanquishTest\Vanquish\bin\x86\Debug\Vanquish.dll
-C:\VanquishTest\VanquishTest\Vanquish\bin\x86\Debug\Vanquish.pdb
-C:\VanquishTest\VanquishTest\Vanquish\obj\x86\Debug\Vanquish.dll
-C:\VanquishTest\VanquishTest\Vanquish\obj\x86\Debug\Vanquish.pdb
-C:\VanquishTest\VanquishTest\Vanquish\bin\x86\Debug\BEPUphysics.dll
-C:\VanquishTest\VanquishTest\Vanquish\bin\x86\Debug\BEPUphysics.xml
