@@ -1,0 +1,15 @@
+Content\Shaders\GBuffer\ClearGBuffer.xnb
+Content\Shaders\GBuffer\CombineFinal.xnb
+Content\Shaders\GBuffer\RenderGBuffer.xnb
+Content\Shaders\Lights\DirectionalLight.xnb
+Content\Shaders\Lights\PointLight.xnb
+Content\Shaders\Shadows\ShadowMap.xnb
+Content\Shaders\Shadows\CascadeShadowMap.xnb
+Content\Shaders\Shadows\Depth.xnb
+Content\Models\Sphere.xnb
+Content\Models\Ground.xnb
+Content\Models\ship1.xnb
+Content\Models\ground_diffuse_0.xnb
+Content\null_normal_0.xnb
+Content\null_specular_0.xnb
+Content\Models\ship1_c_0.xnb

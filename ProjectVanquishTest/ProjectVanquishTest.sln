@@ -1,0 +1,36 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectVanquishTest", "ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest.csproj", "{B26491DC-5F4A-4BD7-8205-7347B8B419DC}"
+EndProject
+Project("{96E2B04D-8817-42C6-938A-82C39BA4D311}") = "ProjectVanquishTestContent", "ProjectVanquishTest\ProjectVanquishTestContent\ProjectVanquishTestContent.contentproj", "{A41A759A-47A3-4E0F-B404-1435E977309E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectVanquishContentPipeline", "ProjectVanquishContentPipeline\ProjectVanquishContentPipeline.csproj", "{ECA6A752-0189-4565-802D-1ADE7DAFE243}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectVanquish", "ProjectVanquish\ProjectVanquish.csproj", "{E7FDF0DF-A8B6-4292-B3EE-0EAEE5F04780}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B26491DC-5F4A-4BD7-8205-7347B8B419DC}.Debug|x86.ActiveCfg = Debug|x86
+		{B26491DC-5F4A-4BD7-8205-7347B8B419DC}.Debug|x86.Build.0 = Debug|x86
+		{B26491DC-5F4A-4BD7-8205-7347B8B419DC}.Release|x86.ActiveCfg = Release|x86
+		{B26491DC-5F4A-4BD7-8205-7347B8B419DC}.Release|x86.Build.0 = Release|x86
+		{A41A759A-47A3-4E0F-B404-1435E977309E}.Debug|x86.ActiveCfg = Debug|x86
+		{A41A759A-47A3-4E0F-B404-1435E977309E}.Release|x86.ActiveCfg = Release|x86
+		{ECA6A752-0189-4565-802D-1ADE7DAFE243}.Debug|x86.ActiveCfg = Debug|x86
+		{ECA6A752-0189-4565-802D-1ADE7DAFE243}.Debug|x86.Build.0 = Debug|x86
+		{ECA6A752-0189-4565-802D-1ADE7DAFE243}.Release|x86.ActiveCfg = Debug|x86
+		{ECA6A752-0189-4565-802D-1ADE7DAFE243}.Release|x86.Build.0 = Debug|x86
+		{E7FDF0DF-A8B6-4292-B3EE-0EAEE5F04780}.Debug|x86.ActiveCfg = Debug|x86
+		{E7FDF0DF-A8B6-4292-B3EE-0EAEE5F04780}.Debug|x86.Build.0 = Debug|x86
+		{E7FDF0DF-A8B6-4292-B3EE-0EAEE5F04780}.Release|x86.ActiveCfg = Release|x86
+		{E7FDF0DF-A8B6-4292-B3EE-0EAEE5F04780}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
