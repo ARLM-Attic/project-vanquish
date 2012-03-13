@@ -5,3 +5,9 @@ C:\ProjectVanquishTest\ProjectVanquish\bin\x86\Debug\ProjectVanquish.dll
 C:\ProjectVanquishTest\ProjectVanquish\bin\x86\Debug\ProjectVanquish.pdb
 C:\ProjectVanquishTest\ProjectVanquish\obj\x86\Debug\ProjectVanquish.dll
 C:\ProjectVanquishTest\ProjectVanquish\obj\x86\Debug\ProjectVanquish.pdb
+C:\ProjectVanquishTest\projectvanquish\ProjectVanquishTest\ProjectVanquish\bin\x86\Debug\ProjectVanquish.dll
+C:\ProjectVanquishTest\projectvanquish\ProjectVanquishTest\ProjectVanquish\bin\x86\Debug\ProjectVanquish.pdb
+C:\ProjectVanquishTest\projectvanquish\ProjectVanquishTest\ProjectVanquish\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\ProjectVanquishTest\projectvanquish\ProjectVanquishTest\ProjectVanquish\obj\x86\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
+C:\ProjectVanquishTest\projectvanquish\ProjectVanquishTest\ProjectVanquish\obj\x86\Debug\ProjectVanquish.dll
+C:\ProjectVanquishTest\projectvanquish\ProjectVanquishTest\ProjectVanquish\obj\x86\Debug\ProjectVanquish.pdb

@@ -22,6 +22,7 @@ namespace ProjectVanquishTest
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         DeferredRenderer renderer;
+        SSAORenderer ssao;
         
         public Game1()
         {
@@ -40,6 +41,9 @@ namespace ProjectVanquishTest
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
+            SSAORenderer.Enabled = true;
+            SSAORenderer.DistanceScale = 100.0f;
+            SSAORenderer.SampleRadius = 1.5f;
             base.Initialize();
         }
 
@@ -51,7 +55,7 @@ namespace ProjectVanquishTest
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-
+            
             // TODO: use this.Content to load your game content here
             SceneManager.AddModel(Content.Load<Model>("Models/ship1"));
             SceneManager.AddModel(Content.Load<Model>("Models/ground"), new Vector3(0, -10, 0));
@@ -79,6 +83,21 @@ namespace ProjectVanquishTest
 
             if (Keyboard.GetState().IsKeyDown(Keys.I))
                 SceneManager.ShowBoundingBoxes = !SceneManager.ShowBoundingBoxes;
+
+            if (Keyboard.GetState().IsKeyDown(Keys.Escape))
+                this.Exit();
+
+            if (Keyboard.GetState().IsKeyDown(Keys.Up))
+                SSAORenderer.DistanceScale += 100.0f;
+
+            if (Keyboard.GetState().IsKeyDown(Keys.Down))
+                SSAORenderer.DistanceScale -= 100.0f;
+
+            if (Keyboard.GetState().IsKeyDown(Keys.D0))
+                SSAORenderer.SampleRadius += 0.5f;
+
+            if (Keyboard.GetState().IsKeyDown(Keys.D9))
+                SSAORenderer.SampleRadius -= 0.5f;
 
             // TODO: Add your update logic here
 

@@ -120,8 +120,9 @@
       <Project>{E7FDF0DF-A8B6-4292-B3EE-0EAEE5F04780}</Project>
       <Name>Vanquish</Name>
     </ProjectReference>
-    <ProjectReference Include="..\VanquishTestContent\VanquishTestContent.contentproj">
-      <Name>VanquishTestContent</Name>
+    <ProjectReference Include="..\ProjectVanquishTestContent\ProjectVanquishTestContent.contentproj">
+      <Project>{A41A759A-47A3-4E0F-B404-1435E977309E}</Project>
+      <Name>ProjectVanquishTestContent %28Content%29</Name>
       <XnaReferenceType>Content</XnaReferenceType>
     </ProjectReference>
   </ItemGroup>

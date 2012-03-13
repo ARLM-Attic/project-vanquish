@@ -44,7 +44,7 @@ namespace ProjectVanquish.Cameras
         /// Gets or sets the aspect ratio.
         /// </summary>
         /// <value>The aspect ratio.</value>
-        public float AspectRatio
+        public override float AspectRatio
         {
             get { return aspectRatio; }
             set

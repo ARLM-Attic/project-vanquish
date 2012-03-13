@@ -7,8 +7,8 @@
       <Importer>EffectImporter</Importer>
       <Processor>EffectProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\VanquishTest\VanquishTest\VanquishTest\VanquishTest\bin\x86\Debug\Content\Shaders\GBuffer\ClearGBuffer.xnb</Output>
-      <Time>2012-03-06T16:18:49.2913976+00:00</Time>
+      <Output>C:\ProjectVanquishTest\projectvanquish\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Shaders\GBuffer\ClearGBuffer.xnb</Output>
+      <Time>2012-03-12T09:03:39.6911712+00:00</Time>
     </Item>
     <Item>
       <Source>Shaders\GBuffer\CombineFinal.fx</Source>
@@ -16,8 +16,8 @@
       <Importer>EffectImporter</Importer>
       <Processor>EffectProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\VanquishTest\VanquishTest\VanquishTest\VanquishTest\bin\x86\Debug\Content\Shaders\GBuffer\CombineFinal.xnb</Output>
-      <Time>2012-03-06T16:19:56.7172541+00:00</Time>
+      <Output>C:\ProjectVanquishTest\projectvanquish\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Shaders\GBuffer\CombineFinal.xnb</Output>
+      <Time>2012-03-12T09:03:39.7071728+00:00</Time>
     </Item>
     <Item>
       <Source>Shaders\GBuffer\RenderGBuffer.fx</Source>
@@ -25,8 +25,8 @@
       <Importer>EffectImporter</Importer>
       <Processor>EffectProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\VanquishTest\VanquishTest\VanquishTest\VanquishTest\bin\x86\Debug\Content\Shaders\GBuffer\RenderGBuffer.xnb</Output>
-      <Time>2012-03-06T16:20:15.684339+00:00</Time>
+      <Output>C:\ProjectVanquishTest\projectvanquish\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Shaders\GBuffer\RenderGBuffer.xnb</Output>
+      <Time>2012-03-12T09:03:39.7231744+00:00</Time>
     </Item>
     <Item>
       <Source>Shaders\Lights\DirectionalLight.fx</Source>
@@ -34,8 +34,8 @@
       <Importer>EffectImporter</Importer>
       <Processor>EffectProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\VanquishTest\VanquishTest\VanquishTest\VanquishTest\bin\x86\Debug\Content\Shaders\Lights\DirectionalLight.xnb</Output>
-      <Time>2012-03-06T16:20:34.5004152+00:00</Time>
+      <Output>C:\ProjectVanquishTest\projectvanquish\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Shaders\Lights\DirectionalLight.xnb</Output>
+      <Time>2012-03-12T09:03:39.7901811+00:00</Time>
     </Item>
     <Item>
       <Source>Shaders\Lights\PointLight.fx</Source>
@@ -43,8 +43,8 @@
       <Importer>EffectImporter</Importer>
       <Processor>EffectProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\VanquishTest\VanquishTest\VanquishTest\VanquishTest\bin\x86\Debug\Content\Shaders\Lights\PointLight.xnb</Output>
-      <Time>2012-03-06T16:20:50.7883468+00:00</Time>
+      <Output>C:\ProjectVanquishTest\projectvanquish\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Shaders\Lights\PointLight.xnb</Output>
+      <Time>2012-03-12T09:03:39.8081829+00:00</Time>
     </Item>
     <Item>
       <Source>Shaders\Shadows\ShadowMap.fx</Source>
@@ -52,8 +52,8 @@
       <Importer>EffectImporter</Importer>
       <Processor>EffectProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\VanquishTest\VanquishTest\VanquishTest\VanquishTest\bin\x86\Debug\Content\Shaders\Shadows\ShadowMap.xnb</Output>
-      <Time>2012-03-06T16:21:13.3066348+00:00</Time>
+      <Output>C:\ProjectVanquishTest\projectvanquish\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Shaders\Shadows\ShadowMap.xnb</Output>
+      <Time>2012-03-12T09:03:40.0282049+00:00</Time>
     </Item>
     <Item>
       <Source>Shaders\Shadows\CascadeShadowMap.fx</Source>
@@ -61,8 +61,8 @@
       <Importer>EffectImporter</Importer>
       <Processor>EffectProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\VanquishTest\VanquishTest\VanquishTest\VanquishTest\bin\x86\Debug\Content\Shaders\Shadows\CascadeShadowMap.xnb</Output>
-      <Time>2012-03-06T20:11:27.0613105+00:00</Time>
+      <Output>C:\ProjectVanquishTest\projectvanquish\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Shaders\Shadows\CascadeShadowMap.xnb</Output>
+      <Time>2012-03-12T09:03:39.9922013+00:00</Time>
     </Item>
     <Item>
       <Source>Shaders\Shadows\Depth.fx</Source>
@@ -70,8 +70,17 @@
       <Importer>EffectImporter</Importer>
       <Processor>EffectProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\VanquishTest\VanquishTest\VanquishTest\VanquishTest\bin\x86\Debug\Content\Shaders\Shadows\Depth.xnb</Output>
-      <Time>2012-03-06T16:22:38.1244861+00:00</Time>
+      <Output>C:\ProjectVanquishTest\projectvanquish\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Shaders\Shadows\Depth.xnb</Output>
+      <Time>2012-03-12T09:03:40.0112032+00:00</Time>
+    </Item>
+    <Item>
+      <Source>Shaders\SSAO\SSAO.fx</Source>
+      <Name>Shaders\SSAO\SSAO</Name>
+      <Importer>EffectImporter</Importer>
+      <Processor>EffectProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\ProjectVanquishTest\projectvanquish\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Shaders\SSAO\SSAO.xnb</Output>
+      <Time>2012-03-13T12:19:58.5569877+00:00</Time>
     </Item>
     <Item>
       <Source>Models\Sphere.x</Source>
@@ -79,11 +88,11 @@
       <Importer>XImporter</Importer>
       <Processor>ModelProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\VanquishTest\VanquishTest\VanquishTest\VanquishTest\bin\x86\Debug\Content\Models\Sphere.xnb</Output>
-      <Time>2012-03-06T16:21:45.4724746+00:00</Time>
+      <Output>C:\ProjectVanquishTest\projectvanquish\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Models\Sphere.xnb</Output>
+      <Time>2012-03-12T09:03:37.5059527+00:00</Time>
       <Dependency>
-        <Key>C:\VanquishTest\VanquishTest\VanquishTest\VanquishTest\obj\x86\Debug\Models\Sphere_0.xml</Key>
-        <Value>2012-03-07T09:15:23.7911805+00:00</Value>
+        <Key>C:\ProjectVanquishTest\projectvanquish\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\obj\x86\Debug\Models\Sphere_0.xml</Key>
+        <Value>2012-03-12T10:06:27.7638054+00:00</Value>
       </Dependency>
     </Item>
     <Item>
@@ -92,16 +101,16 @@
       <Importer>XImporter</Importer>
       <Processor>DeferredRendererModel</Processor>
       <Options>None</Options>
-      <Output>C:\VanquishTest\VanquishTest\VanquishTest\VanquishTest\bin\x86\Debug\Content\Models\Ground.xnb</Output>
-      <Time>2007-12-27T03:20:02+00:00</Time>
+      <Output>C:\ProjectVanquishTest\projectvanquish\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Models\Ground.xnb</Output>
+      <Time>2012-03-12T09:03:37.3369358+00:00</Time>
       <Dependency>
-        <Key>C:\VanquishTest\VanquishTest\VanquishTest\VanquishTest\obj\x86\Debug\Models\Ground_0.xml</Key>
-        <Value>2012-03-07T09:15:23.9091805+00:00</Value>
+        <Key>C:\ProjectVanquishTest\projectvanquish\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\obj\x86\Debug\Models\Ground_0.xml</Key>
+        <Value>2012-03-12T10:06:27.9158054+00:00</Value>
       </Dependency>
-      <Request>C:\VanquishTest\VanquishTest\VanquishTest\VanquishTest\bin\x86\Debug\Content\Models\ground_diffuse_0.xnb</Request>
-      <Request>C:\VanquishTest\VanquishTest\VanquishTest\VanquishTest\bin\x86\Debug\Content\null_normal_0.xnb</Request>
-      <Request>C:\VanquishTest\VanquishTest\VanquishTest\VanquishTest\bin\x86\Debug\Content\null_specular_0.xnb</Request>
-      <Request>C:\VanquishTest\VanquishTest\VanquishTest\VanquishTest\bin\x86\Debug\Content\Shaders\GBuffer\RenderGBuffer.xnb</Request>
+      <Request>C:\ProjectVanquishTest\projectvanquish\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Models\ground_diffuse_0.xnb</Request>
+      <Request>C:\ProjectVanquishTest\projectvanquish\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\null_normal_0.xnb</Request>
+      <Request>C:\ProjectVanquishTest\projectvanquish\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\null_specular_0.xnb</Request>
+      <Request>C:\ProjectVanquishTest\projectvanquish\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Shaders\GBuffer\RenderGBuffer.xnb</Request>
     </Item>
     <Item>
       <Source>Models\ship1.fbx</Source>
@@ -109,30 +118,39 @@
       <Importer>FbxImporter</Importer>
       <Processor>DeferredRendererModel</Processor>
       <Options>None</Options>
-      <Output>C:\VanquishTest\VanquishTest\VanquishTest\VanquishTest\bin\x86\Debug\Content\Models\ship1.xnb</Output>
-      <Time>2010-12-08T20:52:47.3323526+00:00</Time>
+      <Output>C:\ProjectVanquishTest\projectvanquish\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Models\ship1.xnb</Output>
+      <Time>2012-03-12T09:03:37.4119433+00:00</Time>
       <Dependency>
-        <Key>C:\VanquishTest\VanquishTest\VanquishTest\VanquishTest\obj\x86\Debug\Models\ship1_0.xml</Key>
-        <Value>2012-03-07T09:15:25.5261805+00:00</Value>
+        <Key>C:\ProjectVanquishTest\projectvanquish\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\obj\x86\Debug\Models\ship1_0.xml</Key>
+        <Value>2012-03-12T10:06:28.9368054+00:00</Value>
       </Dependency>
-      <Request>C:\VanquishTest\VanquishTest\VanquishTest\VanquishTest\bin\x86\Debug\Content\Models\ship1_c_0.xnb</Request>
-      <Request>C:\VanquishTest\VanquishTest\VanquishTest\VanquishTest\bin\x86\Debug\Content\null_normal_0.xnb</Request>
-      <Request>C:\VanquishTest\VanquishTest\VanquishTest\VanquishTest\bin\x86\Debug\Content\null_specular_0.xnb</Request>
-      <Request>C:\VanquishTest\VanquishTest\VanquishTest\VanquishTest\bin\x86\Debug\Content\Shaders\GBuffer\RenderGBuffer.xnb</Request>
+      <Request>C:\ProjectVanquishTest\projectvanquish\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Models\ship1_c_0.xnb</Request>
+      <Request>C:\ProjectVanquishTest\projectvanquish\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\null_normal_0.xnb</Request>
+      <Request>C:\ProjectVanquishTest\projectvanquish\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\null_specular_0.xnb</Request>
+      <Request>C:\ProjectVanquishTest\projectvanquish\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Shaders\GBuffer\RenderGBuffer.xnb</Request>
+    </Item>
+    <Item>
+      <Source>Textures\RandomNormal.png</Source>
+      <Name>Textures\RandomNormal</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\ProjectVanquishTest\projectvanquish\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Textures\RandomNormal.xnb</Output>
+      <Time>2012-03-12T09:35:39.5454203+00:00</Time>
     </Item>
     <Item>
       <Source>Models\Sphere.x</Source>
       <Importer>XImporter</Importer>
       <Options>IntermediateFile, DontCacheImportedData</Options>
-      <Output>C:\VanquishTest\VanquishTest\VanquishTest\VanquishTest\obj\x86\Debug\Models\Sphere_0.xml</Output>
-      <Time>2012-03-06T16:21:45.4724746+00:00</Time>
+      <Output>C:\ProjectVanquishTest\projectvanquish\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\obj\x86\Debug\Models\Sphere_0.xml</Output>
+      <Time>2012-03-12T09:03:37.5059527+00:00</Time>
     </Item>
     <Item>
       <Source>Models\Ground.x</Source>
       <Importer>XImporter</Importer>
       <Options>IntermediateFile, DontCacheImportedData</Options>
-      <Output>C:\VanquishTest\VanquishTest\VanquishTest\VanquishTest\obj\x86\Debug\Models\Ground_0.xml</Output>
-      <Time>2007-12-27T03:20:02+00:00</Time>
+      <Output>C:\ProjectVanquishTest\projectvanquish\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\obj\x86\Debug\Models\Ground_0.xml</Output>
+      <Time>2012-03-12T09:03:37.3369358+00:00</Time>
     </Item>
     <Item>
       <Source>Models\ground_diffuse.jpg</Source>
@@ -147,8 +165,8 @@
         <Data Key="PremultiplyAlpha" Type="bool">true</Data>
       </Parameters>
       <Options>None</Options>
-      <Output>C:\VanquishTest\VanquishTest\VanquishTest\VanquishTest\bin\x86\Debug\Content\Models\ground_diffuse_0.xnb</Output>
-      <Time>2012-02-21T20:17:46.1640233+00:00</Time>
+      <Output>C:\ProjectVanquishTest\projectvanquish\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Models\ground_diffuse_0.xnb</Output>
+      <Time>2012-03-12T09:03:37.3529374+00:00</Time>
     </Item>
     <Item>
       <Source>null_normal.tga</Source>
@@ -163,8 +181,8 @@
         <Data Key="PremultiplyAlpha" Type="bool">true</Data>
       </Parameters>
       <Options>None</Options>
-      <Output>C:\VanquishTest\VanquishTest\VanquishTest\VanquishTest\bin\x86\Debug\Content\null_normal_0.xnb</Output>
-      <Time>2012-02-21T20:17:46.9908247+00:00</Time>
+      <Output>C:\ProjectVanquishTest\projectvanquish\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\null_normal_0.xnb</Output>
+      <Time>2012-03-12T09:03:39.2441265+00:00</Time>
     </Item>
     <Item>
       <Source>null_specular.tga</Source>
@@ -179,15 +197,15 @@
         <Data Key="PremultiplyAlpha" Type="bool">true</Data>
       </Parameters>
       <Options>None</Options>
-      <Output>C:\VanquishTest\VanquishTest\VanquishTest\VanquishTest\bin\x86\Debug\Content\null_specular_0.xnb</Output>
-      <Time>2012-02-21T20:17:46.023623+00:00</Time>
+      <Output>C:\ProjectVanquishTest\projectvanquish\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\null_specular_0.xnb</Output>
+      <Time>2012-03-12T09:03:39.2601281+00:00</Time>
     </Item>
     <Item>
       <Source>Models\ship1.fbx</Source>
       <Importer>FbxImporter</Importer>
       <Options>IntermediateFile, DontCacheImportedData</Options>
-      <Output>C:\VanquishTest\VanquishTest\VanquishTest\VanquishTest\obj\x86\Debug\Models\ship1_0.xml</Output>
-      <Time>2010-12-08T20:52:47.3323526+00:00</Time>
+      <Output>C:\ProjectVanquishTest\projectvanquish\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\obj\x86\Debug\Models\ship1_0.xml</Output>
+      <Time>2012-03-12T09:03:37.4119433+00:00</Time>
     </Item>
     <Item>
       <Source>Models\ship1_c.tga</Source>
@@ -202,8 +220,26 @@
         <Data Key="PremultiplyAlpha" Type="bool">true</Data>
       </Parameters>
       <Options>None</Options>
-      <Output>C:\VanquishTest\VanquishTest\VanquishTest\VanquishTest\bin\x86\Debug\Content\Models\ship1_c_0.xnb</Output>
-      <Time>2012-02-21T20:17:46.569624+00:00</Time>
+      <Output>C:\ProjectVanquishTest\projectvanquish\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Models\ship1_c_0.xnb</Output>
+      <Time>2012-03-12T09:03:37.4409462+00:00</Time>
+    </Item>
+    <Item>
+      <Source>Shaders\SSAO\Blur.fx</Source>
+      <Name>Shaders\SSAO\Blur</Name>
+      <Importer>EffectImporter</Importer>
+      <Processor>EffectProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\ProjectVanquishTest\projectvanquish\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Shaders\SSAO\Blur.xnb</Output>
+      <Time>2012-03-13T12:26:34.3905671+00:00</Time>
+    </Item>
+    <Item>
+      <Source>Shaders\SSAO\Final.fx</Source>
+      <Name>Shaders\SSAO\Final</Name>
+      <Importer>EffectImporter</Importer>
+      <Processor>EffectProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\ProjectVanquishTest\projectvanquish\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Shaders\SSAO\Final.xnb</Output>
+      <Time>2012-03-13T12:27:28.2639539+00:00</Time>
     </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
@@ -212,15 +248,15 @@
       <TargetProfile>HiDef</TargetProfile>
       <BuildConfiguration>Debug</BuildConfiguration>
       <CompressContent>false</CompressContent>
-      <RootDirectory>C:\VanquishTest\VanquishTest\VanquishTest\VanquishTestContent\</RootDirectory>
-      <LoggerRootDirectory>C:\VanquishTest\VanquishTest\VanquishTest\VanquishTest\</LoggerRootDirectory>
-      <IntermediateDirectory>C:\VanquishTest\VanquishTest\VanquishTest\VanquishTest\obj\x86\Debug\</IntermediateDirectory>
-      <OutputDirectory>C:\VanquishTest\VanquishTest\VanquishTest\VanquishTest\bin\x86\Debug\Content\</OutputDirectory>
+      <RootDirectory>C:\ProjectVanquishTest\projectvanquish\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTestContent\</RootDirectory>
+      <LoggerRootDirectory>C:\ProjectVanquishTest\projectvanquish\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\</LoggerRootDirectory>
+      <IntermediateDirectory>C:\ProjectVanquishTest\projectvanquish\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\obj\x86\Debug\</IntermediateDirectory>
+      <OutputDirectory>C:\ProjectVanquishTest\projectvanquish\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\</OutputDirectory>
     </Settings>
     <Assemblies>
       <Assembly>
-        <Key>C:\VanquishTest\VanquishTest\VanquishContentPipeline\bin\x86\Debug\VanquishContentPipeline.dll</Key>
-        <Value>2012-03-06T16:24:52.4581695+00:00</Value>
+        <Key>C:\ProjectVanquishTest\projectvanquish\ProjectVanquishTest\ProjectVanquishContentPipeline\bin\x86\Debug\ProjectVanquishContentPipeline.dll</Key>
+        <Value>2012-03-12T09:44:13.8561465+00:00</Value>
       </Assembly>
       <Assembly>
         <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.XImporter.dll</Key>

@@ -2,7 +2,7 @@
 <XnaContent xmlns:Graphics="Microsoft.Xna.Framework.Content.Pipeline.Graphics" xmlns:Framework="Microsoft.Xna.Framework">
   <Asset Type="Graphics:NodeContent">
     <Identity>
-      <SourceFilename>C:\VanquishTest\VanquishTest\VanquishTest\VanquishTestContent\Models\Ground.x</SourceFilename>
+      <SourceFilename>C:\ProjectVanquishTest\projectvanquish\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTestContent\Models\Ground.x</SourceFilename>
       <SourceTool>XImporter</SourceTool>
     </Identity>
     <Transform>1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</Transform>
@@ -30,7 +30,7 @@
   <Resources>
     <Resource ID="#Resource1" Type="Graphics:BasicMaterialContent">
       <Identity>
-        <SourceFilename>C:\VanquishTest\VanquishTest\VanquishTest\VanquishTestContent\Models\Ground.x</SourceFilename>
+        <SourceFilename>C:\ProjectVanquishTest\projectvanquish\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTestContent\Models\Ground.x</SourceFilename>
         <SourceTool>XImporter</SourceTool>
       </Identity>
       <OpaqueData>
@@ -47,6 +47,6 @@
     </Resource>
   </Resources>
   <ExternalReferences>
-    <ExternalReference ID="#External1" TargetType="Graphics:TextureContent">..\..\..\..\..\VanquishTestContent\Models\ground_diffuse.jpg</ExternalReference>
+    <ExternalReference ID="#External1" TargetType="Graphics:TextureContent">..\..\..\..\..\ProjectVanquishTestContent\Models\ground_diffuse.jpg</ExternalReference>
   </ExternalReferences>
 </XnaContent>

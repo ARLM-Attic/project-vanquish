@@ -16,13 +16,14 @@ namespace ProjectVanquish.Renderers
         private FirstPersonCamera camera;
         private QuadRenderer quadRenderer;
         SceneManager scene;
-        private RenderTarget2D colorRT, normalRT, depthRT, depthTexture, lightRT;
+        private RenderTarget2D colorRT, normalRT, depthRT, depthTexture, lightRT, sceneRT;
         private SpriteBatch spriteBatch;
         private Vector2 halfPixel;
         private Effect clearBufferEffect, directionalLightEffect, finalCombineEffect, pointLightEffect, depthShadowEffect;
         private Model sphereModel;
         private Lights.DirectionalLight light;
         private CascadeShadowRenderer shadowRenderer;
+        private SSAORenderer ssaoRenderer;
         private KeyboardState lastKeyboardState;
         private int lastMouseX;
         private int lastMouseY;
@@ -57,13 +58,37 @@ namespace ProjectVanquish.Renderers
         /// <param name="gameTime">Time passed since the last call to Draw.</param>
         public override void Draw(GameTime gameTime)
         {
+            // Set the GBuffer
             SetGBuffer();
+
+            // Clear the GBuffer
             ClearGBuffer();
+
+            // Render the scene
             scene.DrawScene(gameTime);
+
+            // Resolve the GBuffer
             ResolveGBuffer();
+
+            // Draw Depth for Shadow Mapping
             DrawDepth(gameTime);
+
+            // Render Shadows
             var shadowOcclusion = shadowRenderer.Draw(GraphicsDevice, depthTexture, scene, camera);
+
+            // Draw Lights
             DrawLights(gameTime, ref shadowOcclusion);
+            
+            // Render SSAO if enabled
+            if (SSAORenderer.Enabled)
+                ssaoRenderer.Draw(GraphicsDevice, normalRT, depthRT, sceneRT, scene, camera, null);
+
+            // Render output
+            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Opaque, SamplerState.PointClamp, null, null);
+            spriteBatch.Draw((Texture2D)ssaoRenderer.ssaoRT, new Rectangle(0, 0, 128, 128), Color.White);
+            spriteBatch.Draw((Texture2D)ssaoRenderer.blurRT, new Rectangle(128, 0, 128, 128), Color.White);
+            spriteBatch.End();
+
             base.Draw(gameTime);
         }
 
@@ -162,10 +187,16 @@ namespace ProjectVanquish.Renderers
 
             DrawDirectionalLight(light.Direction,new Color(light.Color));
 
+            // Reset the RenderTarget
+            GraphicsDevice.SetRenderTarget(null);
+
             GraphicsDevice.BlendState = BlendState.Opaque;
             GraphicsDevice.DepthStencilState = DepthStencilState.None;
             GraphicsDevice.RasterizerState = RasterizerState.CullCounterClockwise;
-            GraphicsDevice.SetRenderTarget(null);
+
+            // If SSAO is enabled, set the RenderTarget
+            if (SSAORenderer.Enabled)
+                GraphicsDevice.SetRenderTarget(sceneRT);
 
             // Set the effect parameters
             finalCombineEffect.Parameters["colorMap"].SetValue(colorRT);
@@ -256,8 +287,10 @@ namespace ProjectVanquish.Renderers
             light.Direction = new Vector3(-1, -1, -1);
             light.Color = new Vector3(0.7f, 0.7f, 0.7f);
 
+            // Instantiate the QuadRenderer
             quadRenderer = new QuadRenderer(Game);
             Game.Components.Add(quadRenderer);
+            
             base.Initialize();
         }
 
@@ -280,8 +313,12 @@ namespace ProjectVanquish.Renderers
             depthRT = new RenderTarget2D(GraphicsDevice, backBufferWidth, backBufferHeight, false, SurfaceFormat.Single, DepthFormat.Depth24Stencil8);
             depthTexture = new RenderTarget2D(GraphicsDevice, backBufferWidth, backBufferHeight, false, SurfaceFormat.Single, DepthFormat.Depth24Stencil8);
             lightRT = new RenderTarget2D(GraphicsDevice, backBufferWidth, backBufferHeight, false, SurfaceFormat.Color, DepthFormat.None);
-
+            sceneRT = new RenderTarget2D(GraphicsDevice, backBufferWidth, backBufferHeight, false, SurfaceFormat.Color, DepthFormat.Depth24Stencil8);
+            
+            // Initialize SceneManager
             scene.InitializeScene(camera);
+
+            // Load Effects
             clearBufferEffect = Game.Content.Load<Effect>("Shaders/GBuffer/ClearGBuffer");
             directionalLightEffect = Game.Content.Load<Effect>("Shaders/Lights/DirectionalLight");
             finalCombineEffect = Game.Content.Load<Effect>("Shaders/GBuffer/CombineFinal");
@@ -289,10 +326,14 @@ namespace ProjectVanquish.Renderers
             depthShadowEffect = Game.Content.Load<Effect>("Shaders/Shadows/Depth");
             sphereModel = Game.Content.Load<Model>("Models/sphere");
 
+            // Instantiate SpriteBatch
             spriteBatch = new SpriteBatch(Game.GraphicsDevice);
 
             // Make our ShadowRenderer
             shadowRenderer = new CascadeShadowRenderer(GraphicsDevice, Game.Content);
+
+            // Instantiate the SSAO Renderer
+            ssaoRenderer = new SSAORenderer(Game, backBufferWidth, backBufferHeight);
             base.LoadContent();
         }
 

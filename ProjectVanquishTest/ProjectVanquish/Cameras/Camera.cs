@@ -31,6 +31,16 @@ namespace ProjectVanquish.Cameras
 
         #region Properties
         /// <summary>
+        /// Gets or sets the aspect ratio.
+        /// </summary>
+        /// <value>The aspect ratio.</value>
+        public virtual float AspectRatio
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
         /// Gets the bounding frustum.
         /// </summary>
         /// <value>The bounding frustum.</value>

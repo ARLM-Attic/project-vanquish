@@ -3,7 +3,7 @@
   <Asset Type="Graphics:MeshContent">
     <Name>polySurface8</Name>
     <Identity>
-      <SourceFilename>C:\VanquishTest\VanquishTest\VanquishTest\VanquishTestContent\Models\ship1.fbx</SourceFilename>
+      <SourceFilename>C:\ProjectVanquishTest\projectvanquish\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTestContent\Models\ship1.fbx</SourceFilename>
       <SourceTool>FbxImporter</SourceTool>
     </Identity>
     <Transform>2.308545 0 0 0 0 2.54 5.639933E-16 0 0 -5.126E-16 2.308545 0 0 0 -3.980118 1</Transform>
@@ -28,7 +28,7 @@
     <Resource ID="#Resource1" Type="Graphics:BasicMaterialContent">
       <Name>phong6</Name>
       <Identity>
-        <SourceFilename>C:\VanquishTest\VanquishTest\VanquishTest\VanquishTestContent\Models\ship1.fbx</SourceFilename>
+        <SourceFilename>C:\ProjectVanquishTest\projectvanquish\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTestContent\Models\ship1.fbx</SourceFilename>
         <SourceTool>FbxImporter</SourceTool>
       </Identity>
       <OpaqueData>
@@ -61,8 +61,8 @@
     </Resource>
   </Resources>
   <ExternalReferences>
-    <ExternalReference ID="#External1" TargetType="Graphics:TextureContent">..\..\..\..\..\VanquishTestContent\Models\ship1_c.tga</ExternalReference>
-    <ExternalReference ID="#External2" TargetType="Graphics:TextureContent">..\..\..\..\..\VanquishTestContent\Models\ship1_s.tga</ExternalReference>
-    <ExternalReference ID="#External3" TargetType="Graphics:TextureContent">..\..\..\..\..\VanquishTestContent\Models\ship1_n.tga</ExternalReference>
+    <ExternalReference ID="#External1" TargetType="Graphics:TextureContent">..\..\..\..\..\ProjectVanquishTestContent\Models\ship1_c.tga</ExternalReference>
+    <ExternalReference ID="#External2" TargetType="Graphics:TextureContent">..\..\..\..\..\ProjectVanquishTestContent\Models\ship1_s.tga</ExternalReference>
+    <ExternalReference ID="#External3" TargetType="Graphics:TextureContent">..\..\..\..\..\ProjectVanquishTestContent\Models\ship1_n.tga</ExternalReference>
   </ExternalReferences>
 </XnaContent>
