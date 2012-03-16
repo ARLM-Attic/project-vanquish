@@ -17,3 +17,5 @@ Content\null_specular_0.xnb
 Content\Models\ship1_c_0.xnb
 Content\Shaders\SSAO\Blur.xnb
 Content\Shaders\SSAO\Final.xnb
+Content\Shaders\Lights\HemisphericLight.xnb
+Content\Textures\ColorMap.xnb

@@ -36,3 +36,6 @@ C:\ProjectVanquishTest\projectvanquish\ProjectVanquishTest\ProjectVanquishTest\P
 C:\ProjectVanquishTest\projectvanquish\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Models\ship1_c_0.xnb
 C:\ProjectVanquishTest\projectvanquish\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Shaders\SSAO\Blur.xnb
 C:\ProjectVanquishTest\projectvanquish\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Shaders\SSAO\Final.xnb
+C:\ProjectVanquishTest\projectvanquish\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\BEPUphysics.xml
+C:\ProjectVanquishTest\projectvanquish\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Shaders\Lights\HemisphericLight.xnb
+C:\ProjectVanquishTest\projectvanquish\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Textures\ColorMap.xnb

@@ -89,10 +89,10 @@
       <Processor>ModelProcessor</Processor>
       <Options>None</Options>
       <Output>C:\ProjectVanquishTest\projectvanquish\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Models\Sphere.xnb</Output>
-      <Time>2012-03-12T09:03:37.5059527+00:00</Time>
+      <Time>2012-03-08T02:08:02+00:00</Time>
       <Dependency>
         <Key>C:\ProjectVanquishTest\projectvanquish\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\obj\x86\Debug\Models\Sphere_0.xml</Key>
-        <Value>2012-03-12T10:06:27.7638054+00:00</Value>
+        <Value>2012-03-15T09:18:59.9370986+00:00</Value>
       </Dependency>
     </Item>
     <Item>
@@ -143,7 +143,7 @@
       <Importer>XImporter</Importer>
       <Options>IntermediateFile, DontCacheImportedData</Options>
       <Output>C:\ProjectVanquishTest\projectvanquish\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\obj\x86\Debug\Models\Sphere_0.xml</Output>
-      <Time>2012-03-12T09:03:37.5059527+00:00</Time>
+      <Time>2012-03-08T02:08:02+00:00</Time>
     </Item>
     <Item>
       <Source>Models\Ground.x</Source>
@@ -240,6 +240,24 @@
       <Options>None</Options>
       <Output>C:\ProjectVanquishTest\projectvanquish\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Shaders\SSAO\Final.xnb</Output>
       <Time>2012-03-13T12:27:28.2639539+00:00</Time>
+    </Item>
+    <Item>
+      <Source>Shaders\Lights\HemisphericLight.fx</Source>
+      <Name>Shaders\Lights\HemisphericLight</Name>
+      <Importer>EffectImporter</Importer>
+      <Processor>EffectProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\ProjectVanquishTest\projectvanquish\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Shaders\Lights\HemisphericLight.xnb</Output>
+      <Time>2012-03-16T10:13:27.5022594+00:00</Time>
+    </Item>
+    <Item>
+      <Source>Textures\ColorMap.jpg</Source>
+      <Name>Textures\ColorMap</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\ProjectVanquishTest\projectvanquish\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Textures\ColorMap.xnb</Output>
+      <Time>2012-03-16T09:10:49.8907521+00:00</Time>
     </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>

@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -19,7 +20,7 @@ namespace ProjectVanquish.Renderers
         private RenderTarget2D colorRT, normalRT, depthRT, depthTexture, lightRT, sceneRT;
         private SpriteBatch spriteBatch;
         private Vector2 halfPixel;
-        private Effect clearBufferEffect, directionalLightEffect, finalCombineEffect, pointLightEffect, depthShadowEffect;
+        private Effect clearBufferEffect, directionalLightEffect, finalCombineEffect, pointLightEffect, depthShadowEffect, hemisphericLight;
         private Model sphereModel;
         private Lights.DirectionalLight light;
         private CascadeShadowRenderer shadowRenderer;
@@ -27,7 +28,8 @@ namespace ProjectVanquish.Renderers
         private KeyboardState lastKeyboardState;
         private int lastMouseX;
         private int lastMouseY;
-        private GamePadState lastGamepadState; 
+        private GamePadState lastGamepadState;
+        private Texture2D hemisphericColorMap;
         #endregion
 
         #region Constructor
@@ -85,8 +87,8 @@ namespace ProjectVanquish.Renderers
 
             // Render output
             spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Opaque, SamplerState.PointClamp, null, null);
-            spriteBatch.Draw((Texture2D)ssaoRenderer.ssaoRT, new Rectangle(0, 0, 128, 128), Color.White);
-            spriteBatch.Draw((Texture2D)ssaoRenderer.blurRT, new Rectangle(128, 0, 128, 128), Color.White);
+            spriteBatch.Draw((Texture2D)colorRT, new Rectangle(0, 0, 128, 128), Color.White);
+            spriteBatch.Draw((Texture2D)normalRT, new Rectangle(128, 0, 128, 128), Color.White);
             spriteBatch.End();
 
             base.Draw(gameTime);
@@ -150,11 +152,13 @@ namespace ProjectVanquish.Renderers
         {
             // Set the Light RenderTarget
             GraphicsDevice.SetRenderTarget(lightRT);
-
+            
             // Clear all components to 0
             GraphicsDevice.Clear(Color.Transparent);
             GraphicsDevice.BlendState = BlendState.AlphaBlend;
             GraphicsDevice.DepthStencilState = DepthStencilState.None;
+
+            DrawHemisphericLight();
 
             Color[] colors = new Color[10];
             colors[0] = Color.Red; colors[1] = Color.Blue;
@@ -164,7 +168,9 @@ namespace ProjectVanquish.Renderers
             colors[8] = Color.Red; colors[9] = Color.ForestGreen;
 
             float angle = (float)gameTime.TotalGameTime.TotalSeconds;
-            
+
+            //DrawDirectionalLight(new Vector3(-1, -1, -1), new Color(light.Color));
+
             int n = 10;
             for (int i = 0; i < n; i++)
             {
@@ -184,9 +190,7 @@ namespace ProjectVanquish.Renderers
             DrawPointLight(new Vector3(0, (float)Math.Sin(angle * 0.8) * 40, 0), Color.Red, 30, 5);
             DrawPointLight(new Vector3(0, 25, 0), Color.White, 30, 1);
             DrawPointLight(new Vector3(0, 0, 70), Color.Wheat, 55 + 10 * (float)Math.Sin(5 * angle), 3);
-
-            DrawDirectionalLight(light.Direction,new Color(light.Color));
-
+            
             // Reset the RenderTarget
             GraphicsDevice.SetRenderTarget(null);
 
@@ -208,6 +212,42 @@ namespace ProjectVanquish.Renderers
 
             // Render a full-screen quad
             quadRenderer.Render(Vector2.One * -1, Vector2.One);
+        }
+
+        /// <summary>
+        /// Draws the hemispheric light.
+        /// </summary>
+        private void DrawHemisphericLight()
+        {
+            GraphicsDevice.BlendState = BlendState.Opaque;
+
+            // Only apply the effect to those models in the Frustum
+            foreach (Models.Actor actor in scene.Models.Where(a => camera.BoundingFrustum.Intersects(a.BoundingSphere)))
+            {
+                foreach (ModelMesh mesh in actor.Model.Meshes)
+                {
+                    foreach (ModelMeshPart part in mesh.MeshParts)
+                    {
+                        // Set the Effect Parameters
+                        hemisphericLight.Parameters["matWorldViewProj"].SetValue(actor.World * camera.ViewMatrix * camera.ProjectionMatrix);
+                        hemisphericLight.Parameters["matInverseWorld"].SetValue(Matrix.Invert(actor.World));
+                        hemisphericLight.Parameters["vLightDirection"].SetValue(new Vector4(light.Direction, 1));
+                        hemisphericLight.Parameters["ColorMap"].SetValue(hemisphericColorMap);
+                        hemisphericLight.Parameters["LightIntensity"].SetValue(0.3f);
+                        hemisphericLight.Parameters["SkyColor"].SetValue(new Vector4(light.Color, 1));
+                        
+                        // Apply the Effect
+                        hemisphericLight.Techniques[0].Passes[0].Apply();
+
+                        // Render the Primitives
+                        GraphicsDevice.SetVertexBuffer(part.VertexBuffer, part.VertexOffset);
+                        GraphicsDevice.Indices = part.IndexBuffer;
+                        GraphicsDevice.DrawIndexedPrimitives(PrimitiveType.TriangleList, 0, 0, part.NumVertices, part.StartIndex, part.PrimitiveCount);
+                    }
+                }
+            }
+
+            GraphicsDevice.BlendState = BlendState.AlphaBlend;
         }
 
         /// <summary>
@@ -308,13 +348,15 @@ namespace ProjectVanquish.Renderers
             int backBufferWidth = GraphicsDevice.PresentationParameters.BackBufferWidth;
             int backBufferHeight = GraphicsDevice.PresentationParameters.BackBufferHeight;
 
+            // Configure RenderTargets
             colorRT = new RenderTarget2D(GraphicsDevice, backBufferWidth, backBufferHeight, false, SurfaceFormat.Color, DepthFormat.Depth24);
             normalRT = new RenderTarget2D(GraphicsDevice, backBufferWidth, backBufferHeight, false, SurfaceFormat.Color, DepthFormat.Depth24);
             depthRT = new RenderTarget2D(GraphicsDevice, backBufferWidth, backBufferHeight, false, SurfaceFormat.Single, DepthFormat.Depth24Stencil8);
             depthTexture = new RenderTarget2D(GraphicsDevice, backBufferWidth, backBufferHeight, false, SurfaceFormat.Single, DepthFormat.Depth24Stencil8);
             lightRT = new RenderTarget2D(GraphicsDevice, backBufferWidth, backBufferHeight, false, SurfaceFormat.Color, DepthFormat.None);
             sceneRT = new RenderTarget2D(GraphicsDevice, backBufferWidth, backBufferHeight, false, SurfaceFormat.Color, DepthFormat.Depth24Stencil8);
-            
+            hemisphericColorMap = Game.Content.Load<Texture2D>("Textures/ColorMap");
+
             // Initialize SceneManager
             scene.InitializeScene(camera);
 
@@ -324,6 +366,7 @@ namespace ProjectVanquish.Renderers
             finalCombineEffect = Game.Content.Load<Effect>("Shaders/GBuffer/CombineFinal");
             pointLightEffect = Game.Content.Load<Effect>("Shaders/Lights/PointLight");
             depthShadowEffect = Game.Content.Load<Effect>("Shaders/Shadows/Depth");
+            hemisphericLight = Game.Content.Load<Effect>("Shaders/Lights/HemisphericLight");
             sphereModel = Game.Content.Load<Model>("Models/sphere");
 
             // Instantiate SpriteBatch

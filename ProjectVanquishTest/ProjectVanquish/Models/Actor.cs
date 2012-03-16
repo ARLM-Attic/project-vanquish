@@ -83,6 +83,14 @@ namespace ProjectVanquish.Models
 
         #region Properties
         /// <summary>
+        /// Gets the bones.
+        /// </summary>
+        public Matrix[] Bones
+        {
+            get { return bones; }
+        }
+
+        /// <summary>
         /// Gets the bounding box.
         /// </summary>
         /// <value>The bounding box.</value>

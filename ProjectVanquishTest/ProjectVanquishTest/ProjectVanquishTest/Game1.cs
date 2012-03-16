@@ -55,7 +55,7 @@ namespace ProjectVanquishTest
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            
+
             // TODO: use this.Content to load your game content here
             SceneManager.AddModel(Content.Load<Model>("Models/ship1"));
             SceneManager.AddModel(Content.Load<Model>("Models/ground"), new Vector3(0, -10, 0));
@@ -100,7 +100,6 @@ namespace ProjectVanquishTest
                 SSAORenderer.SampleRadius -= 0.5f;
 
             // TODO: Add your update logic here
-
             base.Update(gameTime);
         }
 
