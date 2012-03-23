@@ -44,7 +44,7 @@
       <Processor>EffectProcessor</Processor>
       <Options>None</Options>
       <Output>C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Shaders\Lights\PointLight.xnb</Output>
-      <Time>2012-03-23T09:29:08.9275433+00:00</Time>
+      <Time>2012-03-23T09:45:57.5515892+00:00</Time>
     </Item>
     <Item>
       <Source>Shaders\Shadows\ShadowMap.fx</Source>
@@ -258,6 +258,96 @@
       <Options>None</Options>
       <Output>C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Models\ship1_c_0.xnb</Output>
       <Time>2012-03-23T09:29:07.6264689+00:00</Time>
+    </Item>
+    <Item>
+      <Source>Shaders\Sky\scatter.fx</Source>
+      <Name>Shaders\Sky\scatter</Name>
+      <Importer>EffectImporter</Importer>
+      <Processor>EffectProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Shaders\Sky\scatter.xnb</Output>
+      <Time>2012-03-23T15:49:46.7006615+00:00</Time>
+    </Item>
+    <Item>
+      <Source>Shaders\Sky\Sky.fx</Source>
+      <Name>Shaders\Sky\Sky</Name>
+      <Importer>EffectImporter</Importer>
+      <Processor>EffectProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Shaders\Sky\Sky.xnb</Output>
+      <Time>2012-03-23T15:49:46.7026616+00:00</Time>
+    </Item>
+    <Item>
+      <Source>Shaders\Sky\SNoise.fx</Source>
+      <Name>Shaders\Sky\SNoise</Name>
+      <Importer>EffectImporter</Importer>
+      <Processor>EffectProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Shaders\Sky\SNoise.xnb</Output>
+      <Time>2012-03-23T15:49:46.7046617+00:00</Time>
+    </Item>
+    <Item>
+      <Source>Shaders\Sky\Textured.fx</Source>
+      <Name>Shaders\Sky\Textured</Name>
+      <Importer>EffectImporter</Importer>
+      <Processor>EffectProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Shaders\Sky\Textured.xnb</Output>
+      <Time>2012-03-23T15:49:46.7056618+00:00</Time>
+    </Item>
+    <Item>
+      <Source>Textures\moon.tga</Source>
+      <Name>Textures\moon</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Textures\moon.xnb</Output>
+      <Time>2012-03-23T15:50:07.6488597+00:00</Time>
+    </Item>
+    <Item>
+      <Source>Textures\moonglow.tga</Source>
+      <Name>Textures\moonglow</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Textures\moonglow.xnb</Output>
+      <Time>2012-03-23T15:50:07.6518598+00:00</Time>
+    </Item>
+    <Item>
+      <Source>Textures\SkyDay.png</Source>
+      <Name>Textures\SkyDay</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Textures\SkyDay.xnb</Output>
+      <Time>2012-03-23T15:50:07.6748612+00:00</Time>
+    </Item>
+    <Item>
+      <Source>Textures\SkyNight.png</Source>
+      <Name>Textures\SkyNight</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Textures\SkyNight.xnb</Output>
+      <Time>2012-03-23T15:50:07.6768613+00:00</Time>
+    </Item>
+    <Item>
+      <Source>Textures\starfield.png</Source>
+      <Name>Textures\starfield</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Textures\starfield.xnb</Output>
+      <Time>2012-03-23T15:50:07.6788614+00:00</Time>
+    </Item>
+    <Item>
+      <Source>Textures\Sunset.png</Source>
+      <Name>Textures\Sunset</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Textures\Sunset.xnb</Output>
+      <Time>2012-03-23T15:50:07.6808615+00:00</Time>
     </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>

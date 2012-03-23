@@ -22,7 +22,6 @@ namespace ProjectVanquishTest
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         DeferredRenderer renderer;
-        SSAORenderer ssao;
         
         public Game1()
         {
@@ -44,6 +43,7 @@ namespace ProjectVanquishTest
             SSAORenderer.Enabled = true;
             SSAORenderer.DistanceScale = 100.0f;
             SSAORenderer.SampleRadius = 1.5f;
+            SkyRenderer.RealTime = true;
             base.Initialize();
         }
 
@@ -98,7 +98,7 @@ namespace ProjectVanquishTest
 
             if (Keyboard.GetState().IsKeyDown(Keys.D9))
                 SSAORenderer.SampleRadius -= 0.5f;
-
+            
             // TODO: Add your update logic here
             base.Update(gameTime);
         }

@@ -19,3 +19,13 @@ Content\Models\ground_diffuse_0.xnb
 Content\null_normal_0.xnb
 Content\null_specular_0.xnb
 Content\Models\ship1_c_0.xnb
+Content\Shaders\Sky\scatter.xnb
+Content\Shaders\Sky\Sky.xnb
+Content\Shaders\Sky\SNoise.xnb
+Content\Shaders\Sky\Textured.xnb
+Content\Textures\moon.xnb
+Content\Textures\moonglow.xnb
+Content\Textures\SkyDay.xnb
+Content\Textures\SkyNight.xnb
+Content\Textures\starfield.xnb
+Content\Textures\Sunset.xnb

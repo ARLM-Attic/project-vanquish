@@ -25,6 +25,7 @@ namespace ProjectVanquish.Renderers
         private Lights.DirectionalLight light;
         private CascadeShadowRenderer shadowRenderer;
         private SSAORenderer ssaoRenderer;
+        private SkyRenderer skyRenderer;
         private KeyboardState lastKeyboardState;
         private int lastMouseX;
         private int lastMouseY;
@@ -66,11 +67,13 @@ namespace ProjectVanquish.Renderers
             // Clear the GBuffer
             ClearGBuffer();
 
+            skyRenderer.Draw(gameTime, camera);
+
             // Render the scene
             scene.DrawScene(gameTime);
 
             // Resolve the GBuffer
-            ResolveGBuffer();
+            ResolveGBuffer();            
 
             // Draw Depth for Shadow Mapping
             DrawDepth(gameTime);
@@ -80,16 +83,16 @@ namespace ProjectVanquish.Renderers
 
             // Draw Lights
             DrawLights(gameTime, ref shadowOcclusion);
-            
+                        
             // Render SSAO if enabled
             if (SSAORenderer.Enabled)
                 ssaoRenderer.Draw(GraphicsDevice, normalRT, depthRT, sceneRT, scene, camera, null);
-
+                        
             // Render output
-            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Opaque, SamplerState.PointClamp, null, null);
-            spriteBatch.Draw((Texture2D)colorRT, new Rectangle(0, 0, 128, 128), Color.White);
-            spriteBatch.Draw((Texture2D)normalRT, new Rectangle(128, 0, 128, 128), Color.White);
-            spriteBatch.End();
+            //spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Opaque, SamplerState.PointClamp, null, null);
+            //spriteBatch.Draw((Texture2D)sceneRT, new Rectangle(0, 0, 128, 128), Color.White);
+            //spriteBatch.Draw((Texture2D)depthRT, new Rectangle(128, 0, 128, 128), Color.White);
+            //spriteBatch.End();
 
             base.Draw(gameTime);
         }
@@ -158,7 +161,7 @@ namespace ProjectVanquish.Renderers
             GraphicsDevice.BlendState = BlendState.AlphaBlend;
             GraphicsDevice.DepthStencilState = DepthStencilState.None;
 
-            DrawHemisphericLight();
+            //DrawHemisphericLight();
 
             Color[] colors = new Color[10];
             colors[0] = Color.Red; colors[1] = Color.Blue;
@@ -169,7 +172,7 @@ namespace ProjectVanquish.Renderers
 
             float angle = (float)gameTime.TotalGameTime.TotalSeconds;
 
-            //DrawDirectionalLight(new Vector3(-1, -1, -1), new Color(light.Color));
+            DrawDirectionalLight(new Vector3(-1, -1, -1), new Color(light.Color));
 
             int n = 10;
             for (int i = 0; i < n; i++)
@@ -230,10 +233,10 @@ namespace ProjectVanquish.Renderers
                     {
                         // Set the Effect Parameters
                         hemisphericLight.Parameters["matWorldViewProj"].SetValue(actor.World * camera.ViewMatrix * camera.ProjectionMatrix);
-                        hemisphericLight.Parameters["matInverseWorld"].SetValue(Matrix.Invert(actor.World));
+                        hemisphericLight.Parameters["matInverseWorld"].SetValue(actor.World);
                         hemisphericLight.Parameters["vLightDirection"].SetValue(new Vector4(light.Direction, 1));
                         hemisphericLight.Parameters["ColorMap"].SetValue(hemisphericColorMap);
-                        hemisphericLight.Parameters["LightIntensity"].SetValue(0.3f);
+                        hemisphericLight.Parameters["LightIntensity"].SetValue(0.7f);
                         hemisphericLight.Parameters["SkyColor"].SetValue(new Vector4(light.Color, 1));
                         
                         // Apply the Effect
@@ -351,7 +354,7 @@ namespace ProjectVanquish.Renderers
             // Configure RenderTargets
             colorRT = new RenderTarget2D(GraphicsDevice, backBufferWidth, backBufferHeight, false, SurfaceFormat.Color, DepthFormat.Depth24);
             normalRT = new RenderTarget2D(GraphicsDevice, backBufferWidth, backBufferHeight, false, SurfaceFormat.Color, DepthFormat.Depth24);
-            depthRT = new RenderTarget2D(GraphicsDevice, backBufferWidth, backBufferHeight, false, SurfaceFormat.Single, DepthFormat.Depth24Stencil8);
+            depthRT = new RenderTarget2D(GraphicsDevice, backBufferWidth, backBufferHeight, false, SurfaceFormat.Color, DepthFormat.Depth24Stencil8);
             depthTexture = new RenderTarget2D(GraphicsDevice, backBufferWidth, backBufferHeight, false, SurfaceFormat.Single, DepthFormat.Depth24Stencil8);
             lightRT = new RenderTarget2D(GraphicsDevice, backBufferWidth, backBufferHeight, false, SurfaceFormat.Color, DepthFormat.None);
             sceneRT = new RenderTarget2D(GraphicsDevice, backBufferWidth, backBufferHeight, false, SurfaceFormat.Color, DepthFormat.Depth24Stencil8);
@@ -370,13 +373,17 @@ namespace ProjectVanquish.Renderers
             sphereModel = Game.Content.Load<Model>("Models/sphere");
 
             // Instantiate SpriteBatch
-            spriteBatch = new SpriteBatch(Game.GraphicsDevice);
+            spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // Make our ShadowRenderer
             shadowRenderer = new CascadeShadowRenderer(GraphicsDevice, Game.Content);
 
             // Instantiate the SSAO Renderer
             ssaoRenderer = new SSAORenderer(Game, backBufferWidth, backBufferHeight);
+
+            // Instantiate the Sky Renderer
+            skyRenderer = new SkyRenderer(Game, Game.Content, camera);
+
             base.LoadContent();
         }
 
@@ -454,6 +461,10 @@ namespace ProjectVanquish.Renderers
                 camera.YRotation -= cameraRotateAmount * mouseMoveX;
                 camera.XRotation -= cameraRotateAmount * mouseMoveY;
             }
+
+            SkyRenderer.Parameters.LightDirection = new Vector4(light.Direction, 1);
+            SkyRenderer.Parameters.LightColor = new Vector4(light.Color, 1);
+            skyRenderer.Update(gameTime);
 
             lastMouseX = mouseState.X;
             lastMouseY = mouseState.Y;
