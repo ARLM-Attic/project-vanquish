@@ -12,3 +12,10 @@ C:\ProjectVanquishTest\projectvanquish\ProjectVanquishTest\ProjectVanquish\obj\x
 C:\ProjectVanquishTest\projectvanquish\ProjectVanquishTest\ProjectVanquish\obj\x86\Debug\ProjectVanquish.dll
 C:\ProjectVanquishTest\projectvanquish\ProjectVanquishTest\ProjectVanquish\obj\x86\Debug\ProjectVanquish.pdb
 C:\ProjectVanquishTest\projectvanquish\ProjectVanquishTest\ProjectVanquish\bin\x86\Debug\BEPUphysics.xml
+C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquish\bin\x86\Debug\ProjectVanquish.dll
+C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquish\bin\x86\Debug\ProjectVanquish.pdb
+C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquish\bin\x86\Debug\BEPUphysics.xml
+C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquish\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquish\obj\x86\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
+C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquish\obj\x86\Debug\ProjectVanquish.dll
+C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquish\obj\x86\Debug\ProjectVanquish.pdb

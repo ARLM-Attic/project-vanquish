@@ -3,7 +3,7 @@
   <Asset Type="Graphics:NodeContent">
     <Name>Scene_Root</Name>
     <Identity>
-      <SourceFilename>C:\VanquishTest\VanquishTest\VanquishTest\VanquishTestContent\Models\Sphere.x</SourceFilename>
+      <SourceFilename>C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTestContent\Models\Sphere.x</SourceFilename>
       <SourceTool>XImporter</SourceTool>
     </Identity>
     <Transform>1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</Transform>
@@ -36,7 +36,7 @@
   <Resources>
     <Resource ID="#Resource1" Type="Graphics:BasicMaterialContent">
       <Identity>
-        <SourceFilename>C:\VanquishTest\VanquishTest\VanquishTest\VanquishTestContent\Models\Sphere.x</SourceFilename>
+        <SourceFilename>C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTestContent\Models\Sphere.x</SourceFilename>
         <SourceTool>XImporter</SourceTool>
       </Identity>
       <OpaqueData>
