@@ -58,7 +58,7 @@ namespace ProjectVanquish.Renderers
         Vector3[] farFrustumCornersVS = new Vector3[4];
         OrthographicCamera lightCamera;
 
-        bool enabled = true;
+        static bool enabled = true;
         ShadowFilteringType filteringType = ShadowFilteringType.PCF5x5;
 
         EffectTechnique[] shadowOcclusionTechniques = new EffectTechnique[4]; 
@@ -106,7 +106,7 @@ namespace ProjectVanquish.Renderers
         /// Gets or sets a value indicating whether or not shadow occlusion
         /// should be calculated.
         /// </summary>
-        public bool Enabled
+        public static bool Enabled
         {
             get { return enabled; }
             set { enabled = value; }
@@ -236,9 +236,9 @@ namespace ProjectVanquish.Renderers
         protected void DrawShadowMap(SceneManager scene)
         {
             // Set the shadow map as the current render target and clear it
-            graphicsDevice.SetRenderTarget(shadowMap);
-            graphicsDevice.Clear(ClearOptions.Target, new Vector4(1.0f), 1.0f, 0);
-            graphicsDevice.Clear(ClearOptions.DepthBuffer, new Vector4(1.0f), 1.0f, 0);
+            //graphicsDevice.SetRenderTarget(shadowMap);
+            //graphicsDevice.Clear(ClearOptions.Target, new Vector4(1.0f), 1.0f, 0);
+            //graphicsDevice.Clear(ClearOptions.DepthBuffer, new Vector4(1.0f), 1.0f, 0);
 
             // Set up the Effect
             shadowMapEffect.CurrentTechnique = shadowMapEffect.Techniques["GenerateShadowMap"];

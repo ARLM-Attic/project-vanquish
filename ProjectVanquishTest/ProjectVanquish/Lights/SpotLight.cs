@@ -16,8 +16,8 @@ namespace ProjectVanquish.Lights
         /// <summary>
         /// Initializes a new instance of the <see cref="SpotLight"/> class.
         /// </summary>
-        public SpotLight()
-            : base()
+        public SpotLight(Vector3 position, Vector3 color, float range, float intensity)
+            : base(position, color, range, intensity)
         {
         } 
         #endregion

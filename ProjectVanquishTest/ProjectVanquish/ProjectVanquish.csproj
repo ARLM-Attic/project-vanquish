@@ -100,6 +100,7 @@
     <Compile Include="Cameras\OrthographicCamera.cs" />
     <Compile Include="Cameras\PerspectiveCamera.cs" />
     <Compile Include="Core\BoundingBoxes\BoundingBoxBuffers.cs" />
+    <Compile Include="Core\LightManager.cs" />
     <Compile Include="Core\PhysicsManager.cs" />
     <Compile Include="Core\BoundingBoxes\VertexElementExtractor.cs" />
     <Compile Include="Lights\DirectionalLight.cs" />

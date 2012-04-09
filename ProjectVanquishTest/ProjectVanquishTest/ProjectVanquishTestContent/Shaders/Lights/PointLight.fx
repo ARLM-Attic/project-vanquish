@@ -130,17 +130,13 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
     //camera-to-surface vector
     float3 directionToCamera = normalize(cameraPosition - position);
     //compute specular light
-    float specularLight = specularIntensity * pow(saturate(dot(reflectionVector, directionToCamera)), specularPower);
-
-	// Self shadow
-	float shadow = saturate(4.0 * directionToCamera.z);
+    float specularLight = specularIntensity * pow( saturate(dot(reflectionVector, directionToCamera)), specularPower);
 
     //take into account attenuation and lightIntensity.
-    //return attenuation * lightIntensity * float4(diffuseLight.rgb,specularLight);
-	return 0.2 * shadow * (attenuation * lightIntensity * float4(diffuseLight.rgb,specularLight));
+    return attenuation * lightIntensity * float4(diffuseLight.rgb,specularLight);
 }
 
-technique Technique1
+technique PointLight
 {
     pass Pass1
     {

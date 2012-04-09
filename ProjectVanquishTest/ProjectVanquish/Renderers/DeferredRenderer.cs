@@ -17,20 +17,19 @@ namespace ProjectVanquish.Renderers
         private FirstPersonCamera camera;
         private QuadRenderer quadRenderer;
         SceneManager scene;
+        private LightManager lightManager;
         private RenderTarget2D colorRT, normalRT, depthRT, depthTexture, lightRT, sceneRT;
         private SpriteBatch spriteBatch;
         private Vector2 halfPixel;
-        private Effect clearBufferEffect, directionalLightEffect, finalCombineEffect, pointLightEffect, depthShadowEffect, hemisphericLight;
+        private Effect clearBufferEffect, finalCombineEffect, depthShadowEffect;
         private Model sphereModel;
-        private Lights.DirectionalLight light;
-        private CascadeShadowRenderer shadowRenderer;
+        private ShadowRenderer shadowRenderer;
         private SSAORenderer ssaoRenderer;
         private SkyRenderer skyRenderer;
         private KeyboardState lastKeyboardState;
         private int lastMouseX;
         private int lastMouseY;
         private GamePadState lastGamepadState;
-        private Texture2D hemisphericColorMap;
         #endregion
 
         #region Constructor
@@ -63,11 +62,13 @@ namespace ProjectVanquish.Renderers
         {
             // Set the GBuffer
             SetGBuffer();
-
+            
             // Clear the GBuffer
             ClearGBuffer();
 
-            skyRenderer.Draw(gameTime, camera);
+            // Render sky if enabled
+            if (SkyRenderer.Enabled)
+                skyRenderer.Draw(gameTime, camera);
 
             // Render the scene
             scene.DrawScene(gameTime);
@@ -79,20 +80,23 @@ namespace ProjectVanquish.Renderers
             DrawDepth(gameTime);
 
             // Render Shadows
-            var shadowOcclusion = shadowRenderer.Draw(GraphicsDevice, depthTexture, scene, camera);
+            var shadowOcclusion = shadowRenderer.Draw(scene, depthTexture, LightManager.Light, camera);
 
             // Draw Lights
-            DrawLights(gameTime, ref shadowOcclusion);
-                        
+            lightManager.DrawLights(GraphicsDevice, colorRT, normalRT, depthRT, lightRT, camera, scene);
+
+            // Combine the Final scene
+            CombineFinal(shadowOcclusion);
+
             // Render SSAO if enabled
             if (SSAORenderer.Enabled)
                 ssaoRenderer.Draw(GraphicsDevice, normalRT, depthRT, sceneRT, scene, camera, null);
                         
             // Render output
-            //spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Opaque, SamplerState.PointClamp, null, null);
-            //spriteBatch.Draw((Texture2D)sceneRT, new Rectangle(0, 0, 128, 128), Color.White);
-            //spriteBatch.Draw((Texture2D)depthRT, new Rectangle(128, 0, 128, 128), Color.White);
-            //spriteBatch.End();
+            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Opaque, SamplerState.PointClamp, null, null);
+            spriteBatch.Draw((Texture2D)colorRT, new Rectangle(0, 0, 128, 128), Color.White);
+            spriteBatch.Draw((Texture2D)depthRT, new Rectangle(128, 0, 128, 128), Color.White);
+            spriteBatch.End();
 
             base.Draw(gameTime);
         }
@@ -123,84 +127,11 @@ namespace ProjectVanquish.Renderers
         }
 
         /// <summary>
-        /// Draws a directional light.
+        /// Combines the final scene.
         /// </summary>
-        /// <param name="lightDirection">The light direction.</param>
-        /// <param name="color">The color.</param>
-        private void DrawDirectionalLight(Vector3 lightDirection, Color color)
-        {
-            // Set all parameters
-            directionalLightEffect.Parameters["colorMap"].SetValue(colorRT);
-            directionalLightEffect.Parameters["normalMap"].SetValue(normalRT);
-            directionalLightEffect.Parameters["depthMap"].SetValue(depthRT);
-            directionalLightEffect.Parameters["lightDirection"].SetValue(lightDirection);
-            directionalLightEffect.Parameters["Color"].SetValue(color.ToVector3());
-            directionalLightEffect.Parameters["cameraPosition"].SetValue(camera.Position);
-            directionalLightEffect.Parameters["InvertViewProjection"].SetValue(Matrix.Invert(camera.ViewMatrix * camera.ProjectionMatrix));
-            directionalLightEffect.Parameters["halfPixel"].SetValue(halfPixel);
-
-            // Apply the Effect
-            directionalLightEffect.Techniques[0].Passes[0].Apply();
-
-            // Draw a FullscreenQuad
-            quadRenderer.Render(Vector2.One * -1, Vector2.One);
-        }
-
-        /// <summary>
-        /// Draws the lights.
-        /// </summary>
-        /// <param name="gameTime">The game time.</param>
         /// <param name="shadowOcclusion">The shadow occlusion.</param>
-        private void DrawLights(GameTime gameTime, ref RenderTarget2D shadowOcclusion)
+        void CombineFinal(RenderTarget2D shadowOcclusion)
         {
-            // Set the Light RenderTarget
-            GraphicsDevice.SetRenderTarget(lightRT);
-            
-            // Clear all components to 0
-            GraphicsDevice.Clear(Color.Transparent);
-            GraphicsDevice.BlendState = BlendState.AlphaBlend;
-            GraphicsDevice.DepthStencilState = DepthStencilState.None;
-
-            //DrawHemisphericLight();
-
-            Color[] colors = new Color[10];
-            colors[0] = Color.Red; colors[1] = Color.Blue;
-            colors[2] = Color.IndianRed; colors[3] = Color.CornflowerBlue;
-            colors[4] = Color.Gold; colors[5] = Color.Green;
-            colors[6] = Color.Crimson; colors[7] = Color.SkyBlue;
-            colors[8] = Color.Red; colors[9] = Color.ForestGreen;
-
-            float angle = (float)gameTime.TotalGameTime.TotalSeconds;
-
-            DrawDirectionalLight(new Vector3(-1, -1, -1), new Color(light.Color));
-
-            int n = 10;
-            for (int i = 0; i < n; i++)
-            {
-                Vector3 pos = new Vector3((float)Math.Sin(i * MathHelper.TwoPi / n + angle), 0.30f, (float)Math.Cos(i * MathHelper.TwoPi / n + angle));
-                DrawPointLight(pos * 40, colors[i % 10], 15, 2);
-
-                pos = new Vector3((float)Math.Cos((i + 5) * MathHelper.TwoPi / n - angle), 0.30f, (float)Math.Sin((i + 5) * MathHelper.TwoPi / n - angle));
-                DrawPointLight(pos * 20, colors[i % 10], 20, 1);
-
-                pos = new Vector3((float)Math.Cos(i * MathHelper.TwoPi / n + angle), 0.10f, (float)Math.Sin(i * MathHelper.TwoPi / n + angle));
-                DrawPointLight(pos * 75, colors[i % 10], 45, 2);
-
-                pos = new Vector3((float)Math.Cos(i * MathHelper.TwoPi / n + angle), -0.3f, (float)Math.Sin(i * MathHelper.TwoPi / n + angle));
-                DrawPointLight(pos * 20, colors[i % 10], 20, 2);
-            }
-
-            DrawPointLight(new Vector3(0, (float)Math.Sin(angle * 0.8) * 40, 0), Color.Red, 30, 5);
-            DrawPointLight(new Vector3(0, 25, 0), Color.White, 30, 1);
-            DrawPointLight(new Vector3(0, 0, 70), Color.Wheat, 55 + 10 * (float)Math.Sin(5 * angle), 3);
-            
-            // Reset the RenderTarget
-            GraphicsDevice.SetRenderTarget(null);
-
-            GraphicsDevice.BlendState = BlendState.Opaque;
-            GraphicsDevice.DepthStencilState = DepthStencilState.None;
-            GraphicsDevice.RasterizerState = RasterizerState.CullCounterClockwise;
-
             // If SSAO is enabled, set the RenderTarget
             if (SSAORenderer.Enabled)
                 GraphicsDevice.SetRenderTarget(sceneRT);
@@ -211,6 +142,7 @@ namespace ProjectVanquish.Renderers
             finalCombineEffect.Parameters["halfPixel"].SetValue(halfPixel);
             finalCombineEffect.Parameters["shadowOcclusion"].SetValue(shadowOcclusion);
 
+            // Apply the Effect
             finalCombineEffect.Techniques[0].Passes[0].Apply();
 
             // Render a full-screen quad
@@ -218,118 +150,10 @@ namespace ProjectVanquish.Renderers
         }
 
         /// <summary>
-        /// Draws the hemispheric light.
-        /// </summary>
-        private void DrawHemisphericLight()
-        {
-            GraphicsDevice.BlendState = BlendState.Opaque;
-
-            // Only apply the effect to those models in the Frustum
-            foreach (Models.Actor actor in scene.Models.Where(a => camera.BoundingFrustum.Intersects(a.BoundingSphere)))
-            {
-                foreach (ModelMesh mesh in actor.Model.Meshes)
-                {
-                    foreach (ModelMeshPart part in mesh.MeshParts)
-                    {
-                        // Set the Effect Parameters
-                        hemisphericLight.Parameters["matWorldViewProj"].SetValue(actor.World * camera.ViewMatrix * camera.ProjectionMatrix);
-                        hemisphericLight.Parameters["matInverseWorld"].SetValue(actor.World);
-                        hemisphericLight.Parameters["vLightDirection"].SetValue(new Vector4(light.Direction, 1));
-                        hemisphericLight.Parameters["ColorMap"].SetValue(hemisphericColorMap);
-                        hemisphericLight.Parameters["LightIntensity"].SetValue(0.7f);
-                        hemisphericLight.Parameters["SkyColor"].SetValue(new Vector4(light.Color, 1));
-                        
-                        // Apply the Effect
-                        hemisphericLight.Techniques[0].Passes[0].Apply();
-
-                        // Render the Primitives
-                        GraphicsDevice.SetVertexBuffer(part.VertexBuffer, part.VertexOffset);
-                        GraphicsDevice.Indices = part.IndexBuffer;
-                        GraphicsDevice.DrawIndexedPrimitives(PrimitiveType.TriangleList, 0, 0, part.NumVertices, part.StartIndex, part.PrimitiveCount);
-                    }
-                }
-            }
-
-            GraphicsDevice.BlendState = BlendState.AlphaBlend;
-        }
-
-        /// <summary>
-        /// Draws a point light.
-        /// </summary>
-        /// <param name="lightPosition">The light position.</param>
-        /// <param name="color">The color.</param>
-        /// <param name="lightRadius">The light radius.</param>
-        /// <param name="lightIntensity">The light intensity.</param>
-        private void DrawPointLight(Vector3 lightPosition, Color color, float lightRadius, float lightIntensity)
-        {
-            GraphicsDevice.RasterizerState = RasterizerState.CullNone;
-
-            // Set the G-Buffer parameters
-            pointLightEffect.Parameters["colorMap"].SetValue(colorRT);
-            pointLightEffect.Parameters["normalMap"].SetValue(normalRT);
-            pointLightEffect.Parameters["depthMap"].SetValue(depthRT);
-
-            // Compute the light world matrix
-            // scale according to light radius, and translate it to light position
-            Matrix sphereWorldMatrix = Matrix.CreateScale(lightRadius) * Matrix.CreateTranslation(lightPosition);
-            pointLightEffect.Parameters["World"].SetValue(sphereWorldMatrix);
-            pointLightEffect.Parameters["View"].SetValue(camera.ViewMatrix);
-            pointLightEffect.Parameters["Projection"].SetValue(camera.ProjectionMatrix);
-
-            // Light position
-            pointLightEffect.Parameters["lightPosition"].SetValue(lightPosition);
-
-            // Set the color, radius and Intensity
-            pointLightEffect.Parameters["Color"].SetValue(color.ToVector3());
-            pointLightEffect.Parameters["lightRadius"].SetValue(lightRadius);
-            pointLightEffect.Parameters["lightIntensity"].SetValue(lightIntensity);
-
-            // Parameters for specular computations
-            pointLightEffect.Parameters["cameraPosition"].SetValue(camera.Position);
-            pointLightEffect.Parameters["InvertViewProjection"].SetValue(Matrix.Invert(camera.ViewMatrix * camera.ProjectionMatrix));
-
-            // Size of a halfpixel, for texture coordinates alignment
-            pointLightEffect.Parameters["halfPixel"].SetValue(halfPixel);
-
-            // Calculate the distance between the camera and light center
-            float cameraToCenter = Vector3.Distance(camera.Position, lightPosition);
-
-            // If we are inside the light volume, draw the sphere's inside face
-            if (cameraToCenter < lightRadius)
-                GraphicsDevice.RasterizerState = RasterizerState.CullClockwise;
-            else
-                GraphicsDevice.RasterizerState = RasterizerState.CullCounterClockwise;
-
-            GraphicsDevice.DepthStencilState = DepthStencilState.None;
-            GraphicsDevice.RasterizerState = RasterizerState.CullNone;
-
-            // Apply the Effect
-            pointLightEffect.Techniques[0].Passes[0].Apply();
-
-            // Draw the Sphere mesh
-            foreach (ModelMesh mesh in sphereModel.Meshes)
-                foreach (ModelMeshPart meshPart in mesh.MeshParts)
-                {
-                    GraphicsDevice.SetVertexBuffer(meshPart.VertexBuffer, meshPart.VertexOffset);
-                    GraphicsDevice.Indices = meshPart.IndexBuffer;
-                    GraphicsDevice.DrawIndexedPrimitives(PrimitiveType.TriangleList, 0, 0, meshPart.NumVertices, meshPart.StartIndex, meshPart.PrimitiveCount);
-                }
-
-            // Reset RenderStates
-            GraphicsDevice.RasterizerState = RasterizerState.CullCounterClockwise;
-            GraphicsDevice.DepthStencilState = DepthStencilState.Default;
-        }
-
-        /// <summary>
         /// Initializes the component. Override this method to load any non-graphics resources and query for any required services.
         /// </summary>
         public override void Initialize()
         {
-            // Make our directional light source
-            light = new Lights.DirectionalLight();
-            light.Direction = new Vector3(-1, -1, -1);
-            light.Color = new Vector3(0.7f, 0.7f, 0.7f);
-
             // Instantiate the QuadRenderer
             quadRenderer = new QuadRenderer(Game);
             Game.Components.Add(quadRenderer);
@@ -353,30 +177,29 @@ namespace ProjectVanquish.Renderers
 
             // Configure RenderTargets
             colorRT = new RenderTarget2D(GraphicsDevice, backBufferWidth, backBufferHeight, false, SurfaceFormat.Color, DepthFormat.Depth24);
-            normalRT = new RenderTarget2D(GraphicsDevice, backBufferWidth, backBufferHeight, false, SurfaceFormat.Color, DepthFormat.Depth24);
-            depthRT = new RenderTarget2D(GraphicsDevice, backBufferWidth, backBufferHeight, false, SurfaceFormat.Color, DepthFormat.Depth24Stencil8);
-            depthTexture = new RenderTarget2D(GraphicsDevice, backBufferWidth, backBufferHeight, false, SurfaceFormat.Single, DepthFormat.Depth24Stencil8);
+            normalRT = new RenderTarget2D(GraphicsDevice, backBufferWidth, backBufferHeight, false, SurfaceFormat.Color, DepthFormat.None);
+            depthRT = new RenderTarget2D(GraphicsDevice, backBufferWidth, backBufferHeight, false, SurfaceFormat.Single, DepthFormat.None);
+            depthTexture = new RenderTarget2D(GraphicsDevice, backBufferWidth, backBufferHeight, false, SurfaceFormat.Single, DepthFormat.Depth24);
             lightRT = new RenderTarget2D(GraphicsDevice, backBufferWidth, backBufferHeight, false, SurfaceFormat.Color, DepthFormat.None);
-            sceneRT = new RenderTarget2D(GraphicsDevice, backBufferWidth, backBufferHeight, false, SurfaceFormat.Color, DepthFormat.Depth24Stencil8);
-            hemisphericColorMap = Game.Content.Load<Texture2D>("Textures/ColorMap");
+            sceneRT = new RenderTarget2D(GraphicsDevice, backBufferWidth, backBufferHeight, false, SurfaceFormat.Color, DepthFormat.Depth24);
 
             // Initialize SceneManager
             scene.InitializeScene(camera);
 
+            // Instantiate the LightManager
+            lightManager = new LightManager(Game);
+
             // Load Effects
             clearBufferEffect = Game.Content.Load<Effect>("Shaders/GBuffer/ClearGBuffer");
-            directionalLightEffect = Game.Content.Load<Effect>("Shaders/Lights/DirectionalLight");
             finalCombineEffect = Game.Content.Load<Effect>("Shaders/GBuffer/CombineFinal");
-            pointLightEffect = Game.Content.Load<Effect>("Shaders/Lights/PointLight");
             depthShadowEffect = Game.Content.Load<Effect>("Shaders/Shadows/Depth");
-            hemisphericLight = Game.Content.Load<Effect>("Shaders/Lights/HemisphericLight");
             sphereModel = Game.Content.Load<Model>("Models/sphere");
 
             // Instantiate SpriteBatch
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // Make our ShadowRenderer
-            shadowRenderer = new CascadeShadowRenderer(GraphicsDevice, Game.Content);
+            shadowRenderer = new ShadowRenderer(GraphicsDevice, Game.Content);
 
             // Instantiate the SSAO Renderer
             ssaoRenderer = new SSAORenderer(Game, backBufferWidth, backBufferHeight);
@@ -416,7 +239,7 @@ namespace ProjectVanquish.Renderers
 
             // Toggle shadow rendering on and off
             if (keyboardState.IsKeyDown(Keys.T) && lastKeyboardState.IsKeyUp(Keys.T))
-                shadowRenderer.Enabled = !shadowRenderer.Enabled;
+                ShadowRenderer.Enabled = !ShadowRenderer.Enabled;
 
             // Switch through shadowmap filtering techniques
             if (keyboardState.IsKeyDown(Keys.G) && lastKeyboardState.IsKeyUp(Keys.G))
@@ -462,8 +285,8 @@ namespace ProjectVanquish.Renderers
                 camera.XRotation -= cameraRotateAmount * mouseMoveY;
             }
 
-            SkyRenderer.Parameters.LightDirection = new Vector4(light.Direction, 1);
-            SkyRenderer.Parameters.LightColor = new Vector4(light.Color, 1);
+            SkyRenderer.Parameters.LightDirection = new Vector4(LightManager.Light.Direction, 1);
+            SkyRenderer.Parameters.LightColor = new Vector4(LightManager.Light.Color, 1);
             skyRenderer.Update(gameTime);
 
             lastMouseX = mouseState.X;

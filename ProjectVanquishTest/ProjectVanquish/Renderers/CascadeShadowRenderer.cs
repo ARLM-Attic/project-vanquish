@@ -198,7 +198,7 @@ namespace ProjectVanquish.Renderers
 
             // Position the shadow-caster camera so that it's looking at the centroid,
             // and backed up in the direction of the sunlight
-            Matrix viewMatrix = Matrix.CreateLookAt(Vector3.Zero - (light.Direction * 100), Vector3.Zero, new Vector3(0, 1, 0));
+            Matrix viewMatrix = Matrix.CreateLookAt(Vector3.Zero - light.Direction * 100, Vector3.Zero, new Vector3(0, 1, 0));
 
             // Determine the position of the frustum corners in light space
             Vector3.Transform(frustumCornersWS, ref viewMatrix, frustumCornersLS);

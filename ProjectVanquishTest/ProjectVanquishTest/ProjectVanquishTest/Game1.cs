@@ -41,9 +41,8 @@ namespace ProjectVanquishTest
         {
             // TODO: Add your initialization logic here
             SSAORenderer.Enabled = true;
-            SSAORenderer.DistanceScale = 100.0f;
-            SSAORenderer.SampleRadius = 1.5f;
-            SkyRenderer.RealTime = true;
+            //SkyRenderer.Enabled = false;
+            SkyRenderer.RealTime = false;
             base.Initialize();
         }
 
