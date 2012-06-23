@@ -17,7 +17,7 @@
       <Processor>EffectProcessor</Processor>
       <Options>None</Options>
       <Output>C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Shaders\GBuffer\CombineFinal.xnb</Output>
-      <Time>2012-03-29T21:37:01.1276031+01:00</Time>
+      <Time>2012-05-18T13:36:38.2653366+01:00</Time>
     </Item>
     <Item>
       <Source>Shaders\GBuffer\RenderGBuffer.fx</Source>
@@ -26,7 +26,7 @@
       <Processor>EffectProcessor</Processor>
       <Options>None</Options>
       <Output>C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Shaders\GBuffer\RenderGBuffer.xnb</Output>
-      <Time>2012-03-23T09:29:08.8735402+00:00</Time>
+      <Time>2012-05-17T12:10:37.5489232+01:00</Time>
     </Item>
     <Item>
       <Source>Shaders\Lights\DirectionalLight.fx</Source>
@@ -35,7 +35,7 @@
       <Processor>EffectProcessor</Processor>
       <Options>None</Options>
       <Output>C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Shaders\Lights\DirectionalLight.xnb</Output>
-      <Time>2012-03-23T09:29:08.9145426+00:00</Time>
+      <Time>2012-05-17T11:41:53.2073889+01:00</Time>
     </Item>
     <Item>
       <Source>Shaders\Lights\PointLight.fx</Source>
@@ -71,7 +71,7 @@
       <Processor>EffectProcessor</Processor>
       <Options>None</Options>
       <Output>C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Shaders\Shadows\Depth.xnb</Output>
-      <Time>2012-03-23T09:29:08.9795463+00:00</Time>
+      <Time>2012-05-17T13:24:58.7724988+01:00</Time>
     </Item>
     <Item>
       <Source>Shaders\SSAO\Blur.fx</Source>
@@ -110,6 +110,42 @@
       <Time>2012-03-23T09:29:08.9205429+00:00</Time>
     </Item>
     <Item>
+      <Source>Shaders\Sky\scatter.fx</Source>
+      <Name>Shaders\Sky\scatter</Name>
+      <Importer>EffectImporter</Importer>
+      <Processor>EffectProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Shaders\Sky\scatter.xnb</Output>
+      <Time>2012-03-23T15:49:46.7006615+00:00</Time>
+    </Item>
+    <Item>
+      <Source>Shaders\Sky\Sky.fx</Source>
+      <Name>Shaders\Sky\Sky</Name>
+      <Importer>EffectImporter</Importer>
+      <Processor>EffectProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Shaders\Sky\Sky.xnb</Output>
+      <Time>2012-05-17T11:05:09.0061713+01:00</Time>
+    </Item>
+    <Item>
+      <Source>Shaders\Sky\SNoise.fx</Source>
+      <Name>Shaders\Sky\SNoise</Name>
+      <Importer>EffectImporter</Importer>
+      <Processor>EffectProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Shaders\Sky\SNoise.xnb</Output>
+      <Time>2012-03-23T15:49:46.7046617+00:00</Time>
+    </Item>
+    <Item>
+      <Source>Shaders\Sky\Textured.fx</Source>
+      <Name>Shaders\Sky\Textured</Name>
+      <Importer>EffectImporter</Importer>
+      <Processor>EffectProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Shaders\Sky\Textured.xnb</Output>
+      <Time>2012-03-23T15:49:46.7056618+00:00</Time>
+    </Item>
+    <Item>
       <Source>Models\Sphere.x</Source>
       <Name>Models\Sphere</Name>
       <Importer>XImporter</Importer>
@@ -119,7 +155,7 @@
       <Time>2012-03-23T09:29:07.6744717+00:00</Time>
       <Dependency>
         <Key>obj\x86\Debug\Models\Sphere_0.xml</Key>
-        <Value>2012-03-23T09:35:39.0963758+00:00</Value>
+        <Value>2012-05-17T12:20:49.4753004+01:00</Value>
       </Dependency>
     </Item>
     <Item>
@@ -132,7 +168,7 @@
       <Time>2012-03-23T09:29:07.5654654+00:00</Time>
       <Dependency>
         <Key>obj\x86\Debug\Models\Ground_0.xml</Key>
-        <Value>2012-03-23T09:35:39.4083763+00:00</Value>
+        <Value>2012-05-17T12:20:49.6053006+01:00</Value>
       </Dependency>
       <Request>C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Models\ground_diffuse_0.xnb</Request>
       <Request>C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\null_normal_0.xnb</Request>
@@ -149,7 +185,7 @@
       <Time>2012-03-23T09:29:07.6034676+00:00</Time>
       <Dependency>
         <Key>obj\x86\Debug\Models\ship1_0.xml</Key>
-        <Value>2012-03-23T09:35:40.6875786+00:00</Value>
+        <Value>2012-05-17T12:21:28.1203559+01:00</Value>
       </Dependency>
       <Request>C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Models\ship1_c_0.xnb</Request>
       <Request>C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\null_normal_0.xnb</Request>
@@ -173,6 +209,42 @@
       <Options>None</Options>
       <Output>C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Textures\ColorMap.xnb</Output>
       <Time>2009-05-09T14:00:52.7165879+01:00</Time>
+    </Item>
+    <Item>
+      <Source>Textures\SkyDay.png</Source>
+      <Name>Textures\SkyDay</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Textures\SkyDay.xnb</Output>
+      <Time>2012-03-23T15:50:07.6748612+00:00</Time>
+    </Item>
+    <Item>
+      <Source>Textures\SkyNight.png</Source>
+      <Name>Textures\SkyNight</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Textures\SkyNight.xnb</Output>
+      <Time>2012-03-23T15:50:07.6768613+00:00</Time>
+    </Item>
+    <Item>
+      <Source>Textures\starfield.png</Source>
+      <Name>Textures\starfield</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Textures\starfield.xnb</Output>
+      <Time>2012-03-23T15:50:07.6788614+00:00</Time>
+    </Item>
+    <Item>
+      <Source>Textures\Sunset.png</Source>
+      <Name>Textures\Sunset</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Textures\Sunset.xnb</Output>
+      <Time>2012-03-23T15:50:07.6808615+00:00</Time>
     </Item>
     <Item>
       <Source>Models\Sphere.x</Source>
@@ -237,6 +309,397 @@
       <Time>2012-03-23T09:29:08.6545277+00:00</Time>
     </Item>
     <Item>
+      <Source>Models\sponza2.x</Source>
+      <Importer>XImporter</Importer>
+      <Options>IntermediateFile, DontCacheImportedData</Options>
+      <Output>obj\x86\Debug\Models\sponza2_0.xml</Output>
+      <Time>2012-05-17T10:59:59.2567517+01:00</Time>
+    </Item>
+    <Item>
+      <Source>Models\sponza\sponza_flagpole_diff.tga</Source>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Parameters>
+        <Data Key="ColorKeyColor" Type="Framework:Color">FFFF00FF</Data>
+        <Data Key="ColorKeyEnabled" Type="bool">true</Data>
+        <Data Key="TextureFormat" Type="Processors:TextureProcessorOutputFormat">DxtCompressed</Data>
+        <Data Key="GenerateMipmaps" Type="bool">true</Data>
+        <Data Key="ResizeToPowerOfTwo" Type="bool">false</Data>
+        <Data Key="PremultiplyAlpha" Type="bool">true</Data>
+      </Parameters>
+      <Options>None</Options>
+      <Output>C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Models\sponza\sponza_flagpole_diff_0.xnb</Output>
+      <Time>2012-05-17T10:59:57.2583484+01:00</Time>
+    </Item>
+    <Item>
+      <Source>Models\sponza\sponza_column_c_diff.tga</Source>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Parameters>
+        <Data Key="ColorKeyColor" Type="Framework:Color">FFFF00FF</Data>
+        <Data Key="ColorKeyEnabled" Type="bool">true</Data>
+        <Data Key="TextureFormat" Type="Processors:TextureProcessorOutputFormat">DxtCompressed</Data>
+        <Data Key="GenerateMipmaps" Type="bool">true</Data>
+        <Data Key="ResizeToPowerOfTwo" Type="bool">false</Data>
+        <Data Key="PremultiplyAlpha" Type="bool">true</Data>
+      </Parameters>
+      <Options>None</Options>
+      <Output>C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Models\sponza\sponza_column_c_diff_0.xnb</Output>
+      <Time>2012-05-17T10:59:54.185143+01:00</Time>
+    </Item>
+    <Item>
+      <Source>Models\sponza\sponza_arch_diff.tga</Source>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Parameters>
+        <Data Key="ColorKeyColor" Type="Framework:Color">FFFF00FF</Data>
+        <Data Key="ColorKeyEnabled" Type="bool">true</Data>
+        <Data Key="TextureFormat" Type="Processors:TextureProcessorOutputFormat">DxtCompressed</Data>
+        <Data Key="GenerateMipmaps" Type="bool">true</Data>
+        <Data Key="ResizeToPowerOfTwo" Type="bool">false</Data>
+        <Data Key="PremultiplyAlpha" Type="bool">true</Data>
+      </Parameters>
+      <Options>None</Options>
+      <Output>C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Models\sponza\sponza_arch_diff_0.xnb</Output>
+      <Time>2012-05-17T10:59:54.1071428+01:00</Time>
+    </Item>
+    <Item>
+      <Source>Models\sponza\sponza_column_a_diff.tga</Source>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Parameters>
+        <Data Key="ColorKeyColor" Type="Framework:Color">FFFF00FF</Data>
+        <Data Key="ColorKeyEnabled" Type="bool">true</Data>
+        <Data Key="TextureFormat" Type="Processors:TextureProcessorOutputFormat">DxtCompressed</Data>
+        <Data Key="GenerateMipmaps" Type="bool">true</Data>
+        <Data Key="ResizeToPowerOfTwo" Type="bool">false</Data>
+        <Data Key="PremultiplyAlpha" Type="bool">true</Data>
+      </Parameters>
+      <Options>None</Options>
+      <Output>C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Models\sponza\sponza_column_a_diff_0.xnb</Output>
+      <Time>2012-05-17T10:59:54.1539429+01:00</Time>
+    </Item>
+    <Item>
+      <Source>Models\sponza\sponza_column_b_diff.tga</Source>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Parameters>
+        <Data Key="ColorKeyColor" Type="Framework:Color">FFFF00FF</Data>
+        <Data Key="ColorKeyEnabled" Type="bool">true</Data>
+        <Data Key="TextureFormat" Type="Processors:TextureProcessorOutputFormat">DxtCompressed</Data>
+        <Data Key="GenerateMipmaps" Type="bool">true</Data>
+        <Data Key="ResizeToPowerOfTwo" Type="bool">false</Data>
+        <Data Key="PremultiplyAlpha" Type="bool">true</Data>
+      </Parameters>
+      <Options>None</Options>
+      <Output>C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Models\sponza\sponza_column_b_diff_0.xnb</Output>
+      <Time>2012-05-17T10:59:54.1695429+01:00</Time>
+    </Item>
+    <Item>
+      <Source>Models\sponza\sponza_thorn_diff.tga</Source>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Parameters>
+        <Data Key="ColorKeyColor" Type="Framework:Color">FFFF00FF</Data>
+        <Data Key="ColorKeyEnabled" Type="bool">true</Data>
+        <Data Key="TextureFormat" Type="Processors:TextureProcessorOutputFormat">DxtCompressed</Data>
+        <Data Key="GenerateMipmaps" Type="bool">true</Data>
+        <Data Key="ResizeToPowerOfTwo" Type="bool">false</Data>
+        <Data Key="PremultiplyAlpha" Type="bool">true</Data>
+      </Parameters>
+      <Options>None</Options>
+      <Output>C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Models\sponza\sponza_thorn_diff_0.xnb</Output>
+      <Time>2012-05-17T10:59:58.16315+01:00</Time>
+    </Item>
+    <Item>
+      <Source>Models\sponza\vase_dif.tga</Source>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Parameters>
+        <Data Key="ColorKeyColor" Type="Framework:Color">FFFF00FF</Data>
+        <Data Key="ColorKeyEnabled" Type="bool">true</Data>
+        <Data Key="TextureFormat" Type="Processors:TextureProcessorOutputFormat">DxtCompressed</Data>
+        <Data Key="GenerateMipmaps" Type="bool">true</Data>
+        <Data Key="ResizeToPowerOfTwo" Type="bool">false</Data>
+        <Data Key="PremultiplyAlpha" Type="bool">true</Data>
+      </Parameters>
+      <Options>None</Options>
+      <Output>C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Models\sponza\vase_dif_0.xnb</Output>
+      <Time>2012-05-17T10:59:58.17875+01:00</Time>
+    </Item>
+    <Item>
+      <Source>Models\sponza\vase_plant.tga</Source>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Parameters>
+        <Data Key="ColorKeyColor" Type="Framework:Color">FFFF00FF</Data>
+        <Data Key="ColorKeyEnabled" Type="bool">true</Data>
+        <Data Key="TextureFormat" Type="Processors:TextureProcessorOutputFormat">DxtCompressed</Data>
+        <Data Key="GenerateMipmaps" Type="bool">true</Data>
+        <Data Key="ResizeToPowerOfTwo" Type="bool">false</Data>
+        <Data Key="PremultiplyAlpha" Type="bool">true</Data>
+      </Parameters>
+      <Options>None</Options>
+      <Output>C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Models\sponza\vase_plant_0.xnb</Output>
+      <Time>2012-05-17T10:59:58.2255501+01:00</Time>
+    </Item>
+    <Item>
+      <Source>Models\sponza\lion.tga</Source>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Parameters>
+        <Data Key="ColorKeyColor" Type="Framework:Color">FFFF00FF</Data>
+        <Data Key="ColorKeyEnabled" Type="bool">true</Data>
+        <Data Key="TextureFormat" Type="Processors:TextureProcessorOutputFormat">DxtCompressed</Data>
+        <Data Key="GenerateMipmaps" Type="bool">true</Data>
+        <Data Key="ResizeToPowerOfTwo" Type="bool">false</Data>
+        <Data Key="PremultiplyAlpha" Type="bool">true</Data>
+      </Parameters>
+      <Options>None</Options>
+      <Output>C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Models\sponza\lion_0.xnb</Output>
+      <Time>2012-05-17T10:59:53.061941+01:00</Time>
+    </Item>
+    <Item>
+      <Source>Models\sponza\background.tga</Source>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Parameters>
+        <Data Key="ColorKeyColor" Type="Framework:Color">FFFF00FF</Data>
+        <Data Key="ColorKeyEnabled" Type="bool">true</Data>
+        <Data Key="TextureFormat" Type="Processors:TextureProcessorOutputFormat">DxtCompressed</Data>
+        <Data Key="GenerateMipmaps" Type="bool">true</Data>
+        <Data Key="ResizeToPowerOfTwo" Type="bool">false</Data>
+        <Data Key="PremultiplyAlpha" Type="bool">true</Data>
+      </Parameters>
+      <Options>None</Options>
+      <Output>C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Models\sponza\background_0.xnb</Output>
+      <Time>2012-05-17T10:59:53.046341+01:00</Time>
+    </Item>
+    <Item>
+      <Source>Models\sponza\chain_texture.tga</Source>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Parameters>
+        <Data Key="ColorKeyColor" Type="Framework:Color">FFFF00FF</Data>
+        <Data Key="ColorKeyEnabled" Type="bool">true</Data>
+        <Data Key="TextureFormat" Type="Processors:TextureProcessorOutputFormat">DxtCompressed</Data>
+        <Data Key="GenerateMipmaps" Type="bool">true</Data>
+        <Data Key="ResizeToPowerOfTwo" Type="bool">false</Data>
+        <Data Key="PremultiplyAlpha" Type="bool">true</Data>
+      </Parameters>
+      <Options>None</Options>
+      <Output>C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Models\sponza\chain_texture_0.xnb</Output>
+      <Time>2012-05-17T10:59:53.046341+01:00</Time>
+    </Item>
+    <Item>
+      <Source>Models\sponza\vase_hanging.tga</Source>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Parameters>
+        <Data Key="ColorKeyColor" Type="Framework:Color">FFFF00FF</Data>
+        <Data Key="ColorKeyEnabled" Type="bool">true</Data>
+        <Data Key="TextureFormat" Type="Processors:TextureProcessorOutputFormat">DxtCompressed</Data>
+        <Data Key="GenerateMipmaps" Type="bool">true</Data>
+        <Data Key="ResizeToPowerOfTwo" Type="bool">false</Data>
+        <Data Key="PremultiplyAlpha" Type="bool">true</Data>
+      </Parameters>
+      <Options>None</Options>
+      <Output>C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Models\sponza\vase_hanging_0.xnb</Output>
+      <Time>2012-05-17T10:59:58.20995+01:00</Time>
+    </Item>
+    <Item>
+      <Source>Models\sponza\sponza_curtain_blue_diff.tga</Source>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Parameters>
+        <Data Key="ColorKeyColor" Type="Framework:Color">FFFF00FF</Data>
+        <Data Key="ColorKeyEnabled" Type="bool">true</Data>
+        <Data Key="TextureFormat" Type="Processors:TextureProcessorOutputFormat">DxtCompressed</Data>
+        <Data Key="GenerateMipmaps" Type="bool">true</Data>
+        <Data Key="ResizeToPowerOfTwo" Type="bool">false</Data>
+        <Data Key="PremultiplyAlpha" Type="bool">true</Data>
+      </Parameters>
+      <Options>None</Options>
+      <Output>C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Models\sponza\sponza_curtain_blue_diff_0.xnb</Output>
+      <Time>2012-05-17T10:59:55.2459448+01:00</Time>
+    </Item>
+    <Item>
+      <Source>Models\sponza\sponza_floor_a_diff.tga</Source>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Parameters>
+        <Data Key="ColorKeyColor" Type="Framework:Color">FFFF00FF</Data>
+        <Data Key="ColorKeyEnabled" Type="bool">true</Data>
+        <Data Key="TextureFormat" Type="Processors:TextureProcessorOutputFormat">DxtCompressed</Data>
+        <Data Key="GenerateMipmaps" Type="bool">true</Data>
+        <Data Key="ResizeToPowerOfTwo" Type="bool">false</Data>
+        <Data Key="PremultiplyAlpha" Type="bool">true</Data>
+      </Parameters>
+      <Options>None</Options>
+      <Output>C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Models\sponza\sponza_floor_a_diff_0.xnb</Output>
+      <Time>2012-05-17T10:59:58.1475499+01:00</Time>
+    </Item>
+    <Item>
+      <Source>Models\sponza\sponza_curtain_diff.tga</Source>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Parameters>
+        <Data Key="ColorKeyColor" Type="Framework:Color">FFFF00FF</Data>
+        <Data Key="ColorKeyEnabled" Type="bool">true</Data>
+        <Data Key="TextureFormat" Type="Processors:TextureProcessorOutputFormat">DxtCompressed</Data>
+        <Data Key="GenerateMipmaps" Type="bool">true</Data>
+        <Data Key="ResizeToPowerOfTwo" Type="bool">false</Data>
+        <Data Key="PremultiplyAlpha" Type="bool">true</Data>
+      </Parameters>
+      <Options>None</Options>
+      <Output>C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Models\sponza\sponza_curtain_diff_0.xnb</Output>
+      <Time>2012-05-17T10:59:56.2287466+01:00</Time>
+    </Item>
+    <Item>
+      <Source>Models\sponza\spnza_bricks_a_diff.tga</Source>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Parameters>
+        <Data Key="ColorKeyColor" Type="Framework:Color">FFFF00FF</Data>
+        <Data Key="ColorKeyEnabled" Type="bool">true</Data>
+        <Data Key="TextureFormat" Type="Processors:TextureProcessorOutputFormat">DxtCompressed</Data>
+        <Data Key="GenerateMipmaps" Type="bool">true</Data>
+        <Data Key="ResizeToPowerOfTwo" Type="bool">false</Data>
+        <Data Key="PremultiplyAlpha" Type="bool">true</Data>
+      </Parameters>
+      <Options>None</Options>
+      <Output>C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Models\sponza\spnza_bricks_a_diff_0.xnb</Output>
+      <Time>2012-05-17T10:59:53.0931411+01:00</Time>
+    </Item>
+    <Item>
+      <Source>Models\sponza\vase_round.tga</Source>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Parameters>
+        <Data Key="ColorKeyColor" Type="Framework:Color">FFFF00FF</Data>
+        <Data Key="ColorKeyEnabled" Type="bool">true</Data>
+        <Data Key="TextureFormat" Type="Processors:TextureProcessorOutputFormat">DxtCompressed</Data>
+        <Data Key="GenerateMipmaps" Type="bool">true</Data>
+        <Data Key="ResizeToPowerOfTwo" Type="bool">false</Data>
+        <Data Key="PremultiplyAlpha" Type="bool">true</Data>
+      </Parameters>
+      <Options>None</Options>
+      <Output>C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Models\sponza\vase_round_0.xnb</Output>
+      <Time>2012-05-17T10:59:58.5531506+01:00</Time>
+    </Item>
+    <Item>
+      <Source>Models\sponza\sponza_fabric_diff.tga</Source>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Parameters>
+        <Data Key="ColorKeyColor" Type="Framework:Color">FFFF00FF</Data>
+        <Data Key="ColorKeyEnabled" Type="bool">true</Data>
+        <Data Key="TextureFormat" Type="Processors:TextureProcessorOutputFormat">DxtCompressed</Data>
+        <Data Key="GenerateMipmaps" Type="bool">true</Data>
+        <Data Key="ResizeToPowerOfTwo" Type="bool">false</Data>
+        <Data Key="PremultiplyAlpha" Type="bool">true</Data>
+      </Parameters>
+      <Options>None</Options>
+      <Output>C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Models\sponza\sponza_fabric_diff_0.xnb</Output>
+      <Time>2012-05-17T10:59:57.2271483+01:00</Time>
+    </Item>
+    <Item>
+      <Source>Models\sponza\sponza_fabric_blue_diff.tga</Source>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Parameters>
+        <Data Key="ColorKeyColor" Type="Framework:Color">FFFF00FF</Data>
+        <Data Key="ColorKeyEnabled" Type="bool">true</Data>
+        <Data Key="TextureFormat" Type="Processors:TextureProcessorOutputFormat">DxtCompressed</Data>
+        <Data Key="GenerateMipmaps" Type="bool">true</Data>
+        <Data Key="ResizeToPowerOfTwo" Type="bool">false</Data>
+        <Data Key="PremultiplyAlpha" Type="bool">true</Data>
+      </Parameters>
+      <Options>None</Options>
+      <Output>C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Models\sponza\sponza_fabric_blue_diff_0.xnb</Output>
+      <Time>2012-05-17T10:59:57.2115483+01:00</Time>
+    </Item>
+    <Item>
+      <Source>Models\sponza\sponza_curtain_green_diff.tga</Source>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Parameters>
+        <Data Key="ColorKeyColor" Type="Framework:Color">FFFF00FF</Data>
+        <Data Key="ColorKeyEnabled" Type="bool">true</Data>
+        <Data Key="TextureFormat" Type="Processors:TextureProcessorOutputFormat">DxtCompressed</Data>
+        <Data Key="GenerateMipmaps" Type="bool">true</Data>
+        <Data Key="ResizeToPowerOfTwo" Type="bool">false</Data>
+        <Data Key="PremultiplyAlpha" Type="bool">true</Data>
+      </Parameters>
+      <Options>None</Options>
+      <Output>C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Models\sponza\sponza_curtain_green_diff_0.xnb</Output>
+      <Time>2012-05-17T10:59:57.1647482+01:00</Time>
+    </Item>
+    <Item>
+      <Source>Models\sponza\sponza_ceiling_a_diff.tga</Source>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Parameters>
+        <Data Key="ColorKeyColor" Type="Framework:Color">FFFF00FF</Data>
+        <Data Key="ColorKeyEnabled" Type="bool">true</Data>
+        <Data Key="TextureFormat" Type="Processors:TextureProcessorOutputFormat">DxtCompressed</Data>
+        <Data Key="GenerateMipmaps" Type="bool">true</Data>
+        <Data Key="ResizeToPowerOfTwo" Type="bool">false</Data>
+        <Data Key="PremultiplyAlpha" Type="bool">true</Data>
+      </Parameters>
+      <Options>None</Options>
+      <Output>C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Models\sponza\sponza_ceiling_a_diff_0.xnb</Output>
+      <Time>2012-05-17T10:59:54.1227429+01:00</Time>
+    </Item>
+    <Item>
+      <Source>Models\sponza\sponza_fabric_green_diff.tga</Source>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Parameters>
+        <Data Key="ColorKeyColor" Type="Framework:Color">FFFF00FF</Data>
+        <Data Key="ColorKeyEnabled" Type="bool">true</Data>
+        <Data Key="TextureFormat" Type="Processors:TextureProcessorOutputFormat">DxtCompressed</Data>
+        <Data Key="GenerateMipmaps" Type="bool">true</Data>
+        <Data Key="ResizeToPowerOfTwo" Type="bool">false</Data>
+        <Data Key="PremultiplyAlpha" Type="bool">true</Data>
+      </Parameters>
+      <Options>None</Options>
+      <Output>C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Models\sponza\sponza_fabric_green_diff_0.xnb</Output>
+      <Time>2012-05-17T10:59:57.2427483+01:00</Time>
+    </Item>
+    <Item>
+      <Source>Models\sponza\sponza_details_diff.tga</Source>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Parameters>
+        <Data Key="ColorKeyColor" Type="Framework:Color">FFFF00FF</Data>
+        <Data Key="ColorKeyEnabled" Type="bool">true</Data>
+        <Data Key="TextureFormat" Type="Processors:TextureProcessorOutputFormat">DxtCompressed</Data>
+        <Data Key="GenerateMipmaps" Type="bool">true</Data>
+        <Data Key="ResizeToPowerOfTwo" Type="bool">false</Data>
+        <Data Key="PremultiplyAlpha" Type="bool">true</Data>
+      </Parameters>
+      <Options>None</Options>
+      <Output>C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Models\sponza\sponza_details_diff_0.xnb</Output>
+      <Time>2012-05-17T10:59:57.1959483+01:00</Time>
+    </Item>
+    <Item>
+      <Source>Models\sponza\sponza_roof_diff.tga</Source>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Parameters>
+        <Data Key="ColorKeyColor" Type="Framework:Color">FFFF00FF</Data>
+        <Data Key="ColorKeyEnabled" Type="bool">true</Data>
+        <Data Key="TextureFormat" Type="Processors:TextureProcessorOutputFormat">DxtCompressed</Data>
+        <Data Key="GenerateMipmaps" Type="bool">true</Data>
+        <Data Key="ResizeToPowerOfTwo" Type="bool">false</Data>
+        <Data Key="PremultiplyAlpha" Type="bool">true</Data>
+      </Parameters>
+      <Options>None</Options>
+      <Output>C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Models\sponza\sponza_roof_diff_0.xnb</Output>
+      <Time>2012-05-17T10:59:58.16315+01:00</Time>
+    </Item>
+    <Item>
       <Source>Models\ship1.fbx</Source>
       <Importer>FbxImporter</Importer>
       <Options>IntermediateFile, DontCacheImportedData</Options>
@@ -260,94 +723,106 @@
       <Time>2012-03-23T09:29:07.6264689+00:00</Time>
     </Item>
     <Item>
-      <Source>Shaders\Sky\scatter.fx</Source>
-      <Name>Shaders\Sky\scatter</Name>
-      <Importer>EffectImporter</Importer>
-      <Processor>EffectProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Shaders\Sky\scatter.xnb</Output>
-      <Time>2012-03-23T15:49:46.7006615+00:00</Time>
-    </Item>
-    <Item>
-      <Source>Shaders\Sky\Sky.fx</Source>
-      <Name>Shaders\Sky\Sky</Name>
-      <Importer>EffectImporter</Importer>
-      <Processor>EffectProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Shaders\Sky\Sky.xnb</Output>
-      <Time>2012-03-23T15:49:46.7026616+00:00</Time>
-    </Item>
-    <Item>
-      <Source>Shaders\Sky\SNoise.fx</Source>
-      <Name>Shaders\Sky\SNoise</Name>
-      <Importer>EffectImporter</Importer>
-      <Processor>EffectProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Shaders\Sky\SNoise.xnb</Output>
-      <Time>2012-03-23T15:49:46.7046617+00:00</Time>
-    </Item>
-    <Item>
-      <Source>Shaders\Sky\Textured.fx</Source>
-      <Name>Shaders\Sky\Textured</Name>
-      <Importer>EffectImporter</Importer>
-      <Processor>EffectProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Shaders\Sky\Textured.xnb</Output>
-      <Time>2012-03-23T15:49:46.7056618+00:00</Time>
-    </Item>
-    <Item>
-      <Source>Textures\moon.tga</Source>
-      <Name>Textures\moon</Name>
+      <Source>Textures\Snow.dds</Source>
+      <Name>Textures\Snow</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Textures\moon.xnb</Output>
-      <Time>2012-03-23T15:50:07.6488597+00:00</Time>
+      <Output>C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Textures\Snow.xnb</Output>
+      <Time>2012-05-17T12:37:34.6850714+01:00</Time>
     </Item>
     <Item>
-      <Source>Textures\moonglow.tga</Source>
-      <Name>Textures\moonglow</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
+      <Source>Models\sponza2.x</Source>
+      <Name>Models\sponza2</Name>
+      <Importer>XImporter</Importer>
+      <Processor>DeferredRendererModel</Processor>
+      <Parameters>
+        <Data Key="RotationX">-90</Data>
+        <Data Key="Scale">0.15</Data>
+        <Data Key="SwapWindingOrder">True</Data>
+        <Data Key="PremultiplyTextureAlpha">False</Data>
+        <Data Key="TextureFormat">NoChange</Data>
+      </Parameters>
       <Options>None</Options>
-      <Output>C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Textures\moonglow.xnb</Output>
-      <Time>2012-03-23T15:50:07.6518598+00:00</Time>
+      <Output>C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Models\sponza2.xnb</Output>
+      <Time>2012-05-17T10:59:59.2567517+01:00</Time>
+      <Dependency>
+        <Key>obj\x86\Debug\Models\sponza2_0.xml</Key>
+        <Value>2012-05-17T12:21:02.4163186+01:00</Value>
+      </Dependency>
+      <Request>C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\null_normal_0.xnb</Request>
+      <Request>C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\null_specular_0.xnb</Request>
+      <Request>C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Shaders\GBuffer\RenderGBuffer.xnb</Request>
+      <Request>C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Models\sponza\sponza_flagpole_diff_0.xnb</Request>
+      <Request>C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Models\sponza\sponza_column_c_diff_0.xnb</Request>
+      <Request>C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Models\sponza\sponza_arch_diff_0.xnb</Request>
+      <Request>C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Models\sponza\sponza_column_a_diff_0.xnb</Request>
+      <Request>C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Models\sponza\sponza_column_b_diff_0.xnb</Request>
+      <Request>C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Models\sponza\sponza_thorn_diff_0.xnb</Request>
+      <Request>C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Models\sponza\vase_dif_0.xnb</Request>
+      <Request>C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Models\sponza\vase_plant_0.xnb</Request>
+      <Request>C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Models\sponza\lion_0.xnb</Request>
+      <Request>C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Models\sponza\background_0.xnb</Request>
+      <Request>C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Models\sponza\chain_texture_0.xnb</Request>
+      <Request>C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Models\sponza\vase_hanging_0.xnb</Request>
+      <Request>C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Models\sponza\sponza_curtain_blue_diff_0.xnb</Request>
+      <Request>C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Models\sponza\sponza_floor_a_diff_0.xnb</Request>
+      <Request>C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Models\sponza\sponza_curtain_diff_0.xnb</Request>
+      <Request>C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Models\sponza\spnza_bricks_a_diff_0.xnb</Request>
+      <Request>C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Models\sponza\vase_round_0.xnb</Request>
+      <Request>C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Models\sponza\sponza_fabric_diff_0.xnb</Request>
+      <Request>C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Models\sponza\sponza_fabric_blue_diff_0.xnb</Request>
+      <Request>C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Models\sponza\sponza_curtain_green_diff_0.xnb</Request>
+      <Request>C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Models\sponza\sponza_ceiling_a_diff_0.xnb</Request>
+      <Request>C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Models\sponza\sponza_fabric_green_diff_0.xnb</Request>
+      <Request>C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Models\sponza\sponza_details_diff_0.xnb</Request>
+      <Request>C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Models\sponza\sponza_roof_diff_0.xnb</Request>
     </Item>
     <Item>
-      <Source>Textures\SkyDay.png</Source>
-      <Name>Textures\SkyDay</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Textures\SkyDay.xnb</Output>
-      <Time>2012-03-23T15:50:07.6748612+00:00</Time>
+      <Source>Models\ExampleMap.fbx</Source>
+      <Importer>FbxImporter</Importer>
+      <Options>IntermediateFile, DontCacheImportedData</Options>
+      <Output>obj\x86\Debug\Models\ExampleMap_0.xml</Output>
+      <Time>2012-05-19T09:57:52.272189+01:00</Time>
     </Item>
     <Item>
-      <Source>Textures\SkyNight.png</Source>
-      <Name>Textures\SkyNight</Name>
+      <Source>Textures\ColorMap.jpg</Source>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
+      <Parameters>
+        <Data Key="ColorKeyColor" Type="Framework:Color">FFFF00FF</Data>
+        <Data Key="ColorKeyEnabled" Type="bool">true</Data>
+        <Data Key="TextureFormat" Type="Processors:TextureProcessorOutputFormat">DxtCompressed</Data>
+        <Data Key="GenerateMipmaps" Type="bool">true</Data>
+        <Data Key="ResizeToPowerOfTwo" Type="bool">false</Data>
+        <Data Key="PremultiplyAlpha" Type="bool">true</Data>
+      </Parameters>
       <Options>None</Options>
-      <Output>C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Textures\SkyNight.xnb</Output>
-      <Time>2012-03-23T15:50:07.6768613+00:00</Time>
+      <Output>C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Textures\ColorMap_0.xnb</Output>
+      <Time>2009-05-09T14:00:52.7165879+01:00</Time>
     </Item>
     <Item>
-      <Source>Textures\starfield.png</Source>
-      <Name>Textures\starfield</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
+      <Source>Models\ExampleMap.fbx</Source>
+      <Name>Models\ExampleMap</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>DeferredRendererModel</Processor>
+      <Parameters>
+        <Data Key="Scale">0.05</Data>
+        <Data Key="PremultiplyVertexColors">False</Data>
+        <Data Key="PremultiplyTextureAlpha">False</Data>
+        <Data Key="NormalMapTexture">../Textures/ColorMap.jpg</Data>
+        <Data Key="GenerateMipmaps">False</Data>
+      </Parameters>
       <Options>None</Options>
-      <Output>C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Textures\starfield.xnb</Output>
-      <Time>2012-03-23T15:50:07.6788614+00:00</Time>
-    </Item>
-    <Item>
-      <Source>Textures\Sunset.png</Source>
-      <Name>Textures\Sunset</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Textures\Sunset.xnb</Output>
-      <Time>2012-03-23T15:50:07.6808615+00:00</Time>
+      <Output>C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Models\ExampleMap.xnb</Output>
+      <Time>2012-05-19T09:57:52.272189+01:00</Time>
+      <Dependency>
+        <Key>obj\x86\Debug\Models\ExampleMap_0.xml</Key>
+        <Value>2012-05-19T09:58:46.698302+01:00</Value>
+      </Dependency>
+      <Request>C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Textures\ColorMap_0.xnb</Request>
+      <Request>C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\null_specular_0.xnb</Request>
+      <Request>C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Shaders\GBuffer\RenderGBuffer.xnb</Request>
     </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
@@ -363,7 +838,7 @@
     <Assemblies>
       <Assembly>
         <Key>C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishContentPipeline\bin\x86\Debug\ProjectVanquishContentPipeline.dll</Key>
-        <Value>2012-03-23T09:30:27.3726994+00:00</Value>
+        <Value>2012-05-17T12:20:44.7422891+01:00</Value>
       </Assembly>
       <Assembly>
         <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.XImporter.dll</Key>

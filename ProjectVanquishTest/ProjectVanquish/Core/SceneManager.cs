@@ -109,12 +109,8 @@ namespace ProjectVanquish.Core
         public void DrawScene(GameTime gameTime)
         {
             game.GraphicsDevice.DepthStencilState = DepthStencilState.Default;
-            game.GraphicsDevice.RasterizerState = RasterizerState.CullCounterClockwise;
-            game.GraphicsDevice.BlendState = BlendState.Opaque;
 
             // Check to see what models to Draw
-
-
             foreach (Actor model in models.Where(a => camera.BoundingFrustum.Intersects(a.BoundingSphere)))
                 model.Draw(camera);
 

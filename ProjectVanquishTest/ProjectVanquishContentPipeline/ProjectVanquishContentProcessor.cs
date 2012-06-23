@@ -45,11 +45,34 @@ namespace ProjectVanquishContentPipeline
             {
                 throw new ArgumentNullException("input");
             }
+
+            // We always want to Generate tangent frames
+            GenerateTangentFrames = true;
+
+            MeshHelper.TransformScene(input, input.Transform);
+            input.Transform = Matrix.Identity;
+            MergeTransforms(input);
+
             directory = Path.GetDirectoryName(input.Identity.SourceFilename);
             LookUpTextures(input);
             return base.Process(input, context);
         }
 
+        void MergeTransforms(NodeContent input)
+        {
+            if (input is MeshContent)
+            {
+                MeshContent content = (MeshContent)input;
+                MeshHelper.TransformScene(content, content.Transform);
+                content.Transform = Matrix.Identity;
+                MeshHelper.OptimizeForCache(content);
+            }
+
+            foreach (NodeContent content in input.Children)
+            {
+                MergeTransforms(content);
+            }
+        }
 
         [Browsable(false)]
         public override bool GenerateTangentFrames
@@ -59,20 +82,18 @@ namespace ProjectVanquishContentPipeline
         }
 
 
-        static IList<string> acceptableVertexChannelNames =
-        new string[]
-    {
-        VertexChannelNames.TextureCoordinate(0),
-        VertexChannelNames.Normal(0),
-        VertexChannelNames.Binormal(0),
-        VertexChannelNames.Tangent(0),
-    };
+        static IList<string> acceptableVertexChannelNames = new string[]
+        {
+            VertexChannelNames.TextureCoordinate(0),
+            VertexChannelNames.Normal(0),
+            VertexChannelNames.Binormal(0),
+            VertexChannelNames.Tangent(0),
+        };
 
         protected override void ProcessVertexChannel(GeometryContent geometry,
                                                     int vertexChannelIndex, ContentProcessorContext context)
         {
-            String vertexChannelName =
-                geometry.Vertices.Channels[vertexChannelIndex].Name;
+            String vertexChannelName = geometry.Vertices.Channels[vertexChannelIndex].Name;
 
             // if this vertex channel has an acceptable names, process it as normal.
             if (acceptableVertexChannelNames.Contains(vertexChannelName))
@@ -225,9 +246,7 @@ namespace ProjectVanquishContentPipeline
             foreach (KeyValuePair<String, ExternalReference<TextureContent>> texture
             in material.Textures)
             {
-                if ((texture.Key == "Texture") ||
-                        (texture.Key == "NormalMap") ||
-                        (texture.Key == "SpecularMap"))
+                if ((texture.Key == "Texture") || (texture.Key == "NormalMap") || (texture.Key == "SpecularMap"))
                     deferredShadingMaterial.Textures.Add(texture.Key, texture.Value);
             }
 

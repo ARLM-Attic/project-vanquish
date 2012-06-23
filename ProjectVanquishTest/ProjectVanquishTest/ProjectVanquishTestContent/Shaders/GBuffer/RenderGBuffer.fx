@@ -11,8 +11,8 @@ sampler diffuseSampler = sampler_state
     MAGFILTER = LINEAR;
     MINFILTER = LINEAR;
     MIPFILTER = LINEAR;
-    AddressU = Wrap;
-    AddressV = Wrap;
+    AddressU = WRAP;
+    AddressV = WRAP;
 };
 
 texture SpecularMap;
@@ -22,8 +22,8 @@ sampler specularSampler = sampler_state
     MagFilter = LINEAR;
     MinFilter = LINEAR;
     Mipfilter = LINEAR;
-    AddressU = Wrap;
-    AddressV = Wrap;
+    AddressU = WRAP;
+    AddressV = WRAP;
 };
 
 texture NormalMap;
@@ -33,8 +33,8 @@ sampler normalSampler = sampler_state
     MagFilter = LINEAR;
     MinFilter = LINEAR;
     Mipfilter = LINEAR;
-    AddressU = Wrap;
-    AddressV = Wrap;
+    AddressU = WRAP;
+    AddressV = WRAP;
 };
 
 struct VertexShaderInput
@@ -74,6 +74,7 @@ VertexShaderOutput VertexShaderFunction(VertexShaderInput input)
 
     return output;
 }
+
 struct PixelShaderOutput
 {
     half4 Color : COLOR0;
@@ -100,7 +101,7 @@ PixelShaderOutput PixelShaderFunction(VertexShaderOutput input)
     normalFromMap = normalize(normalFromMap);
     //output the normal, in [0,1] space
     output.Normal.rgb = 0.5f * (normalFromMap + 1.0f);
-
+	
     //specular Power
     output.Normal.a = specularAttributes.a;
 
@@ -111,6 +112,12 @@ technique Technique1
 {
     pass Pass1
     {
+		#ifdef ALPHA_MASKED	
+			CullMode = None;
+		#else
+			CullMode = CCW;
+		#endif
+
         VertexShader = compile vs_2_0 VertexShaderFunction();
         PixelShader = compile ps_2_0 PixelShaderFunction();
     }

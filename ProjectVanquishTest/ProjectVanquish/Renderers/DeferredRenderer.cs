@@ -68,14 +68,17 @@ namespace ProjectVanquish.Renderers
 
             // Render sky if enabled
             if (SkyRenderer.Enabled)
+            {
+                SkyRenderer.Parameters.LightDirection = new Vector4(LightManager.Light.Direction, 1);
                 skyRenderer.Draw(gameTime, camera);
+            }
 
             // Render the scene
             scene.DrawScene(gameTime);
 
             // Resolve the GBuffer
-            ResolveGBuffer();            
-
+            ResolveGBuffer();
+            
             // Draw Depth for Shadow Mapping
             DrawDepth(gameTime);
 
@@ -249,7 +252,7 @@ namespace ProjectVanquish.Renderers
             float cameraMoveAmount = 50.0f * dt;
             float cameraRotateAmount = 0.25f * dt;
             float modelRotateAmount = 0.5f * dt;
-
+            
             if (keyboardState.IsKeyDown(Keys.W))
                 camera.Position += camera.WorldMatrix.Forward * cameraMoveAmount;
             if (keyboardState.IsKeyDown(Keys.S))
@@ -271,6 +274,9 @@ namespace ProjectVanquish.Renderers
             if (keyboardState.IsKeyDown(Keys.D4))
                 shadowRenderer.ShadowFilteringType = ShadowFilteringType.PCF7x7;
 
+            if (keyboardState.IsKeyDown(Keys.Space))
+                LightManager.AddPointLight(new Lights.PointLight(camera.Position, Color.Yellow.ToVector3(), 50f, 1));
+
             if (lastMouseX == -1)
                 lastMouseX = mouseState.X;
             if (lastMouseY == -1)
@@ -288,6 +294,8 @@ namespace ProjectVanquish.Renderers
             SkyRenderer.Parameters.LightDirection = new Vector4(LightManager.Light.Direction, 1);
             SkyRenderer.Parameters.LightColor = new Vector4(LightManager.Light.Color, 1);
             skyRenderer.Update(gameTime);
+
+            Game.Window.Title = String.Format("X:{0} = Y:{1} = Z:{2}", camera.Position.X, camera.Position.Y, camera.Position.Z);
 
             lastMouseX = mouseState.X;
             lastMouseY = mouseState.Y;

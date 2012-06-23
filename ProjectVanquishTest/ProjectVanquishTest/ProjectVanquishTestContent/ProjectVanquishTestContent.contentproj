@@ -183,18 +183,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Textures\moon.tga">
-      <Name>moon</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Textures\moonglow.tga">
-      <Name>moonglow</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Textures\SkyDay.png">
       <Name>SkyDay</Name>
       <Importer>TextureImporter</Importer>
@@ -214,6 +202,37 @@
       <Name>Sunset</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Models\sponza2.x">
+      <Name>sponza2</Name>
+      <Importer>XImporter</Importer>
+      <Processor>DeferredRendererModel</Processor>
+      <ProcessorParameters_RotationX>-90</ProcessorParameters_RotationX>
+      <ProcessorParameters_Scale>0.15</ProcessorParameters_Scale>
+      <ProcessorParameters_SwapWindingOrder>True</ProcessorParameters_SwapWindingOrder>
+      <ProcessorParameters_PremultiplyTextureAlpha>False</ProcessorParameters_PremultiplyTextureAlpha>
+      <ProcessorParameters_TextureFormat>NoChange</ProcessorParameters_TextureFormat>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Textures\Snow.dds">
+      <Name>Snow</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Models\ExampleMap.fbx">
+      <Name>ExampleMap</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>DeferredRendererModel</Processor>
+      <ProcessorParameters_Scale>0.05</ProcessorParameters_Scale>
+      <ProcessorParameters_PremultiplyVertexColors>False</ProcessorParameters_PremultiplyVertexColors>
+      <ProcessorParameters_PremultiplyTextureAlpha>False</ProcessorParameters_PremultiplyTextureAlpha>
+      <ProcessorParameters_NormalMapTexture>../Textures/ColorMap.jpg</ProcessorParameters_NormalMapTexture>
+      <ProcessorParameters_GenerateMipmaps>False</ProcessorParameters_GenerateMipmaps>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />

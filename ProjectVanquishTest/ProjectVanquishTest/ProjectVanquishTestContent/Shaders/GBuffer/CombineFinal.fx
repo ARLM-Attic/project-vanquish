@@ -5,8 +5,8 @@ texture shadowOcclusion;
 sampler colorSampler = sampler_state
 {
     Texture = (colorMap);
-    AddressU = CLAMP;
-    AddressV = CLAMP;
+    AddressU = WRAP;
+    AddressV = WRAP;
     MagFilter = LINEAR;
     MinFilter = LINEAR;
     Mipfilter = LINEAR;
@@ -16,9 +16,9 @@ sampler lightSampler = sampler_state
     Texture = (lightMap);
     AddressU = CLAMP;
     AddressV = CLAMP;
-    MagFilter = LINEAR;
-    MinFilter = LINEAR;
-    Mipfilter = LINEAR;
+    MagFilter = POINT;
+    MinFilter = POINT;
+    Mipfilter = POINT;
 };
 
 sampler shadowSampler = sampler_state
@@ -52,7 +52,7 @@ VertexShaderOutput VertexShaderFunction(VertexShaderInput input)
 
 float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
 {
-	float shadowTerm = tex2D(shadowSampler,input.TexCoord).r;
+	float shadowTerm = tex2D(shadowSampler,input.TexCoord).r + tex2D(colorSampler,input.TexCoord).r;
     float3 diffuseColor = tex2D(colorSampler,input.TexCoord).rgb;
     float4 light = tex2D(lightSampler,input.TexCoord);
     float3 diffuseLight = light.rgb;
