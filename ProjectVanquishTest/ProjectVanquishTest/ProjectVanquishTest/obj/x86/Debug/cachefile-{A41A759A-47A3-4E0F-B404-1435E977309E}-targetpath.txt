@@ -55,3 +55,7 @@ Content\Textures\Snow.xnb
 Content\Models\sponza2.xnb
 Content\Textures\ColorMap_0.xnb
 Content\Models\ExampleMap.xnb
+Content\Textures\ground.xnb
+Content\Shaders\Lights\SpotLight.xnb
+Content\Textures\moon.xnb
+Content\Textures\moonglow.xnb

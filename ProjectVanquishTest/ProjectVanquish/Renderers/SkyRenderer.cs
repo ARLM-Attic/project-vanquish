@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 using ProjectVanquish.Cameras;
+using ProjectVanquish.Core;
 
 namespace ProjectVanquish.Renderers
 {
@@ -17,7 +14,7 @@ namespace ProjectVanquish.Renderers
     {
         #region Fields
         GraphicsDevice device;
-
+        static bool enabled = true;
         /// <summary>
         /// Theta
         /// </summary>
@@ -72,10 +69,6 @@ namespace ProjectVanquish.Renderers
 
         Vector4 sunColor;
 
-        private float inverseCloudVelocity;
-        private float cloudCover;
-        private float cloudSharpness;
-        private float numTiles;
         private Camera camera;
         #endregion
 
@@ -102,20 +95,14 @@ namespace ProjectVanquish.Renderers
             mieRT = new RenderTarget2D(device, 128, 64, false, SurfaceFormat.Color, DepthFormat.None);
             rayleighRT = new RenderTarget2D(device, 128, 64, false, SurfaceFormat.Color, DepthFormat.None);
 
-            // Clouds constants
-            inverseCloudVelocity = 16.0f;
-            CloudCover = -0.1f;
-            CloudSharpness = 0.5f;
-            numTiles = 16.0f;
-
             // Load Effects
             scatterEffect = content.Load<Effect>("Shaders/Sky/scatter");
             texturedEffect = content.Load<Effect>("Shaders/Sky/Textured");
             noiseEffect = content.Load<Effect>("Shaders/Sky/SNoise");
 
             // Load Textures
-            moonTex = content.Load<Texture2D>("Textures/moon");
-            glowTex = content.Load<Texture2D>("Textures/moonglow");
+            moonTex = game.Content.Load<Texture2D>("Textures/moon");
+            glowTex = game.Content.Load<Texture2D>("Textures/moonglow");
             starsTex = content.Load<Texture2D>("Textures/starfield");
 
             GenerateDome();
@@ -124,6 +111,12 @@ namespace ProjectVanquish.Renderers
         #endregion
 
         #region Properties
+        /// <summary>
+        /// Gets or sets a value indicating whether this <see cref="SkyRenderer"/> is enabled.
+        /// </summary>
+        /// <value><c>true</c> if enabled; otherwise, <c>false</c>.</value>
+        public static bool Enabled { get { return enabled; } set { enabled = value; } }
+
         /// <summary>
         /// Gets/Sets Theta value
         /// </summary>
@@ -152,26 +145,6 @@ namespace ProjectVanquish.Renderers
         /// Gets the Sun color
         /// </summary>
         public Vector4 SunColor { get { return sunColor; } }
-
-        /// <summary>
-        /// Gets/Sets InverseCloudVelocity value
-        /// </summary>
-        public float InverseCloudVelocity { get { return inverseCloudVelocity; } set { inverseCloudVelocity = value; } }
-
-        /// <summary>
-        /// Gets/Sets CloudCover value
-        /// </summary>
-        public float CloudCover { get { return cloudCover; } set { cloudCover = value; } }
-
-        /// <summary>
-        /// Gets/Sets CloudSharpness value
-        /// </summary>
-        public float CloudSharpness { get { return cloudSharpness; } set { cloudSharpness = value; } }
-
-        /// <summary>
-        /// Gets/Sets CloudSharpness value
-        /// </summary>
-        public float NumberOfTiles { get { return numTiles; } set { numTiles = value; } }
         #endregion
         
         #region Members
@@ -229,9 +202,9 @@ namespace ProjectVanquish.Renderers
                 device.DrawUserIndexedPrimitives<VertexPositionTexture>(PrimitiveType.TriangleList, domeVerts, 0, DVSize, ib, 0, DISize);
             }
 
-            // Draw Glow and Moon
-            DrawGlow(camera);
-            DrawMoon(camera);
+            // Draw the Moon and the Moon Glow
+            DrawGlow();
+            DrawMoon();
 
             // Reset RasterizerState
             device.RasterizerState = RasterizerState.CullCounterClockwise;
@@ -241,81 +214,71 @@ namespace ProjectVanquish.Renderers
             previousTheta = theta;
             previousPhi = phi;
         }
-        
+
         /// <summary>
         /// Draws the glow.
         /// </summary>
-        private void DrawGlow(Camera camera)
+        private void DrawGlow()
         {
+            // Set the BlendState
             device.BlendState = BlendState.AlphaBlend;
 
-            // Set the Effect parameters
+            // Configure the Textured Effect
             texturedEffect.CurrentTechnique = texturedEffect.Techniques["Textured"];
-            texturedEffect.Parameters["World"].SetValue(
-                                                        Matrix.CreateRotationX(Theta + (float)Math.PI / 2.0f) *
-                                                        Matrix.CreateRotationY(-Phi + (float)Math.PI / 2.0f) *
-                                                        Matrix.CreateTranslation(parameters.LightDirection.X * 5,
-                                                                                 parameters.LightDirection.Y * 5,
-                                                                                 parameters.LightDirection.Z * 5) *
+            texturedEffect.Parameters["World"].SetValue(Matrix.CreateRotationX(this.Theta + (float)Math.PI / 2.0f) *
+                                                        Matrix.CreateRotationY(-this.Phi + (float)Math.PI / 2.0f) *
+                                                        Matrix.CreateTranslation(parameters.LightDirection.X * 5, parameters.LightDirection.Y * 5, parameters.LightDirection.Z * 5) *
                                                         Matrix.CreateTranslation(camera.Position.X, camera.Position.Y, camera.Position.Z));
             texturedEffect.Parameters["View"].SetValue(camera.ViewMatrix);
             texturedEffect.Parameters["Projection"].SetValue(camera.ProjectionMatrix);
-            texturedEffect.Parameters["Texture"].SetValue(glowTex);
+            texturedEffect.Parameters["Texture"].SetValue(this.glowTex);
             if (theta < Math.PI / 2.0f || theta > 3.0f * Math.PI / 2.0f)
                 texturedEffect.Parameters["alpha"].SetValue((float)Math.Abs(Math.Sin(Theta + (float)Math.PI / 2.0f)));
             else
                 texturedEffect.Parameters["alpha"].SetValue(0.0f);
 
-            // Apply each pass
             foreach (EffectPass pass in texturedEffect.CurrentTechnique.Passes)
             {
-                // Apply Effect
                 pass.Apply();
-
-                // Draw Primitives
                 device.DrawUserIndexedPrimitives<VertexPositionTexture>(PrimitiveType.TriangleList, quadVerts, 0, 4, quadIb, 0, 2);
             }
 
+            // Reset BlendState
             device.BlendState = BlendState.Opaque;
         }
 
         /// <summary>
         /// Draws the moon.
         /// </summary>
-        private void DrawMoon(Camera camera)
+        private void DrawMoon()
         {
+            // Set the BlendState
             device.BlendState = BlendState.AlphaBlend;
 
-            // Set Textured Effect parameters
-            texturedEffect.CurrentTechnique = texturedEffect.Techniques["Textured"];
-            texturedEffect.Parameters["World"].SetValue(
-                                                        Matrix.CreateRotationX(Theta + (float)Math.PI / 2.0f) *
-                                                        Matrix.CreateRotationY(-Phi + (float)Math.PI / 2.0f) *
-                                                        Matrix.CreateTranslation(parameters.LightDirection.X * 15,
-                                                                                    parameters.LightDirection.Y * 15,
-                                                                                    parameters.LightDirection.Z * 15) *
-                                                        Matrix.CreateTranslation(camera.Position.X, camera.Position.Y, camera.Position.Z)
-                                                        );
+            // Configure the Textured Effect
+            texturedEffect.CurrentTechnique = texturedEffect.Techniques["Textured"];            
+            texturedEffect.Parameters["World"].SetValue(Matrix.CreateRotationX(this.Theta + (float)Math.PI / 2.0f) *
+                                                        Matrix.CreateRotationY(-this.Phi + (float)Math.PI / 2.0f) *
+                                                        Matrix.CreateTranslation(parameters.LightDirection.X * 15, parameters.LightDirection.Y * 15, parameters.LightDirection.Z * 15) *
+                                                        Matrix.CreateTranslation(camera.Position.X, camera.Position.Y, camera.Position.Z));
             texturedEffect.Parameters["View"].SetValue(camera.ViewMatrix);
             texturedEffect.Parameters["Projection"].SetValue(camera.ProjectionMatrix);
-            texturedEffect.Parameters["Texture"].SetValue(moonTex);
+            texturedEffect.Parameters["Texture"].SetValue(this.moonTex);
             if (theta < Math.PI / 2.0f || theta > 3.0f * Math.PI / 2.0f)
                 texturedEffect.Parameters["alpha"].SetValue((float)Math.Abs(Math.Sin(Theta + (float)Math.PI / 2.0f)));
             else
                 texturedEffect.Parameters["alpha"].SetValue(0.0f);
 
-            // Apply each pass
             foreach (EffectPass pass in texturedEffect.CurrentTechnique.Passes)
             {
-                // Apply Effect
                 pass.Apply();
-                
-                // Draw Primitives
                 device.DrawUserIndexedPrimitives<VertexPositionTexture>(PrimitiveType.TriangleList, quadVerts, 0, 4, quadIb, 0, 2);
             }
 
+            // Reset BlendState
             device.BlendState = BlendState.Opaque;
         }
+
 
         /// <summary>
         /// Generates the dome.
@@ -483,13 +446,11 @@ namespace ProjectVanquish.Renderers
         /// <returns></returns>
         Vector4 GetLightDirection()
         {
-
             float y = (float)Math.Cos((double)theta);
             float x = (float)(Math.Sin((double)theta) * Math.Cos(phi));
             float z = (float)(Math.Sin((double)theta) * Math.Sin(phi));
-            float w = 1.0f;
-
-            return new Vector4(x, y, z, w);
+            
+            return new Vector4(x, y, z, 1f);
         }
 
         /// <summary>

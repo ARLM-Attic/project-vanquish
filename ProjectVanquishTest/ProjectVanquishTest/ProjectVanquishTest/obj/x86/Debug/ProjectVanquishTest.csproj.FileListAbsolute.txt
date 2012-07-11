@@ -106,3 +106,7 @@ C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTe
 C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Textures\Snow.xnb
 C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Models\ExampleMap.xnb
 C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Textures\ColorMap_0.xnb
+C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Textures\ground.xnb
+C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Shaders\Lights\SpotLight.xnb
+C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Textures\moon.xnb
+C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Textures\moonglow.xnb

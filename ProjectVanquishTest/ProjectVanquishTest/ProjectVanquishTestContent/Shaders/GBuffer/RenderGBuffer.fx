@@ -108,16 +108,11 @@ PixelShaderOutput PixelShaderFunction(VertexShaderOutput input)
     output.Depth = input.Depth.x / input.Depth.y;
     return output;
 }
+
 technique Technique1
 {
     pass Pass1
     {
-		#ifdef ALPHA_MASKED	
-			CullMode = None;
-		#else
-			CullMode = CCW;
-		#endif
-
         VertexShader = compile vs_2_0 VertexShaderFunction();
         PixelShader = compile ps_2_0 PixelShaderFunction();
     }

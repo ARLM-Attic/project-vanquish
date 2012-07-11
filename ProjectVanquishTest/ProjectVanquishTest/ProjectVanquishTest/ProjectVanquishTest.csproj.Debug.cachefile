@@ -19,8 +19,6 @@ Content\Models\Ground.xnb
 Content\Models\ship1.xnb
 Content\Textures\RandomNormal.xnb
 Content\Textures\ColorMap.xnb
-Content\Textures\moon.xnb
-Content\Textures\moonglow.xnb
 Content\Textures\SkyDay.xnb
 Content\Textures\SkyNight.xnb
 Content\Textures\starfield.xnb
@@ -57,3 +55,8 @@ Content\Textures\Snow.xnb
 Content\Models\sponza2.xnb
 Content\Textures\ColorMap_0.xnb
 Content\Models\ExampleMap.xnb
+Content\Textures\ground.xnb
+Content\Shaders\Lights\SpotLight.xnb
+Content\Textures\moon.xnb
+Content\Textures\moonglow.xnb
+Content\Shaders\InstancedModel.xnb

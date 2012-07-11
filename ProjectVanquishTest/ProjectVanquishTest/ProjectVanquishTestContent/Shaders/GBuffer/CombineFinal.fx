@@ -11,6 +11,7 @@ sampler colorSampler = sampler_state
     MinFilter = LINEAR;
     Mipfilter = LINEAR;
 };
+
 sampler lightSampler = sampler_state
 {
     Texture = (lightMap);
@@ -57,6 +58,9 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
     float4 light = tex2D(lightSampler,input.TexCoord);
     float3 diffuseLight = light.rgb;
     float specularLight = light.a;
+	// Needs work, but should be pulling from a Texture Cube
+	// float ambient = tex2D(ambient_cubeMap, vertex_normal);
+	float ambient = tex2D(colorSampler, input.TexCoord).rgb;
     return float4(shadowTerm * (diffuseColor * diffuseLight + specularLight),1);
 }
 

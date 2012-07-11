@@ -17,7 +17,7 @@
       <Processor>EffectProcessor</Processor>
       <Options>None</Options>
       <Output>C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Shaders\GBuffer\CombineFinal.xnb</Output>
-      <Time>2012-05-18T13:36:38.2653366+01:00</Time>
+      <Time>2012-07-04T20:41:27.8912661+01:00</Time>
     </Item>
     <Item>
       <Source>Shaders\GBuffer\RenderGBuffer.fx</Source>
@@ -26,7 +26,7 @@
       <Processor>EffectProcessor</Processor>
       <Options>None</Options>
       <Output>C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Shaders\GBuffer\RenderGBuffer.xnb</Output>
-      <Time>2012-05-17T12:10:37.5489232+01:00</Time>
+      <Time>2012-07-04T20:02:09.8433935+01:00</Time>
     </Item>
     <Item>
       <Source>Shaders\Lights\DirectionalLight.fx</Source>
@@ -823,6 +823,42 @@
       <Request>C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Textures\ColorMap_0.xnb</Request>
       <Request>C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\null_specular_0.xnb</Request>
       <Request>C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Shaders\GBuffer\RenderGBuffer.xnb</Request>
+    </Item>
+    <Item>
+      <Source>Textures\ground.png</Source>
+      <Name>Textures\ground</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Textures\ground.xnb</Output>
+      <Time>2012-07-03T20:15:08.7587533+01:00</Time>
+    </Item>
+    <Item>
+      <Source>Shaders\Lights\SpotLight.fx</Source>
+      <Name>Shaders\Lights\SpotLight</Name>
+      <Importer>EffectImporter</Importer>
+      <Processor>EffectProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Shaders\Lights\SpotLight.xnb</Output>
+      <Time>2012-07-04T19:41:08.1322278+01:00</Time>
+    </Item>
+    <Item>
+      <Source>Textures\moon.tga</Source>
+      <Name>Textures\moon</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Textures\moon.xnb</Output>
+      <Time>2012-07-04T20:36:55.2606726+01:00</Time>
+    </Item>
+    <Item>
+      <Source>Textures\moonglow.tga</Source>
+      <Name>Textures\moonglow</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\ProjectVanquishTest\bin\x86\Debug\Content\Textures\moonglow.xnb</Output>
+      <Time>2012-07-04T20:36:55.2636727+01:00</Time>
     </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>

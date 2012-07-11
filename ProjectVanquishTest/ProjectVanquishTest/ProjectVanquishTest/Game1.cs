@@ -57,7 +57,6 @@ namespace ProjectVanquishTest
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
-            //SceneManager.AddModel(Content.Load<Model>("Models/ship1"));
             SceneManager.AddModel(Content.Load<Model>("Models/sponza2"), new Vector3(0, -10, 0));
         }
 

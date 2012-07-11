@@ -69,7 +69,8 @@ namespace ProjectVanquish.Renderers
             // Render sky if enabled
             if (SkyRenderer.Enabled)
             {
-                SkyRenderer.Parameters.LightDirection = new Vector4(LightManager.Light.Direction, 1);
+                // To create a Static SunLight, uncomment this line
+                //SkyRenderer.Parameters.LightDirection = new Vector4(LightManager.Light.Direction, 1);
                 skyRenderer.Draw(gameTime, camera);
             }
 
@@ -179,12 +180,19 @@ namespace ProjectVanquish.Renderers
             int backBufferHeight = GraphicsDevice.PresentationParameters.BackBufferHeight;
 
             // Configure RenderTargets
-            colorRT = new RenderTarget2D(GraphicsDevice, backBufferWidth, backBufferHeight, false, SurfaceFormat.Color, DepthFormat.Depth24);
-            normalRT = new RenderTarget2D(GraphicsDevice, backBufferWidth, backBufferHeight, false, SurfaceFormat.Color, DepthFormat.None);
-            depthRT = new RenderTarget2D(GraphicsDevice, backBufferWidth, backBufferHeight, false, SurfaceFormat.Single, DepthFormat.None);
+            //colorRT = new RenderTarget2D(GraphicsDevice, backBufferWidth, backBufferHeight, false, SurfaceFormat.Color, DepthFormat.Depth24);
+            //normalRT = new RenderTarget2D(GraphicsDevice, backBufferWidth, backBufferHeight, false, SurfaceFormat.Color, DepthFormat.None);
+            //depthRT = new RenderTarget2D(GraphicsDevice, backBufferWidth, backBufferHeight, false, SurfaceFormat.Single, DepthFormat.None);
+            //depthTexture = new RenderTarget2D(GraphicsDevice, backBufferWidth, backBufferHeight, false, SurfaceFormat.Single, DepthFormat.Depth24);
+            //lightRT = new RenderTarget2D(GraphicsDevice, backBufferWidth, backBufferHeight, false, SurfaceFormat.Color, DepthFormat.None);
+            //sceneRT = new RenderTarget2D(GraphicsDevice, backBufferWidth, backBufferHeight, false, SurfaceFormat.Color, DepthFormat.Depth24);
+
+            colorRT = new RenderTarget2D(GraphicsDevice, backBufferWidth, backBufferHeight, false, SurfaceFormat.Rgba64, DepthFormat.Depth24);
+            normalRT = new RenderTarget2D(GraphicsDevice, backBufferWidth, backBufferHeight, false, SurfaceFormat.Rgba64, DepthFormat.None);
+            depthRT = new RenderTarget2D(GraphicsDevice, backBufferWidth, backBufferHeight, false, SurfaceFormat.Rgba64, DepthFormat.None);
             depthTexture = new RenderTarget2D(GraphicsDevice, backBufferWidth, backBufferHeight, false, SurfaceFormat.Single, DepthFormat.Depth24);
-            lightRT = new RenderTarget2D(GraphicsDevice, backBufferWidth, backBufferHeight, false, SurfaceFormat.Color, DepthFormat.None);
-            sceneRT = new RenderTarget2D(GraphicsDevice, backBufferWidth, backBufferHeight, false, SurfaceFormat.Color, DepthFormat.Depth24);
+            lightRT = new RenderTarget2D(GraphicsDevice, backBufferWidth, backBufferHeight, false, SurfaceFormat.HdrBlendable, DepthFormat.None);
+            sceneRT = new RenderTarget2D(GraphicsDevice, backBufferWidth, backBufferHeight, false, SurfaceFormat.Rgba64, DepthFormat.Depth24);
 
             // Initialize SceneManager
             scene.InitializeScene(camera);
@@ -276,6 +284,9 @@ namespace ProjectVanquish.Renderers
 
             if (keyboardState.IsKeyDown(Keys.Space))
                 LightManager.AddPointLight(new Lights.PointLight(camera.Position, Color.Yellow.ToVector3(), 50f, 1));
+
+            if (keyboardState.IsKeyDown(Keys.PageDown))
+                skyRenderer.Theta -= 0.4f * dt;
 
             if (lastMouseX == -1)
                 lastMouseX = mouseState.X;

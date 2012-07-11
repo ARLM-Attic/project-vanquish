@@ -13,7 +13,7 @@ namespace ProjectVanquish.Core
     public class LightManager
     {
         #region Fields
-        Effect directionalLightEffect, hemisphericLight, pointLightEffect;
+        Effect directionalLightEffect, hemisphericLightEffect, pointLightEffect;
         Model sphereModel;
         QuadRenderer fullscreenQuad;
         Vector2 halfPixel;
@@ -29,9 +29,10 @@ namespace ProjectVanquish.Core
         /// <param name="game">The game.</param>
         public LightManager(Game game)
         {
+            // Load Effects, Models and Quad Renderer
             directionalLightEffect = game.Content.Load<Effect>("Shaders/Lights/DirectionalLight");
             pointLightEffect = game.Content.Load<Effect>("Shaders/Lights/PointLight");
-            hemisphericLight = game.Content.Load<Effect>("Shaders/Lights/HemisphericLight");
+            hemisphericLightEffect = game.Content.Load<Effect>("Shaders/Lights/HemisphericLight");
             sphereModel = game.Content.Load<Model>("Models/Sphere");
             fullscreenQuad = new QuadRenderer(game);
             game.Components.Add(fullscreenQuad);
@@ -117,7 +118,7 @@ namespace ProjectVanquish.Core
         /// <summary>
         /// Draws the hemispheric light.
         /// </summary>
-        private void DrawHemisphericLight(GraphicsDevice device, SceneManager scene, Camera camera)
+        void DrawHemisphericLight(GraphicsDevice device, SceneManager scene, Camera camera)
         {
             device.BlendState = BlendState.Opaque;
 
@@ -129,15 +130,15 @@ namespace ProjectVanquish.Core
                     foreach (ModelMeshPart part in mesh.MeshParts)
                     {
                         // Set the Effect Parameters
-                        hemisphericLight.Parameters["matWorldViewProj"].SetValue(actor.World * camera.ViewMatrix * camera.ProjectionMatrix);
-                        hemisphericLight.Parameters["matInverseWorld"].SetValue(actor.World);
-                        hemisphericLight.Parameters["vLightDirection"].SetValue(new Vector4(light.Direction, 1));
-                        hemisphericLight.Parameters["ColorMap"].SetValue(hemisphericColorMap);
-                        hemisphericLight.Parameters["LightIntensity"].SetValue(0.4f);
-                        hemisphericLight.Parameters["SkyColor"].SetValue(new Vector4(light.Color, 1));
+                        hemisphericLightEffect.Parameters["matWorldViewProj"].SetValue(actor.World * camera.ViewMatrix * camera.ProjectionMatrix);
+                        hemisphericLightEffect.Parameters["matInverseWorld"].SetValue(actor.World);
+                        hemisphericLightEffect.Parameters["vLightDirection"].SetValue(new Vector4(light.Direction, 1));
+                        hemisphericLightEffect.Parameters["ColorMap"].SetValue(hemisphericColorMap);
+                        hemisphericLightEffect.Parameters["LightIntensity"].SetValue(0.3f);
+                        hemisphericLightEffect.Parameters["SkyColor"].SetValue(new Vector4(light.Color, 1));
 
                         // Apply the Effect
-                        hemisphericLight.Techniques[0].Passes[0].Apply();
+                        hemisphericLightEffect.Techniques[0].Passes[0].Apply();
 
                         // Render the Primitives
                         device.SetVertexBuffer(part.VertexBuffer, part.VertexOffset);
@@ -161,7 +162,7 @@ namespace ProjectVanquish.Core
         /// <param name="shadowOcclusion">The shadow occlusion.</param>
         /// <param name="camera">The camera.</param>
         /// <param name="scene">The scene.</param>
-        public void DrawLights(GraphicsDevice device, RenderTarget2D colorRT, RenderTarget2D normalRT, RenderTarget2D depthRT, RenderTarget2D lightRT, ref RenderTarget2D shadowOcclusion, Camera camera, SceneManager scene)
+        public void DrawLights(GraphicsDevice device, RenderTarget2D colorRT, RenderTarget2D normalRT, RenderTarget2D depthRT, RenderTarget2D lightRT, Camera camera, SceneManager scene)
         {
             // Set the Light RenderTarget
             device.SetRenderTarget(lightRT);
@@ -183,8 +184,8 @@ namespace ProjectVanquish.Core
 
             // Reset RenderStates
             device.BlendState = BlendState.Opaque;
-            device.DepthStencilState = DepthStencilState.None;
             device.RasterizerState = RasterizerState.CullCounterClockwise;
+            device.DepthStencilState = DepthStencilState.Default;
 
             // Reset the RenderTarget
             device.SetRenderTarget(null);
@@ -250,10 +251,6 @@ namespace ProjectVanquish.Core
                     device.Indices = meshPart.IndexBuffer;
                     device.DrawIndexedPrimitives(PrimitiveType.TriangleList, 0, 0, meshPart.NumVertices, meshPart.StartIndex, meshPart.PrimitiveCount);
                 }
-
-            // Reset RenderStates
-            device.RasterizerState = RasterizerState.CullCounterClockwise;
-            device.DepthStencilState = DepthStencilState.Default;
         } 
         #endregion
     }
