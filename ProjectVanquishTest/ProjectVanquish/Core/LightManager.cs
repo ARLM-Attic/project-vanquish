@@ -123,7 +123,7 @@ namespace ProjectVanquish.Core
             device.BlendState = BlendState.Opaque;
 
             // Only apply the effect to those models in the Frustum
-            foreach (Models.Actor actor in scene.Models.Where(a => camera.BoundingFrustum.Intersects(a.BoundingSphere)))
+            foreach (Models.Actor actor in SceneManager.Models.Where(a => camera.BoundingFrustum.Intersects(a.BoundingSphere)))
             {
                 foreach (ModelMesh mesh in actor.Model.Meshes)
                 {

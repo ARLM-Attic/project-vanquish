@@ -18,6 +18,7 @@ namespace ProjectVanquish.Renderers
         private QuadRenderer quadRenderer;
         SceneManager scene;
         private LightManager lightManager;
+        private PostProcessingManager postProcessingManager;
         private RenderTarget2D colorRT, normalRT, depthRT, depthTexture, lightRT, sceneRT;
         private SpriteBatch spriteBatch;
         private Vector2 halfPixel;
@@ -88,14 +89,17 @@ namespace ProjectVanquish.Renderers
 
             // Draw Lights
             lightManager.DrawLights(GraphicsDevice, colorRT, normalRT, depthRT, lightRT, camera, scene);
-
+            
             // Combine the Final scene
             CombineFinal(shadowOcclusion);
-
+            
             // Render SSAO if enabled
             if (SSAORenderer.Enabled)
                 ssaoRenderer.Draw(GraphicsDevice, normalRT, depthRT, sceneRT, scene, camera, null);
-                        
+
+            // Post Processing Render
+            postProcessingManager.Draw(null, camera);
+
             // Render output
             spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Opaque, SamplerState.PointClamp, null, null);
             spriteBatch.Draw((Texture2D)colorRT, new Rectangle(0, 0, 128, 128), Color.White);
@@ -190,7 +194,7 @@ namespace ProjectVanquish.Renderers
             colorRT = new RenderTarget2D(GraphicsDevice, backBufferWidth, backBufferHeight, false, SurfaceFormat.Rgba64, DepthFormat.Depth24);
             normalRT = new RenderTarget2D(GraphicsDevice, backBufferWidth, backBufferHeight, false, SurfaceFormat.Rgba64, DepthFormat.None);
             depthRT = new RenderTarget2D(GraphicsDevice, backBufferWidth, backBufferHeight, false, SurfaceFormat.Rgba64, DepthFormat.None);
-            depthTexture = new RenderTarget2D(GraphicsDevice, backBufferWidth, backBufferHeight, false, SurfaceFormat.Single, DepthFormat.Depth24);
+            depthTexture = new RenderTarget2D(GraphicsDevice, backBufferWidth, backBufferHeight, false, SurfaceFormat.Color, DepthFormat.Depth24);
             lightRT = new RenderTarget2D(GraphicsDevice, backBufferWidth, backBufferHeight, false, SurfaceFormat.HdrBlendable, DepthFormat.None);
             sceneRT = new RenderTarget2D(GraphicsDevice, backBufferWidth, backBufferHeight, false, SurfaceFormat.Rgba64, DepthFormat.Depth24);
 
@@ -216,7 +220,10 @@ namespace ProjectVanquish.Renderers
             ssaoRenderer = new SSAORenderer(Game, backBufferWidth, backBufferHeight);
 
             // Instantiate the Sky Renderer
-            skyRenderer = new SkyRenderer(Game, Game.Content, camera);
+            skyRenderer = new SkyRenderer(Game, camera);
+
+            // Instantiate the PostProcessing Manager
+            postProcessingManager = new PostProcessingManager(Game);
 
             base.LoadContent();
         }

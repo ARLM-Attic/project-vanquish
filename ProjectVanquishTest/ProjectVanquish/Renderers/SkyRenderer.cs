@@ -78,7 +78,7 @@ namespace ProjectVanquish.Renderers
         /// </summary>
         /// <param name="game">The game.</param>
         /// <param name="camera">The camera.</param>
-        public SkyRenderer(Game game, ContentManager content, Camera camera)
+        public SkyRenderer(Game game, Camera camera)
         {
             this.device = game.GraphicsDevice;
             parameters = new SkyRendererParameters();
@@ -96,14 +96,14 @@ namespace ProjectVanquish.Renderers
             rayleighRT = new RenderTarget2D(device, 128, 64, false, SurfaceFormat.Color, DepthFormat.None);
 
             // Load Effects
-            scatterEffect = content.Load<Effect>("Shaders/Sky/scatter");
-            texturedEffect = content.Load<Effect>("Shaders/Sky/Textured");
-            noiseEffect = content.Load<Effect>("Shaders/Sky/SNoise");
+            scatterEffect = game.Content.Load<Effect>("Shaders/Sky/scatter");
+            texturedEffect = game.Content.Load<Effect>("Shaders/Sky/Textured");
+            noiseEffect = game.Content.Load<Effect>("Shaders/Sky/SNoise");
 
             // Load Textures
             moonTex = game.Content.Load<Texture2D>("Textures/moon");
             glowTex = game.Content.Load<Texture2D>("Textures/moonglow");
-            starsTex = content.Load<Texture2D>("Textures/starfield");
+            starsTex = game.Content.Load<Texture2D>("Textures/starfield");
 
             GenerateDome();
             GenerateMoon();

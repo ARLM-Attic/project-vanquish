@@ -103,6 +103,7 @@
     <Compile Include="Core\LightManager.cs" />
     <Compile Include="Core\PhysicsManager.cs" />
     <Compile Include="Core\BoundingBoxes\VertexElementExtractor.cs" />
+    <Compile Include="Core\PostProcessingManager.cs" />
     <Compile Include="Lights\DirectionalLight.cs" />
     <Compile Include="Lights\PointLight.cs" />
     <Compile Include="Lights\SpotLight.cs" />
@@ -121,7 +122,9 @@
     <Compile Include="Renderers\SkyRenderer.cs" />
     <Compile Include="Renderers\SSAORenderer.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="PostProcessing\" />
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\Microsoft.Xna.GameStudio.targets" />
   <!--

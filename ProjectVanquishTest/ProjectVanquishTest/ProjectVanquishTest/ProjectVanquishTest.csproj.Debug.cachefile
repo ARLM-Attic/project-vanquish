@@ -59,4 +59,4 @@ Content\Textures\ground.xnb
 Content\Shaders\Lights\SpotLight.xnb
 Content\Textures\moon.xnb
 Content\Textures\moonglow.xnb
-Content\Shaders\InstancedModel.xnb
+Content\Shaders\MotionBlur\MotionBlur.xnb

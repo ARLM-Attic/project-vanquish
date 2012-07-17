@@ -40,7 +40,7 @@ namespace ProjectVanquishTest
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-            SSAORenderer.Enabled = false;
+            SSAORenderer.Enabled = true;
             SkyRenderer.Enabled = true;
             SkyRenderer.RealTime = false;
             LightManager.UseHemisphericLight = false;
@@ -58,6 +58,7 @@ namespace ProjectVanquishTest
 
             // TODO: use this.Content to load your game content here
             SceneManager.AddModel(Content.Load<Model>("Models/sponza2"), new Vector3(0, -10, 0));
+            SceneManager.AddModel(Content.Load<Model>("Models/ship1"), new Vector3(0, -1, 0));
         }
 
         /// <summary>

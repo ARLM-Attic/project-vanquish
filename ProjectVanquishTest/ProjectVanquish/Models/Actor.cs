@@ -13,6 +13,7 @@ namespace ProjectVanquish.Models
         BoundingBox boundingBox;
         BoundingBoxRenderer boundingBoxRenderer;
         Matrix[] bones;
+        Matrix world;
         Model model;
         Vector3 position, rotation, scale;
         #endregion
@@ -28,6 +29,7 @@ namespace ProjectVanquish.Models
             position = Vector3.Zero;
             rotation = Vector3.Zero;
             scale = Vector3.One;
+            world = Matrix.Identity;
             bones = new Matrix[model.Bones.Count];
             CalculateBoundingBox(device);
         }
@@ -156,10 +158,12 @@ namespace ProjectVanquish.Models
         {
             get
             {
-                return Matrix.CreateTranslation(position) * Matrix.CreateScale(scale)
+                world = Matrix.CreateTranslation(position) * Matrix.CreateScale(scale)
                     * Matrix.CreateRotationX(rotation.X) * Matrix.CreateRotationY(rotation.Y)
                     * Matrix.CreateRotationZ(rotation.Z);
+                return world;
             }
+            set { world = value; }
         }
         #endregion
 

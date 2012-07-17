@@ -15,6 +15,7 @@ namespace ProjectVanquish.Core
         #region Fields
         private static Game game;
         static IList<Actor> models = null;
+        IList<Actor> visibleModels = null;
         private Camera camera;
 
         /// <summary>
@@ -44,7 +45,7 @@ namespace ProjectVanquish.Core
         /// Gets the models.
         /// </summary>
         /// <value>The models.</value>
-        public IList<Actor> Models { get { return models; } }
+        public static IList<Actor> Models { get { return models; } }
 
         /// <summary>
         /// Gets the physics manager.
@@ -109,13 +110,14 @@ namespace ProjectVanquish.Core
         public void DrawScene(GameTime gameTime)
         {
             game.GraphicsDevice.DepthStencilState = DepthStencilState.Default;
+            visibleModels = models.Where(a => camera.BoundingFrustum.Intersects(a.BoundingSphere)).ToList<Actor>();
 
             // Check to see what models to Draw
-            foreach (Actor model in models.Where(a => camera.BoundingFrustum.Intersects(a.BoundingSphere)))
+            foreach (Actor model in visibleModels)
                 model.Draw(camera);
 
             if (ShowBoundingBoxes)
-                foreach (Actor model in models.Where(a => camera.BoundingFrustum.Intersects(a.BoundingSphere)))
+                foreach (Actor model in visibleModels)
                     model.DrawBoundingBox(camera);
         }
 
@@ -126,7 +128,8 @@ namespace ProjectVanquish.Core
         /// <param name="effect">The effect.</param>
         public void DrawSceneWithCustomEffect(GraphicsDevice device, Effect effect)
         {
-            foreach (Actor model in models)
+            visibleModels = models.Where(a => camera.BoundingFrustum.Intersects(a.BoundingSphere)).ToList<Actor>();
+            foreach (Actor model in visibleModels)
                 model.DrawWithEffect(device, effect);
         }
 
@@ -137,7 +140,7 @@ namespace ProjectVanquish.Core
         /// <param name="world">The world.</param>
         private void DrawModel(Model model, Matrix world)
         {
-            foreach (ModelMesh mesh in model.Meshes)
+            foreach (ModelMesh mesh in model.Meshes.Where(a => camera.BoundingFrustum.Intersects(a.BoundingSphere)))
             {
                 foreach (Effect effect in mesh.Effects)
                 {
